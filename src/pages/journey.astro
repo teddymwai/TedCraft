@@ -2,11 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/Badge.astro';
 import milestonesData from '../content/journey/milestones.json';
-import { getCollection } from 'astro:content';
+import { getPublishedWorks, getPublishedLearnings } from '../utils/content';
 import { resolvePath } from '../utils/paths';
 
-const allWorks = await getCollection('works');
-const allLearnings = await getCollection('learnings');
+const allWorks = await getPublishedWorks();
+const allLearnings = await getPublishedLearnings();
 
 // Map linked IDs to actual entries
 const milestones = milestonesData.map((m) => {

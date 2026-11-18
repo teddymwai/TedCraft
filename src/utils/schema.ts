@@ -6,6 +6,19 @@
 
 export const DEFAULT_SITE_URL = 'https://tedcraft.dev';
 
+/**
+ * Builds the canonical site root URL including any configured BASE_URL (e.g. '/TedCraft').
+ * Strips trailing slashes so `${siteRoot}/#person` and `${siteRoot}/works/...` are consistent.
+ */
+export function getSiteRootUrl(site?: URL | string): string {
+  const origin = (site ? site.toString() : DEFAULT_SITE_URL).replace(/\/$/, '');
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+  if (!base || base === '/') {
+    return origin;
+  }
+  return origin.endsWith(base) ? origin : `${origin}${base.startsWith('/') ? base : `/${base}`}`;
+}
+
 export interface PersonEntityOptions {
   siteUrl?: string;
 }

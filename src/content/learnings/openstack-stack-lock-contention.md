@@ -36,7 +36,7 @@ Instead of looking at the web page, I captured the exact network wire traffic us
 Two distinct root causes emerged:
 
 ### Issue A: OpenStack Stack Lock Contention
-When automated test runners triggered teardown in rapid succession, two simultaneous `DELETE` requests hit the mediator service. In OpenStack Heat, a stack acquires an exclusive database lock during state transitions. The second call received a database lock contention error (`409 Conflict`), which the API proxy swallowed and masked as an in-progress operation.
+When automated test runners triggered teardown in rapid succession, two simultaneous `DELETE` requests hit the orchestration gateway (synthetic `/api/v1/infrastructure/stacks/{id}`). In OpenStack Heat, a stack acquires an exclusive database lock during state transitions. The second call received a database lock contention error (`409 Conflict`), which the API proxy swallowed and masked as an in-progress operation.
 
 ### Issue B: The Argument Type Mismatch
 Looking at the wire capture of the termination payload:

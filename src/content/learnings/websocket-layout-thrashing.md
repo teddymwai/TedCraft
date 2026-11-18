@@ -1,6 +1,6 @@
 ---
 title: "Taming Real-Time Layout Thrashing in Live Telemetry Dashboards"
-subtitle: "Recovering smooth 60fps rendering under 2,000 WebSocket packets/sec"
+subtitle: "Recovering sustained 60fps rendering under 2,500 WebSocket messages/sec"
 date: 2026-08-04
 topic: "Browser Rendering & Performance"
 curveLevel: "Moderate"
@@ -45,6 +45,8 @@ We instituted a strict separation of concerns:
 
 ### Result
 
-- Rendering time per frame dropped from **48ms** to **2.1ms**.
-- Zero dropped frames on 120Hz ProMotion displays.
-- Memory churn virtually eliminated by reusing pre-allocated Float64Array slices.
+Measured over a **60-second sustained 2,500 messages/sec** synthetic WebSocket stream in **Chrome 128 (macOS, Apple M2 Pro, 120Hz display)**:
+
+- Average frame render time dropped from **48ms** (~20fps) to **2.1ms** (sustained 60fps+ within the 8.3ms/16.6ms budget).
+- Zero dropped frames during sustained 60-second bursts on 120Hz ProMotion displays.
+- Heap allocation churn minimized by reusing pre-allocated `Float64Array` ring-buffer slices.

@@ -46,6 +46,7 @@ if (type === 'learning') {
 title: "${title}"
 subtitle: "Short summary of the bug, challenge, or architectural puzzle"
 date: ${today}
+draft: true
 topic: "Architecture & Systems" # e.g. "Concurrency", "Performance", "QA Automation", "Networking"
 curveLevel: "Moderate" # Options: "Steep" | "Moderate" | "Smooth"
 obstacle: "The wall hit: What broke or failed unexpectedly? What was the confusing symptom?"
@@ -91,11 +92,11 @@ title: "${title}"
 tagline: "One-sentence high-impact value proposition"
 description: "A detailed summary of the problem this tool solves and how it functions."
 date: ${today}
-featured: true
+featured: false
+draft: true
 category: "Developer Tools" # e.g. "Systems & Infrastructure", "Web & Developer Tools", "Security & QA"
 tags: ["TypeScript", "Architecture", "Tooling"]
-github: "https://github.com/your-username/${slug}"
-demo: "https://${slug}.example.com"
+github: "https://github.com/teddymwai/${slug}"
 stats:
   - label: "Throughput"
     value: "1,000 req/s"
@@ -128,7 +129,7 @@ description: "A concise overview of the essay or article topic."
 pubDate: ${today}
 tags: ["Engineering", "Philosophy", "Best Practices"]
 readTime: "5 min read"
-draft: false
+draft: true
 ---
 
 Introduction setting up the context and thesis of this article...

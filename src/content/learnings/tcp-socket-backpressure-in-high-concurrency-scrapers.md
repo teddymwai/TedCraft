@@ -2,6 +2,7 @@
 title: "TCP Socket Backpressure in High-Concurrency Scrapers"
 subtitle: "Short summary of the bug, challenge, or architectural puzzle"
 date: 2026-11-18
+draft: true
 topic: "Architecture & Systems" # e.g. "Concurrency", "Performance", "QA Automation", "Networking"
 curveLevel: "Moderate" # Options: "Steep" | "Moderate" | "Smooth"
 obstacle: "The wall hit: What broke or failed unexpectedly? What was the confusing symptom?"

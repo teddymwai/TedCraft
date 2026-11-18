@@ -1,10 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PostCard from '../../components/PostCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../../utils/content';
 
-const allPosts = await getCollection('posts');
-const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+const sortedPosts = await getPublishedPosts();
 
 const allTags = ['All', ...new Set(sortedPosts.flatMap((p) => p.data.tags))];
 ---

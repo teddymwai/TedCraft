@@ -4,6 +4,7 @@ tagline: "Automated, fault-tolerant bulk repository provisioning, staging promot
 description: "An enterprise-grade automation engine built with the Python standard library and low-level Git plumbing that provisioned, configured, branched, promoted, and merged 43 standalone cybersecurity project repositories onto GitLab with 100% success and zero merge conflicts."
 date: 2026-11-06
 featured: true
+featuredOrder: 3
 category: "DevOps & Infrastructure"
 tags: ["Python", "Git Plumbing", "GitLab REST API", "CI/CD", "Distributed Automation", "CYBER RANGES"]
 gitlab: "https://gitlab.com/teddymwai/gitlab-resilient-orchestrator"
