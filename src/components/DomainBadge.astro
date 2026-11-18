@@ -1,0 +1,67 @@
+---
+interface Props {
+  label: string;
+  id?: string;
+  domain?: 'CT' | 'SL' | 'R' | 'G' | 'VPN' | 'TM' | 'PL' | 'AUTO';
+  showCode?: boolean;
+}
+
+const { label, id = '', domain = 'AUTO', showCode = false } = Astro.props;
+
+const normalized = `${id} ${label}`.toLowerCase();
+
+type ResolvedDomain = {
+  isCyberRangesFont: boolean;
+  iconClass: string;
+  materialSymbol?: string;
+  code: string;
+};
+
+function resolveDomain(): ResolvedDomain {
+  if (domain === 'CT' || normalized.includes('openstack') || normalized.includes('cloud') || normalized.includes('virtualization')) {
+    return { isCyberRangesFont: true, iconClass: 'icon-cloud-template', code: 'CT-01' };
+  }
+  if (domain === 'SL' || normalized.includes('threat') || normalized.includes('scenario') || normalized.includes('scada')) {
+    return { isCyberRangesFont: true, iconClass: 'icon-scenarios', code: 'SL-09' };
+  }
+  if (domain === 'R' || normalized.includes('rangemaster') || normalized.includes('har') || normalized.includes('contract') || normalized.includes('verification') || normalized.includes('qa')) {
+    return { isCyberRangesFont: true, iconClass: 'icon-dashboard', code: 'R-01' };
+  }
+  if (domain === 'G' || normalized.includes('nice') || normalized.includes('uam') || normalized.includes('revocation') || normalized.includes('access') || normalized.includes('governance')) {
+    return { isCyberRangesFont: true, iconClass: 'icon-assessment', code: 'G-01' };
+  }
+  if (domain === 'VPN' || normalized.includes('vpn') || normalized.includes('socket') || normalized.includes('network') || normalized.includes('speed')) {
+    return { isCyberRangesFont: true, iconClass: 'icon-node-router', code: 'NET-01' };
+  }
+  if (domain === 'TM' || normalized.includes('team') || normalized.includes('rbac')) {
+    return { isCyberRangesFont: true, iconClass: 'icon-captain', code: 'TM-01' };
+  }
+  if (domain === 'PL' || normalized.includes('playlist')) {
+    return { isCyberRangesFont: true, iconClass: 'icon-playlist', code: 'PL-01' };
+  }
+  return {
+    isCyberRangesFont: false,
+    iconClass: 'material-symbols-outlined',
+    materialSymbol: 'terminal',
+    code: 'SYS-01',
+  };
+}
+
+const resolved = resolveDomain();
+---
+
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[var(--color-accent-badge)] border border-[var(--color-border-accent)] text-[var(--color-text-main)]">
+  {resolved.isCyberRangesFont ? (
+    <span class={`${resolved.iconClass} text-[14px] text-[var(--color-brand)]`} aria-hidden="true"></span>
+  ) : (
+    <span class="material-symbols-outlined !text-[15px] text-[var(--color-brand)]" aria-hidden="true">
+      {resolved.materialSymbol}
+    </span>
+  )}
+  <span class="text-[var(--color-text-secondary)]">{label}</span>
+  {showCode && (
+    <span class="font-mono-tabular text-[11px] text-[var(--color-brand)] pl-1 border-l border-[var(--color-border)]">
+      {resolved.code}
+    </span>
+  )}
+</span>

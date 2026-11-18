@@ -1,53 +1,83 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import Badge from '../../components/Badge.astro';
 import { getCollection } from 'astro:content';
 
 const allWorks = await getCollection('works');
 const sortedWorks = allWorks.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-// Collect all unique categories
 const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
 ---
 
 <Layout
-  title="Works & Projects | Ted's Showcase"
-  description="Selected software projects, developer utilities, and architecture experiments built for reliability and scale."
+  title="Works & Production Systems | Thaddeus Mwai"
+  description="Selected software projects, verification harnesses, access governance tools, and architecture systems built for reliability and scale."
 >
   <div class="site-container space-y-10">
     <!-- Header -->
-    <header class="max-w-3xl">
-      <Badge variant="brand" size="sm">Portfolio</Badge>
-      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text-main)] mt-2">
-        Featured Works & Systems
+    <header class="max-w-3xl space-y-3">
+      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // PRODUCTION SYSTEMS & HARNESSES</div>
+      <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)]">
+        Featured works & verification systems
       </h1>
-      <p class="text-base text-[var(--color-text-muted)] mt-3 leading-relaxed">
-        Production developer tools, orchestration infrastructure, and telemetry utilities designed to solve real operational bottlenecks.
+      <p class="text-[16px] text-[var(--color-text-secondary)] leading-relaxed">
+        Production verification platforms, access governance engines, and cyber drill telemetry systems designed to eliminate operational bottlenecks.
       </p>
     </header>
 
-    <!-- Category filter tabs -->
-    <div class="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] pb-4">
-      {categories.map((cat, idx) => (
-        <button
-          type="button"
-          class={`filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer border ${
-            idx === 0
-              ? 'active bg-[var(--color-brand)] text-white border-[var(--color-brand)]'
-              : 'border-[var(--color-border)] bg-[var(--color-bg-card)] text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-subtle)]'
-          }`}
-          data-category={cat}
-        >
-          {cat}
-        </button>
-      ))}
+    <!-- Apple HIG Filter Bar: Search Input + Sanitized Category <select> + 44px Capsule Category Pills -->
+    <div class="mantra-card p-4 sm:p-5 space-y-4">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1 max-w-2xl">
+          <div class="hig-search-wrapper flex-1">
+            <span class="material-symbols-outlined hig-search-icon" aria-hidden="true">search</span>
+            <input
+              id="works-search-input"
+              type="search"
+              placeholder="Search works & harnesses"
+              aria-label="Search works"
+              class="hig-search-input"
+            />
+          </div>
+
+          <div class="w-full sm:w-56 shrink-0">
+            <label for="works-cat-select" class="sr-only">Filter by category</label>
+            <select id="works-cat-select" name="category" class="hig-select w-full">
+              {categories.map((cat) => (
+                <option value={cat}>{cat === 'All' ? 'All categories' : cat}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div id="works-count-label" class="font-mono-tabular text-[12px] text-[var(--color-text-muted)] shrink-0">
+          {sortedWorks.length} of {sortedWorks.length} systems
+        </div>
+      </div>
+
+      <!-- Category Capsule Pills -->
+      <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[var(--color-border)]">
+        {categories.map((cat, idx) => (
+          <button
+            type="button"
+            class={`filter-btn hig-filter-pill ${idx === 0 ? 'active' : ''}`}
+            aria-pressed={idx === 0 ? 'true' : 'false'}
+            data-category={cat}
+          >
+            <span>{cat}</span>
+          </button>
+        ))}
+      </div>
     </div>
 
     <!-- Works Grid -->
-    <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {sortedWorks.map((work) => (
-        <div class="work-item" data-category={work.data.category}>
+    <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedWorks.map((work, idx) => (
+        <div
+          class="work-item"
+          data-category={work.data.category}
+          data-search={`${work.data.title} ${work.data.tagline} ${work.data.description} ${work.data.category} ${work.data.tags.join(' ')}`.toLowerCase()}
+        >
           <ProjectCard
             id={work.id}
             title={work.data.title}
@@ -59,6 +89,7 @@ const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
             github={work.data.github}
             demo={work.data.demo}
             featured={work.data.featured}
+            index={idx}
           />
         </div>
       ))}
@@ -69,29 +100,57 @@ const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
 <script>
   function setupFilters() {
     const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const catSelect = document.getElementById('works-cat-select') as HTMLSelectElement | null;
+    const searchInput = document.getElementById('works-search-input') as HTMLInputElement | null;
     const items = document.querySelectorAll<HTMLElement>('.work-item');
+    const countLabel = document.getElementById('works-count-label');
+
+    let activeCat = 'All';
+
+    function applyFilter() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const matchesCat = activeCat === 'All' || item.getAttribute('data-category') === activeCat;
+        const itemSearch = item.getAttribute('data-search') || '';
+        const matchesQuery = !query || itemSearch.includes(query);
+
+        if (matchesCat && matchesQuery) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (countLabel) {
+        countLabel.textContent = `${visibleCount} of ${items.length} systems`;
+      }
+    }
+
+    function setCategory(cat: string) {
+      activeCat = cat;
+      if (catSelect) catSelect.value = cat;
+      buttons.forEach((b) => {
+        const isMatch = b.getAttribute('data-category') === cat;
+        b.classList.toggle('active', isMatch);
+        b.setAttribute('aria-pressed', String(isMatch));
+      });
+      applyFilter();
+    }
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const cat = btn.getAttribute('data-category');
-
-        buttons.forEach((b) => {
-          b.classList.remove('active', 'bg-[var(--color-brand)]', 'text-white', 'border-[var(--color-brand)]');
-          b.classList.add('border-[var(--color-border)]', 'bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
-        });
-
-        btn.classList.add('active', 'bg-[var(--color-brand)]', 'text-white', 'border-[var(--color-brand)]');
-        btn.classList.remove('border-[var(--color-border)]', 'bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
-
-        items.forEach((item) => {
-          if (cat === 'All' || item.getAttribute('data-category') === cat) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
+        setCategory(btn.getAttribute('data-category') || 'All');
       });
     });
+
+    catSelect?.addEventListener('change', () => {
+      setCategory(catSelect.value);
+    });
+
+    searchInput?.addEventListener('input', applyFilter);
   }
 
   setupFilters();

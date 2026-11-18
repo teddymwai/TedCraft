@@ -1,59 +1,86 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import LearningCard from '../../components/LearningCard.astro';
-import Badge from '../../components/Badge.astro';
 import { getCollection } from 'astro:content';
 
 const allLearnings = await getCollection('learnings');
 const sortedLearnings = allLearnings.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const curveLevels = ['All', 'Steep', 'Moderate', 'Smooth'];
+const allTopics = ['All', ...new Set(sortedLearnings.map((l) => l.data.topic))];
 ---
 
 <Layout
-  title="Learning Curves & Engineering Post-Mortems | Ted's Notebook"
+  title="Learning Curves & Engineering Post-Mortems | Thaddeus Mwai"
   description="Honest field notes on tough architectural puzzles, subtle bugs, and the turning points that resolved them."
 >
   <div class="site-container space-y-10">
     <!-- Header -->
-    <header class="max-w-3xl">
-      <Badge variant="warning" size="sm">Field Notes & Mental Models</Badge>
-      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text-main)] mt-2">
-        The Learning Curves Ledger
+    <header class="max-w-3xl space-y-3">
+      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">LC // DIAGNOSTIC LEDGER & FIELD NOTES</div>
+      <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)]">
+        The learning curves ledger
       </h1>
-      <p class="text-base text-[var(--color-text-muted)] mt-3 leading-relaxed">
-        Polished project releases only tell half the story. This ledger catalogs the confusing deadlocks, the false assumptions, and the mental model shifts that actually built my engineering reflexes.
+      <p class="text-[16px] text-[var(--color-text-secondary)] leading-relaxed">
+        Polished releases only tell half the story. This ledger catalogs the OpenStack lock contentions, HAR contract drifts, and mental model shifts that forged my engineering reflexes.
       </p>
     </header>
 
-    <!-- Difficulty / Curve Filter -->
-    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[var(--color-border)] pb-4">
-      <div class="flex items-center gap-2">
-        <span class="text-xs font-semibold text-[var(--color-text-muted)] mr-1">Filter by Curve:</span>
+    <!-- Apple HIG Filter Bar: Search Input + Sanitized Topic <select> + 44px Capsule Curve Pills -->
+    <div class="mantra-card p-4 sm:p-5 space-y-4">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1 max-w-2xl">
+          <div class="hig-search-wrapper flex-1">
+            <span class="material-symbols-outlined hig-search-icon" aria-hidden="true">search</span>
+            <input
+              id="lc-search-input"
+              type="search"
+              placeholder="Search post-mortems"
+              aria-label="Search learning curves"
+              class="hig-search-input"
+            />
+          </div>
+
+          <div class="w-full sm:w-56 shrink-0">
+            <label for="lc-topic-select" class="sr-only">Filter by engineering domain</label>
+            <select id="lc-topic-select" name="topic" class="hig-select w-full">
+              {allTopics.map((topic) => (
+                <option value={topic}>{topic === 'All' ? 'All engineering domains' : `Domain: ${topic}`}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div id="lc-count-label" class="font-mono-tabular text-[12px] text-[var(--color-text-muted)] shrink-0">
+          {sortedLearnings.length} of {sortedLearnings.length} documented curves
+        </div>
+      </div>
+
+      <!-- Curve Difficulty Capsule Pills -->
+      <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[var(--color-border)]">
+        <span class="text-[12px] font-mono-tabular text-[var(--color-text-muted)] mr-1">Curve difficulty:</span>
         {curveLevels.map((lvl, idx) => (
           <button
             type="button"
-            class={`curve-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer border ${
-              idx === 0
-                ? 'active bg-[var(--color-brand)] text-white border-[var(--color-brand)]'
-                : 'border-[var(--color-border)] bg-[var(--color-bg-card)] text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-subtle)]'
-            }`}
+            class={`curve-filter-btn hig-filter-pill ${idx === 0 ? 'active' : ''}`}
+            aria-pressed={idx === 0 ? 'true' : 'false'}
             data-level={lvl}
           >
-            {lvl}
+            <span>{lvl === 'All' ? 'All curves' : `${lvl} curve`}</span>
           </button>
         ))}
-      </div>
-
-      <div class="text-xs text-[var(--color-text-muted)] font-mono">
-        Showing {sortedLearnings.length} documented curves
       </div>
     </div>
 
     <!-- Cards List -->
     <div id="learnings-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-      {sortedLearnings.map((item) => (
-        <div class="learning-item" data-level={item.data.curveLevel}>
+      {sortedLearnings.map((item, idx) => (
+        <div
+          class="learning-item"
+          data-level={item.data.curveLevel}
+          data-topic={item.data.topic}
+          data-search={`${item.data.title} ${item.data.subtitle} ${item.data.topic} ${item.data.obstacle} ${item.data.breakthrough} ${item.data.tags.join(' ')}`.toLowerCase()}
+        >
           <LearningCard
             id={item.id}
             title={item.data.title}
@@ -65,6 +92,7 @@ const curveLevels = ['All', 'Steep', 'Moderate', 'Smooth'];
             takeaways={item.data.takeaways}
             tags={item.data.tags}
             date={item.data.date}
+            index={idx}
           />
         </div>
       ))}
@@ -75,29 +103,55 @@ const curveLevels = ['All', 'Steep', 'Moderate', 'Smooth'];
 <script>
   function setupCurveFilters() {
     const buttons = document.querySelectorAll<HTMLButtonElement>('.curve-filter-btn');
+    const topicSelect = document.getElementById('lc-topic-select') as HTMLSelectElement | null;
+    const searchInput = document.getElementById('lc-search-input') as HTMLInputElement | null;
     const items = document.querySelectorAll<HTMLElement>('.learning-item');
+    const countLabel = document.getElementById('lc-count-label');
+
+    let activeLevel = 'All';
+    let activeTopic = 'All';
+
+    function applyFilter() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const matchesLevel = activeLevel === 'All' || item.getAttribute('data-level') === activeLevel;
+        const matchesTopic = activeTopic === 'All' || item.getAttribute('data-topic') === activeTopic;
+        const itemSearch = item.getAttribute('data-search') || '';
+        const matchesQuery = !query || itemSearch.includes(query);
+
+        if (matchesLevel && matchesTopic && matchesQuery) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (countLabel) {
+        countLabel.textContent = `${visibleCount} of ${items.length} documented curves`;
+      }
+    }
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const lvl = btn.getAttribute('data-level');
-
+        activeLevel = btn.getAttribute('data-level') || 'All';
         buttons.forEach((b) => {
-          b.classList.remove('active', 'bg-[var(--color-brand)]', 'text-white', 'border-[var(--color-brand)]');
-          b.classList.add('border-[var(--color-border)]', 'bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
+          const isMatch = b === btn;
+          b.classList.toggle('active', isMatch);
+          b.setAttribute('aria-pressed', String(isMatch));
         });
-
-        btn.classList.add('active', 'bg-[var(--color-brand)]', 'text-white', 'border-[var(--color-brand)]');
-        btn.classList.remove('border-[var(--color-border)]', 'bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
-
-        items.forEach((item) => {
-          if (lvl === 'All' || item.getAttribute('data-level') === lvl) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
+        applyFilter();
       });
     });
+
+    topicSelect?.addEventListener('change', () => {
+      activeTopic = topicSelect.value;
+      applyFilter();
+    });
+
+    searchInput?.addEventListener('input', applyFilter);
   }
 
   setupCurveFilters();

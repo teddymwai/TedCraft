@@ -1,56 +1,57 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/Badge.astro';
+import BrandIcon from '../components/BrandIcon.astro';
 
 const toolkit = [
   {
-    category: 'Security & Risk Governance',
-    items: ['Role-Based Access Control (RBAC)', 'Enterprise GRC Liaison', 'AI Risk Evaluation', 'UAM Audit Automation', 'SIEM & SOC Alert Engineering'],
+    category: 'Security & risk governance',
+    items: ['Role-Based Access Control (RBAC)', 'Enterprise GRC liaison', 'AI risk evaluation & telemetry', 'UAM audit automation', 'SIEM & SOC alert engineering'],
   },
   {
-    category: 'Automation & Verification',
-    items: ['Python & Playwright', 'HAR Wire Contract Testing', 'OpenStack API Automation', 'OpenVPN & L3/L4 Tunneling', 'Deterministic Mutation Guards'],
+    category: 'Automation & verification',
+    items: ['Python & Playwright harnesses', 'HAR wire contract testing', 'OpenStack API automation', 'OpenVPN & L3/L4 tunneling', 'Deterministic mutation guards'],
   },
   {
-    category: 'Infrastructure & Tools',
-    items: ['Linux (LPIC-1) & POSIX Bash', 'Cisco IOS & Colocation', 'Docker & Containerization', 'Go & REST APIs', 'Git & CI/CD Pipelines'],
+    category: 'Infrastructure & systems',
+    items: ['Linux (LPIC-1) & POSIX Bash', 'Cisco IOS & colocation', 'Docker & containerization', 'Go & REST APIs', 'Git & CI/CD pipelines'],
   },
 ];
 
 const results = [
   {
-    metric: '0 Incidents in 18 Mos',
-    label: 'Access Governance',
+    metric: '0 incidents / 18m',
+    label: 'Access governance',
     detail: 'Zero unauthorized access or privilege escalation incidents across 50+ environments for 150+ internal users and 1,000+ client operators.',
   },
   {
-    metric: '17 Days → 13 Hours',
-    label: 'Audit Cycle Compression',
-    detail: 'Engineered Python UAM automation tool that slashed quarterly user access review turnaround from 17 days to 13 business hours.',
+    metric: '17d to 13h',
+    label: 'Audit cycle compression',
+    detail: 'Engineered Python UAM automation engine that compressed quarterly user access review turnaround from 17 days to 13 business hours.',
   },
   {
-    metric: '0 Regressions',
-    label: 'Production Releases',
+    metric: '0 regressions',
+    label: 'Production releases',
     detail: 'Zero critical regressions reached production across 5 consecutive major platform releases of CYBER RANGES via RangeMaster Cockpit.',
   },
   {
-    metric: '$400K - $450K Protected',
-    label: 'Revenue Exposure',
+    metric: '$450,000',
+    label: 'Revenue exposure protected',
     detail: 'Identified privilege revocation latency as an executive metric, driving deprovisioning latency from days down to under 2 hours.',
   },
 ];
 
 const principles = [
   {
-    title: 'Test Below the UI (Wire Contracts Win)',
-    description: 'A green button in the DOM does not prove your system is safe. Frontend state caches mask silent API corruptions. Real verification happens at the network protocol and schema layer.',
+    title: 'Test below the UI (wire contracts win)',
+    description: 'A green indicator in the DOM does not prove a system is sound. Frontend state caches mask silent API corruptions. High-assurance verification happens at the network protocol and schema layer.',
   },
   {
-    title: 'Trace to the Root Cause, Never Patch Symptoms',
-    description: 'Bumping timeouts or adding artificial sleeps to flaky tests merely conceals underlying race conditions and lock contentions. True reliability comes from diagnosing the underlying operating system and database mechanisms.',
+    title: 'Trace to the root cause, never patch symptoms',
+    description: 'Bumping timeouts or adding artificial sleeps to flaky suites merely conceals underlying race conditions and lock contentions. True reliability comes from diagnosing the operating system and database mechanisms.',
   },
   {
-    title: 'Access Control is an Active Perimeter',
+    title: 'Access control is an active perimeter',
     description: 'Periodic quarterly reviews create a false sense of security. Least-privilege governance must be continuous, automated, and evaluated against quantifiable revocation latency.',
   },
 ];
@@ -63,64 +64,76 @@ const principles = [
   <div class="site-container space-y-12">
     <!-- Intro -->
     <header class="space-y-4 max-w-3xl">
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2.5">
         <Badge variant="brand" size="sm">CYBER RANGES</Badge>
-        <span class="text-xs text-[var(--color-text-muted)] font-mono">Nairobi, Kenya • Stafford, VA</span>
+        <span class="text-[12px] text-[var(--color-text-muted)] font-mono-tabular">DOC-CR // Nairobi, Kenya · Stafford, VA</span>
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-[var(--color-text-main)]">
+      <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)]">
         Thaddeus (Ted) Wachira Mwai
       </h1>
 
-      <p class="text-lg text-[var(--color-brand)] font-semibold">
+      <p class="text-[18px] text-[var(--color-brand)] font-medium">
         Security QA Lead & Cross-Functional Risk Strategist
       </p>
 
-      <p class="text-base text-[var(--color-text-muted)] leading-relaxed">
-        I lead quality assurance at <strong class="text-[var(--color-text-main)]">CYBER RANGES</strong>, a premier cybersecurity training and drill platform used by 200+ client organizations worldwide. I also serve as the department's risk liaison to the central Governance, Risk, and Compliance (GRC) function.
+      <p class="text-[16px] text-[var(--color-text-secondary)] leading-relaxed">
+        I lead quality assurance at <strong class="text-[var(--color-text-main)] font-medium">CYBER RANGES</strong>, a cybersecurity simulation and drill platform serving 200+ client organizations worldwide. I also serve as the department's risk liaison to the central Governance, Risk, and Compliance (GRC) function.
       </p>
     </header>
 
-    <!-- Key Results Strip -->
+    <!-- Key Results Strip (Tabular figures, sentence-case labels) -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {results.map((r) => (
-        <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 space-y-2">
-          <div class="text-xs font-bold uppercase tracking-wider text-[var(--color-brand)]">{r.label}</div>
-          <div class="text-xl font-black text-[var(--color-text-main)]">{r.metric}</div>
-          <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">{r.detail}</p>
+      {results.map((r, idx) => (
+        <div class="mantra-card p-5 space-y-2">
+          <div class="flex items-center justify-between text-[12px]">
+            <span class="font-medium text-[var(--color-text-secondary)]">{r.label}</span>
+            <span class="font-mono-tabular text-[11px] text-[var(--color-text-muted)]">0{idx + 1}</span>
+          </div>
+          <div class="font-mono-tabular text-2xl font-medium text-[var(--color-brand)]">{r.metric}</div>
+          <p class="text-[12px] text-[var(--color-text-secondary)] leading-relaxed">{r.detail}</p>
         </div>
       ))}
     </section>
 
     <!-- Detailed Bio -->
-    <section class="space-y-4 text-sm leading-relaxed text-[var(--color-text-main)]">
-      <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
-        Background & Focus
-      </h2>
+    <section class="mantra-panel p-6 sm:p-8 space-y-4 text-[15px] leading-relaxed text-[var(--color-text-secondary)]">
+      <div class="flex items-center justify-between border-b border-[var(--color-border)] pb-3">
+        <h2 class="font-display text-2xl text-[var(--color-text-main)]">
+          Background & operational focus
+        </h2>
+        <span class="font-mono-tabular text-[11px] text-[var(--color-text-muted)]">DOC-CR // BIO</span>
+      </div>
       <p>
-        My work centers on three critical pillars: <strong>finding platform failures before clients do</strong>, <strong>strictly governing who can touch what</strong>, and <strong>turning scattered operational anomalies into ranked risk registers that leadership can act on</strong>.
+        My work centers on three operational pillars: <strong class="text-[var(--color-text-main)] font-medium">finding platform failures before clients do</strong>, <strong class="text-[var(--color-text-main)] font-medium">strictly governing who can touch what</strong>, and <strong class="text-[var(--color-text-main)] font-medium">turning scattered operational anomalies into ranked risk registers that leadership can act on</strong>.
       </p>
       <p>
-        I architect the automation I rely on—authoring high-assurance Python and Playwright verification platforms like <strong>RangeMaster Cockpit</strong>, which validates multi-tenant CloudTemplate stacks and enforces wire contracts against certified Golden Baselines.
+        I architect the automation I rely on—authoring high-assurance Python and Playwright verification platforms like <strong class="text-[var(--color-brand)] font-medium">RangeMaster Cockpit</strong>, which validates multi-tenant CloudTemplate stacks and enforces wire contracts against certified Golden Baselines.
       </p>
       <p>
-        Prior to leading QA at CYBER RANGES, I worked in cybersecurity consulting and SOC optimization at <strong>Silensec Africa</strong> (tuning SIEM detection rules and building automated access review engines), compliance auditing at <strong>Simplify IT</strong> (verifying cloud IAM policies across AWS, Azure, and GCP), and enterprise systems administration at <strong>Avery East Africa</strong> (deploying Cisco networks and enforcing digital security policies for government PPP contracts).
+        Prior to leading QA at CYBER RANGES, I worked in cybersecurity consulting and SOC optimization at <strong class="text-[var(--color-text-main)] font-medium">Silensec Africa</strong> (tuning SIEM detection rules and building automated access review engines), compliance auditing at <strong class="text-[var(--color-text-main)] font-medium">Simplify IT</strong> (verifying cloud IAM policies across AWS, Azure, and GCP), and enterprise systems administration at <strong class="text-[var(--color-text-main)] font-medium">Avery East Africa</strong> (deploying Cisco networks and enforcing digital security policies for government PPP contracts).
       </p>
     </section>
 
     <!-- Engineering Principles -->
     <section class="space-y-6">
-      <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
-        Engineering Philosophy
-      </h2>
-      <div class="grid grid-cols-1 gap-4">
-        {principles.map((p) => (
-          <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5">
-            <h3 class="text-sm font-bold text-[var(--color-text-main)] flex items-center gap-2">
+      <div class="border-b border-[var(--color-border)] pb-3">
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // HEURISTICS</div>
+        <h2 class="font-display text-3xl text-[var(--color-text-main)] mt-1">
+          Engineering philosophy
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {principles.map((p, idx) => (
+          <div class="mantra-card p-6 space-y-2.5">
+            <div class="flex items-center justify-between">
               <span class="w-2 h-2 rounded-full bg-[var(--color-brand)]"></span>
+              <span class="font-mono-tabular text-[11px] text-[var(--color-text-muted)]">PRINCIPLE // 0{idx + 1}</span>
+            </div>
+            <h3 class="font-display text-xl text-[var(--color-text-main)]">
               {p.title}
             </h3>
-            <p class="mt-2 text-xs text-[var(--color-text-muted)] leading-relaxed">
+            <p class="text-[13px] text-[var(--color-text-secondary)] leading-relaxed">
               {p.description}
             </p>
           </div>
@@ -130,19 +143,22 @@ const principles = [
 
     <!-- Technical Toolkit -->
     <section class="space-y-6">
-      <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
-        Core Competencies & Toolkit
-      </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="border-b border-[var(--color-border)] pb-3">
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // CAPABILITIES</div>
+        <h2 class="font-display text-3xl text-[var(--color-text-main)] mt-1">
+          Core competencies & toolkit
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {toolkit.map((group) => (
-          <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4">
-            <div class="text-xs font-bold text-[var(--color-brand)] uppercase tracking-wider mb-3">
+          <div class="mantra-card p-6 space-y-3">
+            <div class="text-[14px] font-medium text-[var(--color-brand)] border-b border-[var(--color-border)] pb-2">
               {group.category}
             </div>
-            <ul class="space-y-1.5 text-xs text-[var(--color-text-main)]">
+            <ul class="space-y-2 text-[13px] text-[var(--color-text-secondary)]">
               {group.items.map((item) => (
-                <li class="flex items-center gap-1.5">
-                  <span class="text-[var(--color-text-muted)]">•</span>
+                <li class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-brand)] shrink-0"></span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -152,36 +168,48 @@ const principles = [
       </div>
     </section>
 
-    <!-- Connect / Contact -->
-    <section class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 space-y-4">
-      <h2 class="text-lg font-bold text-[var(--color-text-main)]">
-        Get in Touch
-      </h2>
-      <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">
-        I am always open to exchanging field notes on security automation, platform quality engineering, access governance, or technology risk:
-      </p>
-      <div class="flex flex-wrap gap-3 pt-2">
-        <a
-          href="mailto:thaddeusmwai.9974@gmail.com"
-          class="px-4 py-2 rounded-lg bg-[var(--color-brand)] text-white text-xs font-semibold hover:bg-[var(--color-brand-hover)] transition-colors"
-        >
-          Email Me (thaddeusmwai.9974@gmail.com)
+    <!-- Connect / Contact (Apple HIG 44px Capsule Buttons) -->
+    <section class="mantra-panel p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div class="space-y-2 max-w-xl">
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // DIRECT CHANNELS</div>
+        <h2 class="font-display text-2xl sm:text-3xl text-[var(--color-text-main)]">
+          Get in touch
+        </h2>
+        <p class="text-[14px] text-[var(--color-text-secondary)] leading-relaxed">
+          Open to exchanging field notes on security automation, platform quality engineering, access governance, or technology risk.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3 shrink-0">
+        <a href="mailto:thaddeusmwai.9974@gmail.com" class="hig-btn hig-btn-primary">
+          <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">mail</span>
+          <span>Email (thaddeusmwai.9974@gmail.com)</span>
         </a>
         <a
           href="https://www.linkedin.com/in/teddymwai/"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs font-semibold hover:text-[var(--color-brand)] transition-colors"
+          class="hig-btn hig-btn-glass"
         >
-          LinkedIn (/in/teddymwai)
+          <BrandIcon name="linkedin" class="w-4 h-4" />
+          <span>LinkedIn</span>
         </a>
         <a
           href="https://github.com/teddymwai"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs font-semibold hover:text-[var(--color-brand)] transition-colors"
+          class="hig-btn hig-btn-glass"
         >
-          GitHub (teddymwai)
+          <BrandIcon name="github" class="w-4 h-4" />
+          <span>GitHub</span>
+        </a>
+        <a
+          href="https://gitlab.com/teddymwai"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hig-btn hig-btn-glass"
+        >
+          <BrandIcon name="gitlab" class="w-4 h-4" />
+          <span>GitLab</span>
         </a>
       </div>
     </section>

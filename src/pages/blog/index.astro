@@ -1,41 +1,158 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PostCard from '../../components/PostCard.astro';
-import Badge from '../../components/Badge.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('posts');
 const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+const allTags = ['All', ...new Set(sortedPosts.flatMap((p) => p.data.tags))];
 ---
 
 <Layout
-  title="Technical Blog | Ted's Notebook"
-  description="Essays and articles on systems architecture, testing strategies, and software craft."
+  title="Technical Articles & Essays | Thaddeus Mwai"
+  description="Essays and articles on systems architecture, verification harnesses, access governance, and software craft."
 >
   <div class="site-container space-y-10">
     <!-- Header -->
-    <header class="max-w-3xl">
-      <Badge variant="brand" size="sm">Technical Writing</Badge>
-      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text-main)] mt-2">
-        Articles & Thoughts
+    <header class="max-w-3xl space-y-3">
+      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">ESSAY // CONTINUOUS DISPATCHES</div>
+      <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)]">
+        Technical articles & essays
       </h1>
-      <p class="text-base text-[var(--color-text-muted)] mt-3 leading-relaxed">
-        Reflections on software reliability, developer ergonomics, and the philosophy behind building in public.
+      <p class="text-[16px] text-[var(--color-text-secondary)] leading-relaxed">
+        Continuous reflections on high-assurance verification, distributed systems ergonomics, and engineering habits.
       </p>
     </header>
 
+    <!-- Apple HIG Filter Bar: 44px Capsule Pills + Sanitized <select> + Instant Live Search -->
+    <div class="mantra-card p-4 sm:p-5 space-y-4">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <!-- Search & Sort Controls -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 flex-1 max-w-2xl">
+          <div class="hig-search-wrapper flex-1">
+            <span class="material-symbols-outlined hig-search-icon" aria-hidden="true">search</span>
+            <input
+              id="blog-search-input"
+              type="search"
+              placeholder="Search articles"
+              aria-label="Search articles"
+              class="hig-search-input"
+            />
+          </div>
+
+          <div class="w-full sm:w-52 shrink-0">
+            <label for="blog-tag-select" class="sr-only">Filter by topic tag</label>
+            <select id="blog-tag-select" name="tag" class="hig-select w-full">
+              {allTags.map((tag) => (
+                <option value={tag}>{tag === 'All' ? 'All topics' : `Topic: ${tag}`}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div id="blog-count-label" class="font-mono-tabular text-[12px] text-[var(--color-text-muted)] shrink-0">
+          {sortedPosts.length} of {sortedPosts.length} articles
+        </div>
+      </div>
+
+      <!-- Quick Capsule Tag Pills -->
+      <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[var(--color-border)]">
+        {allTags.map((tag, idx) => (
+          <button
+            type="button"
+            class={`blog-tag-pill hig-filter-pill ${idx === 0 ? 'active' : ''}`}
+            aria-pressed={idx === 0 ? 'true' : 'false'}
+            data-tag={tag}
+          >
+            <span>{tag}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
     <!-- Posts Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {sortedPosts.map((post) => (
-        <PostCard
-          id={post.id}
-          title={post.data.title}
-          description={post.data.description}
-          pubDate={post.data.pubDate}
-          tags={post.data.tags}
-          readTime={post.data.readTime}
-        />
+    <div id="blog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedPosts.map((post, idx) => (
+        <div
+          class="blog-item"
+          data-tags={post.data.tags.join(',')}
+          data-search={`${post.data.title} ${post.data.description} ${post.data.tags.join(' ')}`.toLowerCase()}
+        >
+          <PostCard
+            id={post.id}
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            readTime={post.data.readTime}
+            index={idx}
+          />
+        </div>
       ))}
     </div>
   </div>
 </Layout>
+
+<script>
+  function setupBlogFilters() {
+    const searchInput = document.getElementById('blog-search-input') as HTMLInputElement | null;
+    const tagSelect = document.getElementById('blog-tag-select') as HTMLSelectElement | null;
+    const pills = document.querySelectorAll<HTMLButtonElement>('.blog-tag-pill');
+    const items = document.querySelectorAll<HTMLElement>('.blog-item');
+    const countLabel = document.getElementById('blog-count-label');
+
+    if (!searchInput || !tagSelect) return;
+
+    let activeTag = 'All';
+
+    function applyFilter() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      items.forEach((item) => {
+        const itemTags = (item.getAttribute('data-tags') || '').split(',');
+        const itemSearch = item.getAttribute('data-search') || '';
+        const matchesTag = activeTag === 'All' || itemTags.includes(activeTag);
+        const matchesQuery = !query || itemSearch.includes(query);
+
+        if (matchesTag && matchesQuery) {
+          item.style.display = 'block';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      if (countLabel) {
+        countLabel.textContent = `${visibleCount} of ${items.length} articles`;
+      }
+    }
+
+    function setTag(tag: string) {
+      activeTag = tag;
+      if (tagSelect) tagSelect.value = tag;
+      pills.forEach((p) => {
+        const isMatch = p.getAttribute('data-tag') === tag;
+        p.classList.toggle('active', isMatch);
+        p.setAttribute('aria-pressed', String(isMatch));
+      });
+      applyFilter();
+    }
+
+    pills.forEach((p) => {
+      p.addEventListener('click', () => {
+        setTag(p.getAttribute('data-tag') || 'All');
+      });
+    });
+
+    tagSelect.addEventListener('change', () => {
+      setTag(tagSelect.value);
+    });
+
+    searchInput.addEventListener('input', applyFilter);
+  }
+
+  setupBlogFilters();
+  document.addEventListener('astro:after-swap', setupBlogFilters);
+</script>

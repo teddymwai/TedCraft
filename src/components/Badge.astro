@@ -8,19 +8,19 @@ interface Props {
 const { variant = 'subtle', size = 'sm', class: className = '' } = Astro.props;
 
 const variantStyles = {
-  brand: 'bg-[var(--color-accent-badge)] text-[var(--color-brand)] border-[var(--color-brand)]/20',
-  subtle: 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] border-[var(--color-border)]',
-  warning: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
-  success: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-  danger: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
+  brand: 'bg-[var(--color-accent-badge)] text-[var(--color-brand)] border-[var(--color-border-accent)]',
+  subtle: 'bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] border-[var(--color-border)]',
+  warning: 'bg-[var(--color-accent-badge)] text-[var(--color-brand)] border-[var(--color-border-accent)]',
+  success: 'bg-[var(--color-cr-surface)] text-[var(--color-positive)] border-[var(--color-cr-border)]',
+  danger: 'bg-[var(--color-negative)]/10 text-[var(--color-negative)] border-[var(--color-negative)]/25',
 };
 
 const sizeStyles = {
-  sm: 'text-[11px] px-2 py-0.5 rounded-full',
-  md: 'text-xs px-2.5 py-1 rounded-md',
+  sm: 'text-[12px] leading-4 px-2 py-0.5 rounded-[6px]',
+  md: 'text-[12px] leading-4 px-2.5 py-1 rounded-[8px]',
 };
 ---
 
-<span class={`inline-flex items-center font-medium border ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}>
+<span class={`inline-flex items-center font-normal border ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}>
   <slot />
 </span>

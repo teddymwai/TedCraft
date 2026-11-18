@@ -1,0 +1,100 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+  stamp?: string;
+}
+
+const { headings = [], stamp = 'DOC-CR // TOC' } = Astro.props;
+const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <aside class="mantra-card p-5 sticky top-24 space-y-3" aria-label="On this page">
+    <div class="flex items-center justify-between border-b border-[var(--color-border)] pb-2.5">
+      <div class="text-[12px] font-medium text-[var(--color-text-main)] flex items-center gap-1.5">
+        <span class="material-symbols-outlined !text-[15px] text-[var(--color-brand)]" aria-hidden="true">toc</span>
+        <span>On this page</span>
+      </div>
+      <span class="font-mono-tabular text-[11px] text-[var(--color-text-muted)]">{stamp}</span>
+    </div>
+
+    <nav class="toc-nav space-y-0.5" aria-label="Table of contents">
+      {filteredHeadings.map((h) => (
+        <a
+          href={`#${h.slug}`}
+          class={h.depth === 3 ? 'pl-5 text-[11px]' : ''}
+        >
+          {h.text}
+        </a>
+      ))}
+    </nav>
+  </aside>
+)}
+
+<script>
+  function setupTocScrollspy() {
+    const tocNav = document.querySelector<HTMLElement>('.toc-nav');
+    if (!tocNav) return;
+
+    const navLinks = tocNav.querySelectorAll<HTMLAnchorElement>('a');
+    if (navLinks.length === 0) return;
+
+    // Ensure target headings can receive programmatic focus on anchor jump (modern-web-guidance: scrollspy)
+    navLinks.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const target = document.getElementById(href.slice(1));
+        if (target && !target.hasAttribute('tabindex')) {
+          target.setAttribute('tabindex', '-1');
+        }
+      }
+    });
+
+    if (CSS.supports('scroll-target-group: auto')) {
+      const syncAriaCurrent = () => {
+        const currentLink = tocNav.querySelector('a:target-current');
+        navLinks.forEach((link) => {
+          link.setAttribute('aria-current', link === currentLink ? 'true' : 'false');
+        });
+      };
+      syncAriaCurrent();
+      document.addEventListener('scrollend', syncAriaCurrent, { passive: true });
+    } else {
+      const targets: HTMLElement[] = [];
+      navLinks.forEach((link) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const el = document.getElementById(href.slice(1));
+          if (el) targets.push(el);
+        }
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              navLinks.forEach((link) => {
+                const isActive = link.getAttribute('href') === `#${id}`;
+                link.classList.toggle('target-current', isActive);
+                link.setAttribute('aria-current', isActive ? 'true' : 'false');
+              });
+            }
+          });
+        },
+        { rootMargin: '-15% 0px -70% 0px', threshold: 0 }
+      );
+
+      targets.forEach((t) => observer.observe(t));
+    }
+  }
+
+  setupTocScrollspy();
+  document.addEventListener('astro:after-swap', setupTocScrollspy);
+</script>
