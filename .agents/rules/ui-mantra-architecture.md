@@ -24,7 +24,7 @@ Every agent, engineer, and UI workflow in this repository must abide by these ru
 - **Dual-Layer Studio Curve (`img001.jpg`) Canvas**:
   - Active across both themes via `public/backgrounds/img001.jpg`: pinned parallax backplane with an `87–95%` warm obsidian wash in dark mode and a `93–96%` warm ivory wash in light mode so a subtle sculptural silhouette grounds the viewport.
 
-## 3. Typography & Unslop Structure (CYBER RANGES UI Mantra)
+## 3. Typography & Unslop Structure (TedCraft UI Mantra)
 - **Editorial & Technical Precision Pairing**:
   - Display & Article Headlines: `Newsreader` (optical serif, weights `400`–`500`, tight display tracking `-0.025em`). Never use `700`–`900` weights or gradient text.
   - Interface & Body Prose: `Instrument Sans` / `Inter` (weights `400`–`500`).
@@ -49,7 +49,7 @@ Every agent, engineer, and UI workflow in this repository must abide by these ru
   - Use **Google Fonts Material Symbols Outlined** (`15px–18px`, monochrome secondary/muted tint) for general UI controls and broader security/engineering entries.
 
 ## 6. Self-Owned Design System: No External Attribution
-- The UI Mantra (unslop methodology, Apple HIG adaptation, palette, iconography) is an internal CYBER RANGES standard.
+- The TedCraft UI Mantra (unslop methodology, Apple HIG adaptation, palette, iconography) is an internal standard.
 - Never add external author handles, personal sites, third-party repository links, or `legacy/` vendored paths to docs, rules, READMEs, UI footers, or templates. Cite internal paths only (e.g. `docs/ui-mantra/03-ui-unslop-methodology.md`).
 - Permitted: functional namespace URIs (`http://www.w3.org/2000/svg`, JSON Schema `$schema`) and runtime asset imports (Google Fonts Material Symbols stylesheet).
 - Third-party code retained under its own license (e.g. CC BY 4.0) keeps its license notice in place; never propagate that notice into internal docs. Prefer rewriting as an original internal artifact over vendoring.

@@ -39,6 +39,7 @@
     }
 
     function updateIcons() {
+      if (!btn || !sunIcon || !moonIcon) return;
       const current = getResolvedTheme();
       if (current === 'dark') {
         sunIcon.classList.remove('hidden');

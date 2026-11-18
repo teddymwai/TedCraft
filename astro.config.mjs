@@ -6,7 +6,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://ted.github.io',
+  site: process.env.SITE_URL || 'https://tedcraft.dev',
+  base: process.env.BASE_PATH || '/',
   vite: {
     plugins: [tailwindcss()]
   },

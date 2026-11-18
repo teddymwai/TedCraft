@@ -1,4 +1,4 @@
-# CYBER RANGES UI Mantra & Design System
+# TedCraft UI Mantra & Design System
 
 This directory houses the foundational design principles, component specifications, brand palette guidelines, and iconography standards for all **CYBER RANGES** user interfaces, applications, dashboards, and agent-generated web components.
 
