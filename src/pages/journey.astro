@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Badge from '../components/Badge.astro';
+import milestonesData from '../content/journey/milestones.json';
+import { getCollection } from 'astro:content';
+
+const allWorks = await getCollection('works');
+const allLearnings = await getCollection('learnings');
+
+// Map linked IDs to actual entries
+const milestones = milestonesData.map((m) => {
+  const linkedWorks = allWorks.filter((w) => m.linkedWorks.includes(w.id));
+  const linkedLearnings = allLearnings.filter((l) => m.linkedLearnings.includes(l.id));
+  return { ...m, resolvedWorks: linkedWorks, resolvedLearnings: linkedLearnings };
+});
+
+const levelBadge = {
+  Pioneering: 'danger',
+  Advanced: 'warning',
+  Proficient: 'brand',
+  Intermediate: 'subtle',
+} as const;
+---
+
+<Layout
+  title="Growth Journey: Day 1 to Present | Ted's Notebook"
+  description="A chronological and topical retrospective showing continuous engineering evolution, mental model breakthroughs, and domain mastery from day 1 to the present."
+>
+  <div class="site-container space-y-12">
+    <!-- Header -->
+    <header class="max-w-3xl space-y-3">
+      <Badge variant="brand" size="sm">Evolutionary Arc</Badge>
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-[var(--color-text-main)]">
+        Growth Journey: Day 1 to Present
+      </h1>
+      <p class="text-base sm:text-lg text-[var(--color-text-muted)] leading-relaxed">
+        Engineering expertise is not instantaneous—it is forged through years of challenging bugs, mental model shifts, and architectural iterations. This page chronicles my growth trajectory, pairing <strong>time in industry</strong> with <strong>topical domain mastery</strong>.
+      </p>
+
+      <!-- High-level Metric Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
+        <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 text-center">
+          <div class="text-2xl font-black text-[var(--color-text-main)]">4+ Years</div>
+          <div class="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider font-semibold">Continuous Growth</div>
+        </div>
+        <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 text-center">
+          <div class="text-2xl font-black text-[var(--color-brand)]">4 Eras</div>
+          <div class="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider font-semibold">Evolutionary Milestones</div>
+        </div>
+        <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 text-center">
+          <div class="text-2xl font-black text-amber-500">8+ Domains</div>
+          <div class="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider font-semibold">Topical Mastery</div>
+        </div>
+        <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 text-center">
+          <div class="text-2xl font-black text-emerald-500">100% Open</div>
+          <div class="text-[11px] text-[var(--color-text-muted)] uppercase tracking-wider font-semibold">Field Notes & Curves</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Timeline Journey -->
+    <section class="relative">
+      <!-- Vertical Connecting Line on desktop -->
+      <div class="hidden md:block absolute left-8 top-10 bottom-10 w-0.5 bg-[var(--color-border)]"></div>
+
+      <div class="space-y-12">
+        {milestones.map((m, idx) => (
+          <div class="relative md:pl-20">
+            <!-- Timeline Marker Dot -->
+            <div class="hidden md:flex absolute left-6 top-6 -translate-x-1/2 w-6 h-6 rounded-full border-4 border-[var(--color-bg-base)] bg-[var(--color-brand)] shadow-sm items-center justify-center">
+              <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+            </div>
+
+            <!-- Milestone Card -->
+            <article class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 sm:p-8 space-y-6 shadow-sm hover:shadow-md transition-shadow">
+              <!-- Header Bar with Time & Era -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border)] pb-4">
+                <div class="flex flex-wrap items-center gap-2">
+                  <Badge variant="brand" size="md">{m.era}</Badge>
+                  <Badge variant="warning" size="md">
+                    ⏱ {m.timeInIndustry}
+                  </Badge>
+                  <span class="text-xs text-[var(--color-text-muted)] font-mono">{m.period}</span>
+                </div>
+                <div class="text-xs font-semibold text-[var(--color-text-muted)]">
+                  Stage {idx + 1} of {milestones.length}
+                </div>
+              </div>
+
+              <!-- Main Title & Summary -->
+              <div>
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-text-main)]">
+                  {m.title}
+                </h2>
+                <p class="mt-2 text-sm text-[var(--color-text-muted)] leading-relaxed">
+                  {m.summary}
+                </p>
+              </div>
+
+              <!-- Turning Point Breakthrough Box -->
+              <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-950/20 p-4">
+                <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1 flex items-center gap-1.5">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                  </svg>
+                  Crucial Mental Model Shift / Turning Point
+                </div>
+                <p class="text-xs text-[var(--color-text-main)] leading-relaxed font-medium">
+                  "{m.turningPoint}"
+                </p>
+              </div>
+
+              <!-- Topical Mastery Grid -->
+              <div class="space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
+                  Topical Mastery Acquired
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {m.topicalMastery.map((tm) => (
+                    <div class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/50 p-3.5 space-y-1">
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs font-bold text-[var(--color-text-main)]">{tm.topic}</span>
+                        <Badge variant={levelBadge[tm.level as keyof typeof levelBadge] || 'subtle'} size="sm">
+                          {tm.level}
+                        </Badge>
+                      </div>
+                      <p class="text-[11px] text-[var(--color-text-muted)] leading-relaxed">
+                        {tm.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Direct Evidence: Linked Works & Learning Curves -->
+              {(m.resolvedWorks.length > 0 || m.resolvedLearnings.length > 0) && (
+                <div class="pt-4 border-t border-[var(--color-border)] space-y-3">
+                  <div class="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
+                    Direct Evidence & Artifacts from this Era
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    {m.resolvedWorks.map((w) => (
+                      <a
+                        href={`/works/${w.id}`}
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-brand)]/30 bg-[var(--color-accent-badge)] text-[var(--color-brand)] text-xs font-semibold hover:border-[var(--color-brand)] transition-colors"
+                      >
+                        <span>📦 Work: {w.data.title}</span>
+                        <span class="text-[10px]">→</span>
+                      </a>
+                    ))}
+                    {m.resolvedLearnings.map((l) => (
+                      <a
+                        href={`/learning-curves/${l.id}`}
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold hover:border-amber-500 transition-colors"
+                      >
+                        <span>🧗 Curve: {l.data.title}</span>
+                        <span class="text-[10px]">→</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <!-- Skills tags -->
+              <div class="flex flex-wrap gap-1.5 pt-2">
+                {m.skills.map((skill) => (
+                  <Badge variant="subtle" size="sm">#{skill}</Badge>
+                ))}
+              </div>
+            </article>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Bottom Callout -->
+    <section class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 sm:p-8 text-center space-y-3">
+      <h3 class="text-xl font-bold text-[var(--color-text-main)]">
+        The Journey Is Continually Documented
+      </h3>
+      <p class="text-xs sm:text-sm text-[var(--color-text-muted)] max-w-xl mx-auto leading-relaxed">
+        Whenever I face a new architectural bottleneck, a subtle OS race condition, or deploy a new production system, I record the challenge, remediation, and takeaways here.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 pt-2">
+        <a
+          href="/learning-curves"
+          class="px-4 py-2 rounded-lg bg-[var(--color-brand)] text-white text-xs font-semibold hover:bg-[var(--color-brand-hover)] transition-colors"
+        >
+          Explore All Learning Curves
+        </a>
+        <a
+          href="/works"
+          class="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs font-semibold text-[var(--color-text-main)] hover:text-[var(--color-brand)] transition-colors"
+        >
+          Browse Production Works
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,121 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  type: 'article' | 'learning-curve' | 'case-study';
+}
+
+const { title, description, tags, type } = Astro.props;
+const currentUrl = Astro.url.href;
+const canonicalUrl = currentUrl;
+
+// Pre-formatted markdown frontmatter for Dev.to / Hashnode
+const devToFrontmatter = `---
+title: "${title.replace(/"/g, '\\"')}"
+published: true
+description: "${description.replace(/"/g, '\\"')}"
+tags: ${tags.slice(0, 4).join(', ')}
+canonical_url: ${canonicalUrl}
+---
+`;
+
+const encodedTitle = encodeURIComponent(title);
+const encodedUrl = encodeURIComponent(currentUrl);
+---
+
+<div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 sm:p-5 my-8 space-y-3">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[var(--color-brand)]/10 text-[var(--color-brand)] font-bold text-[10px]">
+        ⚓
+      </span>
+      <div>
+        <span class="font-semibold text-[var(--color-text-main)]">Cross-Posting & Syndication</span>
+        <span class="text-[var(--color-text-muted)] block sm:inline sm:ml-1">
+          • Canonical URL: <code class="text-[11px] bg-[var(--color-bg-subtle)] px-1 rounded">{canonicalUrl}</code>
+        </span>
+      </div>
+    </div>
+
+    <!-- Dev.to / Hashnode Copy Button -->
+    <button
+      id="copy-syndication-btn"
+      type="button"
+      data-frontmatter={devToFrontmatter}
+      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[var(--color-bg-subtle)] hover:bg-[var(--color-brand)] hover:text-white border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-main)] transition-colors cursor-pointer shrink-0"
+      title="Copy frontmatter with canonical URL for Dev.to or Hashnode"
+    >
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+      </svg>
+      <span id="copy-btn-text">Copy Dev.to / Hashnode Meta</span>
+    </button>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[var(--color-border)]/60 text-xs">
+    <div class="text-[var(--color-text-muted)] text-[11px]">
+      Feel free to syndicate or share this {type} with canonical link attribution.
+    </div>
+
+    <!-- Quick Share Links -->
+    <div class="flex items-center gap-3">
+      <span class="text-[var(--color-text-muted)] text-[11px] font-medium">Share:</span>
+      <a
+        href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors"
+        title="Share on X / Twitter"
+      >
+        X (Twitter)
+      </a>
+      <a
+        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[var(--color-text-muted)] hover:text-[var(--color-brand)] transition-colors"
+        title="Share on LinkedIn"
+      >
+        LinkedIn
+      </a>
+      <a
+        href="/rss.xml"
+        class="text-[var(--color-text-muted)] hover:text-[var(--color-brand)] flex items-center gap-1 transition-colors"
+        title="Subscribe via RSS"
+      >
+        <svg class="w-3 h-3 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93v-2.83Z" />
+        </svg>
+        RSS Feed
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setupSyndicationCopy() {
+    const btn = document.getElementById('copy-syndication-btn');
+    const label = document.getElementById('copy-btn-text');
+    if (!btn || !label) return;
+
+    btn.addEventListener('click', async () => {
+      const frontmatter = btn.getAttribute('data-frontmatter') || '';
+      try {
+        await navigator.clipboard.writeText(frontmatter);
+        const original = label.innerText;
+        label.innerText = 'Copied to Clipboard! ✓';
+        btn.classList.add('text-emerald-600', 'border-emerald-500/50');
+        setTimeout(() => {
+          label.innerText = original;
+          btn.classList.remove('text-emerald-600', 'border-emerald-500/50');
+        }, 2500);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    });
+  }
+
+  setupSyndicationCopy();
+  document.addEventListener('astro:after-swap', setupSyndicationCopy);
+</script>

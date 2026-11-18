@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Badge from '../../components/Badge.astro';
+import SyndicationBar from '../../components/SyndicationBar.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -60,6 +61,14 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
     <div class="prose-content">
       <Content />
     </div>
+
+    <!-- Syndication & Sharing -->
+    <SyndicationBar
+      title={entry.data.title}
+      description={entry.data.description}
+      tags={entry.data.tags}
+      type="article"
+    />
 
     <!-- Bottom nav -->
     <div class="pt-8 border-t border-[var(--color-border)] flex items-center justify-between text-sm">

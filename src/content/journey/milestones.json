@@ -1,0 +1,98 @@
+[
+  {
+    "id": "phase-1",
+    "era": "Day 1 Foundations",
+    "period": "2023 - 2024",
+    "timeInIndustry": "Year 1",
+    "title": "Core Scripting, POSIX Systems & Concurrency Traps",
+    "summary": "Starting with Linux shell scripts, network probes, and Python automation. Encountering the first invisible concurrency and buffer starvation deadlocks.",
+    "topicalMastery": [
+      {
+        "topic": "POSIX Pipes & IPC",
+        "level": "Intermediate",
+        "description": "Understanding OS stream buffers, standard file descriptors, and non-blocking asynchronous consumption."
+      },
+      {
+        "topic": "Shell & Automation Scripts",
+        "level": "Proficient",
+        "description": "Deterministic bash scripting, process exit codes, and robust error escalation."
+      }
+    ],
+    "turningPoint": "Diagnosing that long-running child processes weren't deadlocked in code logic—they were starved by OS pipe buffer exhaustion (64KB limits).",
+    "skills": ["Bash", "Node.js Streams", "Python", "Linux POSIX", "Git"],
+    "linkedLearnings": ["async-process-deadlocks"],
+    "linkedWorks": []
+  },
+  {
+    "id": "phase-2",
+    "era": "Deterministic Testing & Test Infrastructure",
+    "period": "2024 - 2025",
+    "timeInIndustry": "Years 2 - 3",
+    "title": "Resilient QA Automation & Web State Machines",
+    "summary": "Transitioning from fragile DOM-based scraping and test scripts to deterministic, accessibility-anchored automation suites.",
+    "topicalMastery": [
+      {
+        "topic": "End-to-End QA Automation",
+        "level": "Advanced",
+        "description": "Designing deterministic test harnesses that eliminate artificial sleep timeouts and rely on accessible DOM states."
+      },
+      {
+        "topic": "Browser Extensions & Offline Workspaces",
+        "level": "Proficient",
+        "description": "Building zero-latency, local-first in-browser developer tooling utilizing Web Workers and modern web standards."
+      }
+    ],
+    "turningPoint": "Replacing fragile XPath/CSS selectors with accessibility role queries (getByRole, aria-busy), reducing false CI test failures from 14% to under 1%.",
+    "skills": ["Playwright", "TypeScript", "CI/CD Workflows", "Web Accessibility", "Web Workers"],
+    "linkedLearnings": ["dom-test-flakiness"],
+    "linkedWorks": ["markdown-viewer"]
+  },
+  {
+    "id": "phase-3",
+    "era": "Systems Telemetry & High-Throughput Engines",
+    "period": "2025 - 2026",
+    "timeInIndustry": "Years 3 - 4",
+    "title": "Low-Latency Telemetry & Fault-Tolerant Orchestration",
+    "summary": "Engineering real-time network diagnostic tools and fault-tolerant background task runners capable of surviving node crashes and high-frequency WebSocket bursts.",
+    "topicalMastery": [
+      {
+        "topic": "Distributed Job Queues",
+        "level": "Advanced",
+        "description": "Implementing heartbeat monitors, dead-letter replays, exponential backoff, and circuit-breaker patterns on Redis Streams."
+      },
+      {
+        "topic": "High-Frequency Telemetry",
+        "level": "Advanced",
+        "description": "Eliminating browser layout thrashing at 2,500 WebSocket events/sec using typed array ring buffers and requestAnimationFrame batching."
+      }
+    ],
+    "turningPoint": "Decoupling the high-speed network arrival clock from the browser display refresh clock, dropping per-frame rendering time from 48ms to 2.1ms.",
+    "skills": ["Go", "Redis Streams", "WebSockets", "Prometheus", "Network Telemetry"],
+    "linkedLearnings": ["websocket-layout-thrashing"],
+    "linkedWorks": ["speed-my-net", "resilient-orchestrator"]
+  },
+  {
+    "id": "phase-4",
+    "era": "Present & Beyond",
+    "period": "2026 - Present",
+    "timeInIndustry": "Senior / Specialist",
+    "title": "Autonomous Agent Systems & Resilient Orchestrators",
+    "summary": "Building autonomous multi-agent task systems, self-healing background automation, and developer ergonomics infrastructure.",
+    "topicalMastery": [
+      {
+        "topic": "Autonomous Agent Orchestration",
+        "level": "Pioneering",
+        "description": "Orchestrating multi-agent collaboration, structured state handoffs, and resilient recovery protocols."
+      },
+      {
+        "topic": "Developer Tooling & Infrastructure",
+        "level": "Advanced",
+        "description": "Local-first architectures with offline predictability, minimal dependency footprint, and high-signal observability."
+      }
+    ],
+    "turningPoint": "Treating agent systems not as simple chatbots, but as distributed state machines requiring strict backpressure, timeout gates, and observability.",
+    "skills": ["Autonomous Agents", "Distributed State Machines", "Architecture Design", "Observability"],
+    "linkedLearnings": [],
+    "linkedWorks": ["resilient-orchestrator"]
+  }
+]
