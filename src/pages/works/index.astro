@@ -17,7 +17,7 @@ const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
 >
   <div class="site-container space-y-10">
     <!-- Header -->
-    <header class="max-w-2xl">
+    <header class="max-w-3xl">
       <Badge variant="brand" size="sm">Portfolio</Badge>
       <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text-main)] mt-2">
         Featured Works & Systems
@@ -45,7 +45,7 @@ const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
     </div>
 
     <!-- Works Grid -->
-    <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {sortedWorks.map((work) => (
         <div class="work-item" data-category={work.data.category}>
           <ProjectCard

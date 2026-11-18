@@ -16,7 +16,7 @@ const curveLevels = ['All', 'Steep', 'Moderate', 'Smooth'];
 >
   <div class="site-container space-y-10">
     <!-- Header -->
-    <header class="max-w-2xl">
+    <header class="max-w-3xl">
       <Badge variant="warning" size="sm">Field Notes & Mental Models</Badge>
       <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text-main)] mt-2">
         The Learning Curves Ledger
@@ -51,7 +51,7 @@ const curveLevels = ['All', 'Steep', 'Moderate', 'Smooth'];
     </div>
 
     <!-- Cards List -->
-    <div id="learnings-list" class="grid grid-cols-1 gap-6">
+    <div id="learnings-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       {sortedLearnings.map((item) => (
         <div class="learning-item" data-level={item.data.curveLevel}>
           <LearningCard

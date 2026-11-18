@@ -106,20 +106,32 @@
   }
 }
 
-/* Custom utility styles */
+/* Custom utility styles: Fluid Container following modern-web-guidance */
 .site-container {
-  max-width: 58rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  inline-size: 100%;
+  max-inline-size: min(96vw, 108rem);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.5rem);
 }
 
-@media (min-width: 640px) {
-  .site-container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
+.site-container-reading {
+  inline-size: 100%;
+  max-inline-size: min(94vw, 64rem);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 2.5vw, 2.5rem);
+}
+
+/* Fluid responsive grid utilities */
+.fluid-grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: 1.5rem;
+}
+
+.fluid-grid-learnings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 28rem), 1fr));
+  gap: 1.5rem;
 }
 
 /* Prose formatting for markdown content */

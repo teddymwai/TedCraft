@@ -60,9 +60,9 @@ const principles = [
   title="About Thaddeus (Ted) Mwai | Security QA Lead & Risk Strategist"
   description="Security QA Lead, Risk Strategist, and Systems Automation Engineer at CYBER RANGES. 5+ years across test automation, access governance, and technology risk."
 >
-  <div class="site-container max-w-3xl space-y-12">
+  <div class="site-container space-y-12">
     <!-- Intro -->
-    <header class="space-y-4">
+    <header class="space-y-4 max-w-3xl">
       <div class="flex items-center gap-2">
         <Badge variant="brand" size="sm">CYBER RANGES</Badge>
         <span class="text-xs text-[var(--color-text-muted)] font-mono">Nairobi, Kenya • Stafford, VA</span>
@@ -82,7 +82,7 @@ const principles = [
     </header>
 
     <!-- Key Results Strip -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {results.map((r) => (
         <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 space-y-2">
           <div class="text-xs font-bold uppercase tracking-wider text-[var(--color-brand)]">{r.label}</div>

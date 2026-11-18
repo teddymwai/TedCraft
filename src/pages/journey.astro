@@ -72,109 +72,117 @@ const levelBadge = {
             </div>
 
             <!-- Milestone Card -->
-            <article class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 sm:p-8 space-y-6 shadow-sm hover:shadow-md transition-shadow">
-              <!-- Header Bar with Time & Era -->
-              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border)] pb-4">
-                <div class="flex flex-wrap items-center gap-2">
-                  <Badge variant="brand" size="md">{m.era}</Badge>
-                  <Badge variant="warning" size="md">
-                    <svg class="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {m.timeInIndustry}
-                  </Badge>
-                  <span class="text-xs text-[var(--color-text-muted)] font-mono">{m.period}</span>
-                </div>
-                <div class="text-xs font-semibold text-[var(--color-text-muted)]">
-                  Stage {idx + 1} of {milestones.length}
-                </div>
-              </div>
-
-              <!-- Main Title & Summary -->
-              <div>
-                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-text-main)]">
-                  {m.title}
-                </h2>
-                <p class="mt-2 text-sm text-[var(--color-text-muted)] leading-relaxed">
-                  {m.summary}
-                </p>
-              </div>
-
-              <!-- Turning Point Breakthrough Box -->
-              <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-950/20 p-4">
-                <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1 flex items-center gap-1.5">
-                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Crucial Mental Model Shift / Turning Point
-                </div>
-                <p class="text-xs text-[var(--color-text-main)] leading-relaxed font-medium">
-                  "{m.turningPoint}"
-                </p>
-              </div>
-
-              <!-- Topical Mastery Grid -->
-              <div class="space-y-3">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-                  Topical Mastery Acquired
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {m.topicalMastery.map((tm) => (
-                    <div class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/50 p-3.5 space-y-1">
-                      <div class="flex items-center justify-between gap-2">
-                        <span class="text-xs font-bold text-[var(--color-text-main)]">{tm.topic}</span>
-                        <Badge variant={levelBadge[tm.level as keyof typeof levelBadge] || 'subtle'} size="sm">
-                          {tm.level}
-                        </Badge>
-                      </div>
-                      <p class="text-[11px] text-[var(--color-text-muted)] leading-relaxed">
-                        {tm.description}
-                      </p>
+            <article class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow">
+              <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+                <!-- Left Column: Era, Title, Summary & Turning Point -->
+                <div class="xl:col-span-5 space-y-6">
+                  <!-- Header Bar with Time & Era -->
+                  <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--color-border)] pb-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <Badge variant="brand" size="md">{m.era}</Badge>
+                      <Badge variant="warning" size="md">
+                        <svg class="w-3.5 h-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {m.timeInIndustry}
+                      </Badge>
+                      <span class="text-xs text-[var(--color-text-muted)] font-mono">{m.period}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <!-- Direct Evidence: Linked Works & Learning Curves -->
-              {(m.resolvedWorks.length > 0 || m.resolvedLearnings.length > 0) && (
-                <div class="pt-4 border-t border-[var(--color-border)] space-y-3">
-                  <div class="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Direct Evidence & Artifacts from this Era
+                    <div class="text-xs font-semibold text-[var(--color-text-muted)]">
+                      Stage {idx + 1} of {milestones.length}
+                    </div>
                   </div>
-                  <div class="flex flex-wrap gap-2">
-                    {m.resolvedWorks.map((w) => (
-                      <a
-                        href={`/works/${w.id}`}
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-brand)]/30 bg-[var(--color-accent-badge)] text-[var(--color-brand)] text-xs font-semibold hover:border-[var(--color-brand)] transition-colors"
-                      >
-                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                        </svg>
-                        <span>Work: {w.data.title}</span>
-                        <span class="text-[10px]">→</span>
-                      </a>
-                    ))}
-                    {m.resolvedLearnings.map((l) => (
-                      <a
-                        href={`/learning-curves/${l.id}`}
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold hover:border-amber-500 transition-colors"
-                      >
-                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
-                        </svg>
-                        <span>Curve: {l.data.title}</span>
-                        <span class="text-[10px]">→</span>
-                      </a>
-                    ))}
+
+                  <!-- Main Title & Summary -->
+                  <div>
+                    <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[var(--color-text-main)] leading-snug">
+                      {m.title}
+                    </h2>
+                    <p class="mt-2 text-sm text-[var(--color-text-muted)] leading-relaxed">
+                      {m.summary}
+                    </p>
+                  </div>
+
+                  <!-- Turning Point Breakthrough Box -->
+                  <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-950/20 p-4">
+                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1 flex items-center gap-1.5">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      Crucial Mental Model Shift / Turning Point
+                    </div>
+                    <p class="text-xs text-[var(--color-text-main)] leading-relaxed font-medium">
+                      "{m.turningPoint}"
+                    </p>
                   </div>
                 </div>
-              )}
 
-              <!-- Skills tags -->
-              <div class="flex flex-wrap gap-1.5 pt-2">
-                {m.skills.map((skill) => (
-                  <Badge variant="subtle" size="sm">#{skill}</Badge>
-                ))}
+                <!-- Right Column: Topical Mastery, Evidence Artifacts, Skills -->
+                <div class="xl:col-span-7 space-y-6 xl:border-l xl:border-[var(--color-border)] xl:pl-8">
+                  <!-- Topical Mastery Grid -->
+                  <div class="space-y-3">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
+                      Topical Mastery Acquired
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {m.topicalMastery.map((tm) => (
+                        <div class="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/50 p-3.5 space-y-1">
+                          <div class="flex items-center justify-between gap-2">
+                            <span class="text-xs font-bold text-[var(--color-text-main)]">{tm.topic}</span>
+                            <Badge variant={levelBadge[tm.level as keyof typeof levelBadge] || 'subtle'} size="sm">
+                              {tm.level}
+                            </Badge>
+                          </div>
+                          <p class="text-[11px] text-[var(--color-text-muted)] leading-relaxed">
+                            {tm.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <!-- Direct Evidence: Linked Works & Learning Curves -->
+                  {(m.resolvedWorks.length > 0 || m.resolvedLearnings.length > 0) && (
+                    <div class="pt-4 border-t border-[var(--color-border)] space-y-3">
+                      <div class="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
+                        Direct Evidence & Artifacts from this Era
+                      </div>
+                      <div class="flex flex-wrap gap-2">
+                        {m.resolvedWorks.map((w) => (
+                          <a
+                            href={`/works/${w.id}`}
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-brand)]/30 bg-[var(--color-accent-badge)] text-[var(--color-brand)] text-xs font-semibold hover:border-[var(--color-brand)] transition-colors"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                            </svg>
+                            <span>Work: {w.data.title}</span>
+                            <span class="text-[10px]">→</span>
+                          </a>
+                        ))}
+                        {m.resolvedLearnings.map((l) => (
+                          <a
+                            href={`/learning-curves/${l.id}`}
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold hover:border-amber-500 transition-colors"
+                          >
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                            </svg>
+                            <span>Curve: {l.data.title}</span>
+                            <span class="text-[10px]">→</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  <!-- Skills tags -->
+                  <div class="flex flex-wrap gap-1.5 pt-2">
+                    {m.skills.map((skill) => (
+                      <Badge variant="subtle" size="sm">#{skill}</Badge>
+                    ))}
+                  </div>
+                </div>
               </div>
             </article>
           </div>

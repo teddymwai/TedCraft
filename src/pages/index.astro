@@ -9,7 +9,7 @@ import { getCollection } from 'astro:content';
 const allWorks = await getCollection('works');
 const featuredWorks = allWorks
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 2);
+  .slice(0, 3);
 
 const allLearnings = await getCollection('learnings');
 const recentLearnings = allLearnings
@@ -19,7 +19,7 @@ const recentLearnings = allLearnings
 const allPosts = await getCollection('posts');
 const recentPosts = allPosts
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
-  .slice(0, 2);
+  .slice(0, 3);
 ---
 
 <Layout
@@ -29,66 +29,104 @@ const recentPosts = allPosts
   <div class="site-container space-y-16 sm:space-y-24">
     <!-- HERO SECTION -->
     <section class="pt-4 sm:pt-10">
-      <div class="inline-flex items-center gap-2 mb-4">
-        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <Badge variant="subtle" size="sm">Security QA Lead • Risk Strategist • CYBER RANGES</Badge>
-      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <!-- Narrative Column -->
+        <div class="lg:col-span-7 xl:col-span-8 space-y-6">
+          <div class="inline-flex items-center gap-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <Badge variant="subtle" size="sm">Security QA Lead • Risk Strategist • CYBER RANGES</Badge>
+          </div>
 
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[var(--color-text-main)] leading-[1.15]">
-        High-assurance platform verification. <br />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-brand)] to-teal-400">
-          Chronicling the steep climbs.
-        </span>
-      </h1>
+          <h1 class="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-[var(--color-text-main)] leading-[1.12]">
+            High-assurance platform verification. <br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-brand)] to-teal-400">
+              Chronicling the steep climbs.
+            </span>
+          </h1>
 
-      <p class="mt-5 text-base sm:text-lg text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
-        I’m <strong class="text-[var(--color-text-main)]">Thaddeus (Ted) Mwai</strong>, Security QA Lead and Risk Strategist at <strong class="text-[var(--color-text-main)]">CYBER RANGES</strong>. I own access governance across 50+ environments, architect wire-protocol test harnesses like <strong class="text-[var(--color-brand)]">RangeMaster Cockpit</strong>, and document candid field notes on real systems failures and remediations.
-      </p>
+          <p class="text-base sm:text-lg text-[var(--color-text-muted)] leading-relaxed">
+            I’m <strong class="text-[var(--color-text-main)]">Thaddeus (Ted) Mwai</strong>, Security QA Lead and Risk Strategist at <strong class="text-[var(--color-text-main)]">CYBER RANGES</strong>. I own access governance across 50+ environments, architect wire-protocol test harnesses like <strong class="text-[var(--color-brand)]">RangeMaster Cockpit</strong>, and document candid field notes on real systems failures and remediations.
+          </p>
 
-      <div class="mt-8 flex flex-wrap items-center gap-3">
-        <a
-          href="/journey"
-          class="px-5 py-2.5 rounded-lg bg-[var(--color-brand)] hover:bg-[var(--color-brand-hover)] text-white text-sm font-semibold transition-all shadow-sm hover:shadow flex items-center gap-2"
-        >
-          <span>Growth Journey (Day 1 → Present)</span>
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
-          </svg>
-        </a>
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <a
+              href="/journey"
+              class="px-5 py-2.5 rounded-lg bg-[var(--color-brand)] hover:bg-[var(--color-brand-hover)] text-white text-sm font-semibold transition-all shadow-sm hover:shadow flex items-center gap-2"
+            >
+              <span>Growth Journey (Day 1 → Present)</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </a>
 
-        <a
-          href="/works"
-          class="px-5 py-2.5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-brand)] bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-subtle)] text-sm font-semibold transition-all flex items-center gap-2"
-        >
-          View Works
-        </a>
+            <a
+              href="/works"
+              class="px-5 py-2.5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-brand)] bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-subtle)] text-sm font-semibold transition-all flex items-center gap-2"
+            >
+              View Works
+            </a>
 
-        <a
-          href="/learning-curves"
-          class="px-5 py-2.5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-brand)] bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-subtle)] text-sm font-semibold transition-all flex items-center gap-2"
-        >
-          <span>Learning Curves</span>
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </a>
+            <a
+              href="/learning-curves"
+              class="px-5 py-2.5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-brand)] bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-subtle)] text-sm font-semibold transition-all flex items-center gap-2"
+            >
+              <span>Learning Curves</span>
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
 
-        <a
-          href="/about"
-          class="px-4 py-2.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors"
-        >
-          About Me →
-        </a>
-      </div>
+            <a
+              href="/about"
+              class="px-4 py-2.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors"
+            >
+              About Me →
+            </a>
+          </div>
 
-      <!-- Quick Tech Pill Matrix -->
-      <div class="mt-12 pt-8 border-t border-[var(--color-border)] flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-muted)]">
-        <span class="font-semibold text-[var(--color-text-main)] mr-2">Core Focus:</span>
-        <Badge variant="subtle" size="sm">Access Governance (RBAC)</Badge>
-        <Badge variant="subtle" size="sm">Playwright & Python Harnesses</Badge>
-        <Badge variant="subtle" size="sm">HAR Wire Contracts</Badge>
-        <Badge variant="subtle" size="sm">OpenStack Orchestration</Badge>
-        <Badge variant="subtle" size="sm">AI Risk Intelligence</Badge>
+          <!-- Quick Tech Pill Matrix -->
+          <div class="pt-6 border-t border-[var(--color-border)] flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-muted)]">
+            <span class="font-semibold text-[var(--color-text-main)] mr-2">Core Focus:</span>
+            <Badge variant="subtle" size="sm">Access Governance (RBAC)</Badge>
+            <Badge variant="subtle" size="sm">Playwright & Python Harnesses</Badge>
+            <Badge variant="subtle" size="sm">HAR Wire Contracts</Badge>
+            <Badge variant="subtle" size="sm">OpenStack Orchestration</Badge>
+            <Badge variant="subtle" size="sm">AI Risk Intelligence</Badge>
+          </div>
+        </div>
+
+        <!-- Right Quick Card: Live Verification Posture -->
+        <div class="lg:col-span-5 xl:col-span-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-[var(--color-border)] pb-3">
+            <div class="text-xs font-bold text-[var(--color-brand)] uppercase tracking-wider flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Platform Posture & Verification
+            </div>
+            <span class="text-[10px] text-[var(--color-text-muted)] font-mono">CYBER RANGES</span>
+          </div>
+
+          <div class="space-y-3">
+            <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/40 p-3">
+              <div class="text-lg font-black text-[var(--color-text-main)]">0 Incidents in 18 Mos</div>
+              <div class="text-[11px] text-[var(--color-text-muted)]">RBAC governance across 50+ environments and 1,000+ client operators.</div>
+            </div>
+
+            <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/40 p-3">
+              <div class="text-lg font-black text-emerald-600 dark:text-emerald-400">0 Critical Regressions</div>
+              <div class="text-[11px] text-[var(--color-text-muted)]">Across 5 major production platform releases via RangeMaster Cockpit.</div>
+            </div>
+
+            <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)]/40 p-3">
+              <div class="text-lg font-black text-amber-500">-40% API Anomalies</div>
+              <div class="text-[11px] text-[var(--color-text-muted)]">Achieved through wire contract validation and strict mutation safeguards.</div>
+            </div>
+          </div>
+
+          <div class="pt-2 text-[11px] text-[var(--color-text-muted)] flex items-center justify-between border-t border-[var(--color-border)]">
+            <span>Primary Harness: RangeMaster</span>
+            <a href="/works/rangemaster-cockpit" class="text-[var(--color-brand)] font-semibold hover:underline">Read Case Study →</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -137,7 +175,7 @@ const recentPosts = allPosts
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {featuredWorks.map((work) => (
           <ProjectCard
             id={work.id}
@@ -183,7 +221,7 @@ const recentPosts = allPosts
         </a>
       </div>
 
-      <div class="grid grid-cols-1 gap-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {recentLearnings.map((item) => (
           <LearningCard
             id={item.id}
@@ -221,7 +259,7 @@ const recentPosts = allPosts
         </a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {recentPosts.map((post) => (
           <PostCard
             id={post.id}
