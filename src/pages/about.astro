@@ -4,65 +4,114 @@ import Badge from '../components/Badge.astro';
 
 const toolkit = [
   {
-    category: 'Languages & Core Systems',
-    items: ['TypeScript / Node.js', 'Go', 'Python', 'POSIX Shell / Bash', 'SQL & Redis'],
+    category: 'Security & Risk Governance',
+    items: ['Role-Based Access Control (RBAC)', 'Enterprise GRC Liaison', 'AI Risk Evaluation', 'UAM Audit Automation', 'SIEM & SOC Alert Engineering'],
   },
   {
-    category: 'Architecture & Testing',
-    items: ['Distributed Task Queues', 'End-to-End QA Automation', 'WebSocket Telemetry', 'Fault-Tolerant IPC'],
+    category: 'Automation & Verification',
+    items: ['Python & Playwright', 'HAR Wire Contract Testing', 'OpenStack API Automation', 'OpenVPN & L3/L4 Tunneling', 'Deterministic Mutation Guards'],
   },
   {
-    category: 'Web & Tools',
-    items: ['Astro', 'Tailwind CSS', 'Chrome Extensions', 'Web Workers & WASM', 'Docker / Linux'],
+    category: 'Infrastructure & Tools',
+    items: ['Linux (LPIC-1) & POSIX Bash', 'Cisco IOS & Colocation', 'Docker & Containerization', 'Go & REST APIs', 'Git & CI/CD Pipelines'],
+  },
+];
+
+const results = [
+  {
+    metric: '0 Incidents in 18 Mos',
+    label: 'Access Governance',
+    detail: 'Zero unauthorized access or privilege escalation incidents across 50+ environments for 150+ internal users and 1,000+ client operators.',
+  },
+  {
+    metric: '17 Days → 13 Hours',
+    label: 'Audit Cycle Compression',
+    detail: 'Engineered Python UAM automation tool that slashed quarterly user access review turnaround from 17 days to 13 business hours.',
+  },
+  {
+    metric: '0 Regressions',
+    label: 'Production Releases',
+    detail: 'Zero critical regressions reached production across 5 consecutive major platform releases of CYBER RANGES via RangeMaster Cockpit.',
+  },
+  {
+    metric: '$400K - $450K Protected',
+    label: 'Revenue Exposure',
+    detail: 'Identified privilege revocation latency as an executive metric, driving deprovisioning latency from days down to under 2 hours.',
   },
 ];
 
 const principles = [
   {
-    title: 'Fail Visibly & Early',
-    description: 'Silent failures and swallowed exceptions waste hours of debugging. Software should be vocal about degraded states.',
+    title: 'Test Below the UI (Wire Contracts Win)',
+    description: 'A green button in the DOM does not prove your system is safe. Frontend state caches mask silent API corruptions. Real verification happens at the network protocol and schema layer.',
   },
   {
-    title: 'Embrace the Messy Learning Curve',
-    description: 'True domain expertise is forged in the confusing moments before a breakthrough. Documenting mistakes cements them into durable reflexes.',
+    title: 'Trace to the Root Cause, Never Patch Symptoms',
+    description: 'Bumping timeouts or adding artificial sleeps to flaky tests merely conceals underlying race conditions and lock contentions. True reliability comes from diagnosing the underlying operating system and database mechanisms.',
   },
   {
-    title: 'Local-First, Network-Resilient',
-    description: 'Tools should run reliably with zero network dependency wherever possible, gracefully caching and syncing when connections stutter.',
+    title: 'Access Control is an Active Perimeter',
+    description: 'Periodic quarterly reviews create a false sense of security. Least-privilege governance must be continuous, automated, and evaluated against quantifiable revocation latency.',
   },
 ];
 ---
 
 <Layout
-  title="About Me | Ted's Notebook"
-  description="Background, engineering philosophy, and the tools I use to build resilient software."
+  title="About Thaddeus (Ted) Mwai | Security QA Lead & Risk Strategist"
+  description="Security QA Lead, Risk Strategist, and Systems Automation Engineer at CYBER RANGES. 5+ years across test automation, access governance, and technology risk."
 >
   <div class="site-container max-w-3xl space-y-12">
     <!-- Intro -->
     <header class="space-y-4">
-      <Badge variant="brand" size="sm">About Ted</Badge>
+      <div class="flex items-center gap-2">
+        <Badge variant="brand" size="sm">CYBER RANGES</Badge>
+        <span class="text-xs text-[var(--color-text-muted)] font-mono">Nairobi, Kenya • Stafford, VA</span>
+      </div>
+
       <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-[var(--color-text-main)]">
-        Hey, I’m Ted.
+        Thaddeus (Ted) Wachira Mwai
       </h1>
-      <p class="text-lg text-[var(--color-text-muted)] leading-relaxed">
-        I’m an engineer passionate about building reliable software systems, high-efficiency developer tools, and automation pipelines.
+
+      <p class="text-lg text-[var(--color-brand)] font-semibold">
+        Security QA Lead & Cross-Functional Risk Strategist
+      </p>
+
+      <p class="text-base text-[var(--color-text-muted)] leading-relaxed">
+        I lead quality assurance at <strong class="text-[var(--color-text-main)]">CYBER RANGES</strong>, a premier cybersecurity training and drill platform used by 200+ client organizations worldwide. I also serve as the department's risk liaison to the central Governance, Risk, and Compliance (GRC) function.
       </p>
     </header>
 
-    <!-- Bio Section -->
+    <!-- Key Results Strip -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {results.map((r) => (
+        <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5 space-y-2">
+          <div class="text-xs font-bold uppercase tracking-wider text-[var(--color-brand)]">{r.label}</div>
+          <div class="text-xl font-black text-[var(--color-text-main)]">{r.metric}</div>
+          <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">{r.detail}</p>
+        </div>
+      ))}
+    </section>
+
+    <!-- Detailed Bio -->
     <section class="space-y-4 text-sm leading-relaxed text-[var(--color-text-main)]">
+      <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
+        Background & Focus
+      </h2>
       <p>
-        Over the past few years, I’ve worked on everything from automated regression test harnesses and network diagnostic suites to fault-tolerant task orchestrators.
+        My work centers on three critical pillars: <strong>finding platform failures before clients do</strong>, <strong>strictly governing who can touch what</strong>, and <strong>turning scattered operational anomalies into ranked risk registers that leadership can act on</strong>.
       </p>
       <p>
-        My philosophy revolves around <strong class="text-[var(--color-brand)]">transparency in engineering</strong>. We spend too much time reading idealized tech writeups that make hard systems look trivial. I treat this website as a dual workspace: a showroom for production tools that solve real problems, and a field log of the steep learning curves conquered along the way.
+        I architect the automation I rely on—authoring high-assurance Python and Playwright verification platforms like <strong>RangeMaster Cockpit</strong>, which validates multi-tenant CloudTemplate stacks and enforces wire contracts against certified Golden Baselines.
+      </p>
+      <p>
+        Prior to leading QA at CYBER RANGES, I worked in cybersecurity consulting and SOC optimization at <strong>Silensec Africa</strong> (tuning SIEM detection rules and building automated access review engines), compliance auditing at <strong>Simplify IT</strong> (verifying cloud IAM policies across AWS, Azure, and GCP), and enterprise systems administration at <strong>Avery East Africa</strong> (deploying Cisco networks and enforcing digital security policies for government PPP contracts).
       </p>
     </section>
 
-    <!-- Core Principles -->
+    <!-- Engineering Principles -->
     <section class="space-y-6">
       <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
-        Engineering Principles
+        Engineering Philosophy
       </h2>
       <div class="grid grid-cols-1 gap-4">
         {principles.map((p) => (
@@ -82,7 +131,7 @@ const principles = [
     <!-- Technical Toolkit -->
     <section class="space-y-6">
       <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
-        Technical Toolkit
+        Core Competencies & Toolkit
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {toolkit.map((group) => (
@@ -109,30 +158,30 @@ const principles = [
         Get in Touch
       </h2>
       <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">
-        Whether you want to discuss asynchronous stream handling, compare notes on automated testing frameworks, or collaborate on open-source dev utilities:
+        I am always open to exchanging field notes on security automation, platform quality engineering, access governance, or technology risk:
       </p>
       <div class="flex flex-wrap gap-3 pt-2">
         <a
-          href="mailto:ted@example.com"
+          href="mailto:thaddeusmwai.9974@gmail.com"
           class="px-4 py-2 rounded-lg bg-[var(--color-brand)] text-white text-xs font-semibold hover:bg-[var(--color-brand-hover)] transition-colors"
         >
-          Email Me
+          Email Me (thaddeusmwai.9974@gmail.com)
         </a>
         <a
-          href="https://github.com"
+          href="https://www.linkedin.com/in/teddymwai/"
           target="_blank"
           rel="noopener noreferrer"
           class="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs font-semibold hover:text-[var(--color-brand)] transition-colors"
         >
-          GitHub
+          LinkedIn (/in/teddymwai)
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://github.com/teddymwai"
           target="_blank"
           rel="noopener noreferrer"
           class="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs font-semibold hover:text-[var(--color-brand)] transition-colors"
         >
-          LinkedIn
+          GitHub (teddymwai)
         </a>
       </div>
     </section>

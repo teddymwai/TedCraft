@@ -1,98 +1,118 @@
 [
   {
     "id": "phase-1",
-    "era": "Day 1 Foundations",
-    "period": "2023 - 2024",
-    "timeInIndustry": "Year 1",
-    "title": "Core Scripting, POSIX Systems & Concurrency Traps",
-    "summary": "Starting with Linux shell scripts, network probes, and Python automation. Encountering the first invisible concurrency and buffer starvation deadlocks.",
+    "era": "Infrastructure, Cisco Networks & Cloud Audits",
+    "period": "2021 - 2023",
+    "timeInIndustry": "Years 1 - 2",
+    "title": "Systems Administration, Cisco Networks & Multi-Cloud Compliance",
+    "summary": "Managing enterprise IT infrastructure, Cisco network deployments, and disaster recovery at Avery East Africa, alongside cloud security assessments across AWS, Azure, and GCP at Simplify IT.",
     "topicalMastery": [
       {
-        "topic": "POSIX Pipes & IPC",
-        "level": "Intermediate",
-        "description": "Understanding OS stream buffers, standard file descriptors, and non-blocking asynchronous consumption."
+        "topic": "Cloud Security Audits (AWS / Azure / GCP)",
+        "level": "Advanced",
+        "description": "Scripting automated IAM policy checks and S3/storage bucket permission audits in Python, cutting audit prep from 3 days to 4 hours."
       },
       {
-        "topic": "Shell & Automation Scripts",
+        "topic": "Cisco Deployments & Network Administration",
         "level": "Proficient",
-        "description": "Deterministic bash scripting, process exit codes, and robust error escalation."
+        "description": "Network colocation with external partners, failover routing, and digital security policy enforcement for government PPP contracts with zero breaches."
+      },
+      {
+        "topic": "SIEM Correlation & Log Analysis",
+        "level": "Proficient",
+        "description": "Authoring custom correlation rules in Splunk and ELK, reducing false positive alerts by 30%."
       }
     ],
-    "turningPoint": "Diagnosing that long-running child processes weren't deadlocked in code logic—they were starved by OS pipe buffer exhaustion (64KB limits).",
-    "skills": ["Bash", "Node.js Streams", "Python", "Linux POSIX", "Git"],
-    "linkedLearnings": ["async-process-deadlocks"],
+    "turningPoint": "Realizing that compliance and infrastructure audits should not be manual checklists; writing automated Python IAM verification scripts compressed multi-day compliance cycles into hours.",
+    "skills": ["Cisco IOS", "Python", "Bash", "AWS IAM", "Azure", "Splunk", "Linux LPIC-1"],
+    "linkedLearnings": [],
     "linkedWorks": []
   },
   {
     "id": "phase-2",
-    "era": "Deterministic Testing & Test Infrastructure",
-    "period": "2024 - 2025",
+    "era": "Cybersecurity Operations & Access Governance",
+    "period": "2023 - 2024",
     "timeInIndustry": "Years 2 - 3",
-    "title": "Resilient QA Automation & Web State Machines",
-    "summary": "Transitioning from fragile DOM-based scraping and test scripts to deterministic, accessibility-anchored automation suites.",
+    "title": "SOC Alert Optimization, Access Review Automation & Platform Operations",
+    "summary": "Consulting on threat operations at Silensec Africa and resolving frontline platform challenges at CYBER RANGES. Slashing quarterly access review cycle times and tuning SIEM detection engines.",
     "topicalMastery": [
       {
-        "topic": "End-to-End QA Automation",
+        "topic": "Access Governance & UAM Automation",
         "level": "Advanced",
-        "description": "Designing deterministic test harnesses that eliminate artificial sleep timeouts and rely on accessible DOM states."
+        "description": "Built a Python User Access Management review tool that reduced review turnaround from 17 days to 13 business hours."
       },
       {
-        "topic": "Browser Extensions & Offline Workspaces",
+        "topic": "Revocation Latency & Risk Quantification",
+        "level": "Advanced",
+        "description": "Identified and eliminated delayed privilege revocation gaps carrying an estimated $400K to $450K in business exposure."
+      },
+      {
+        "topic": "SIEM Tuning & False Positive Reduction",
         "level": "Proficient",
-        "description": "Building zero-latency, local-first in-browser developer tooling utilizing Web Workers and modern web standards."
+        "description": "Analyzed SOC alerts and dismantled 8 noisy false-positive rules, mitigating SOC analyst alert fatigue."
       }
     ],
-    "turningPoint": "Replacing fragile XPath/CSS selectors with accessibility role queries (getByRole, aria-busy), reducing false CI test failures from 14% to under 1%.",
-    "skills": ["Playwright", "TypeScript", "CI/CD Workflows", "Web Accessibility", "Web Workers"],
-    "linkedLearnings": ["dom-test-flakiness"],
-    "linkedWorks": ["markdown-viewer"]
+    "turningPoint": "Transitioning from static periodic reviews to continuous latency tracking—proving that access governance is an active security perimeter rather than a compliance checkbox.",
+    "skills": ["Access Governance (UAM)", "SIEM Tuning", "Python", "REST API Testing", "Incident Response", "Linux Hardening"],
+    "linkedLearnings": ["privilege-revocation-latency-gap"],
+    "linkedWorks": ["uam-access-review-engine"]
   },
   {
     "id": "phase-3",
-    "era": "Systems Telemetry & High-Throughput Engines",
-    "period": "2025 - 2026",
-    "timeInIndustry": "Years 3 - 4",
-    "title": "Low-Latency Telemetry & Fault-Tolerant Orchestration",
-    "summary": "Engineering real-time network diagnostic tools and fault-tolerant background task runners capable of surviving node crashes and high-frequency WebSocket bursts.",
+    "era": "Security QA Leadership & Platform Verification",
+    "period": "2024 - 2025",
+    "timeInIndustry": "Years 3 - 5",
+    "title": "Leading QA at CYBER RANGES & Engineering RangeMaster Cockpit",
+    "summary": "Leading quality assurance for a cybersecurity training platform used by 200+ client organizations. Owning RBAC across 150+ internal users and 1,000+ clients across 50+ environments with zero unauthorized access incidents in 18 months.",
     "topicalMastery": [
       {
-        "topic": "Distributed Job Queues",
-        "level": "Advanced",
-        "description": "Implementing heartbeat monitors, dead-letter replays, exponential backoff, and circuit-breaker patterns on Redis Streams."
+        "topic": "High-Assurance Platform Harnesses",
+        "level": "Pioneering",
+        "description": "Architected RangeMaster Cockpit: Python/Playwright test harness driven by live HAR captures, OpenAPI contract verification, and strict mutation safeguards."
       },
       {
-        "topic": "High-Frequency Telemetry",
+        "topic": "Access Control & RBAC Ownership",
         "level": "Advanced",
-        "description": "Eliminating browser layout thrashing at 2,500 WebSocket events/sec using typed array ring buffers and requestAnimationFrame batching."
+        "description": "Enforcing strict least privilege across 50+ enterprise and foundry environments, achieving an unblemished 18-month record with 0 privilege escalations."
+      },
+      {
+        "topic": "Root-Cause Defect Triage",
+        "level": "Pioneering",
+        "description": "Instituted root-cause triage method, reducing team resolution time by 30% and eliminating critical regressions across 5 production releases."
       }
     ],
-    "turningPoint": "Decoupling the high-speed network arrival clock from the browser display refresh clock, dropping per-frame rendering time from 48ms to 2.1ms.",
-    "skills": ["Go", "Redis Streams", "WebSockets", "Prometheus", "Network Telemetry"],
-    "linkedLearnings": ["websocket-layout-thrashing"],
-    "linkedWorks": ["speed-my-net", "resilient-orchestrator"]
+    "turningPoint": "Diagnosing that what appeared to be frontend timeouts was actually OpenStack stack lock contention and API payload type mismatches on stack teardown. Wire-level inspection eliminated 40% of production anomalies.",
+    "skills": ["Playwright", "Python", "OpenStack", "OpenVPN", "HAR Wire Capture", "RBAC", "Docker", "Go"],
+    "linkedLearnings": ["openstack-stack-lock-contention", "har-driven-contract-verification"],
+    "linkedWorks": ["rangemaster-cockpit", "nice-framework-mapper"]
   },
   {
     "id": "phase-4",
-    "era": "Present & Beyond",
+    "era": "Risk Strategy & AI Governance",
     "period": "2026 - Present",
-    "timeInIndustry": "Senior / Specialist",
-    "title": "Autonomous Agent Systems & Resilient Orchestrators",
-    "summary": "Building autonomous multi-agent task systems, self-healing background automation, and developer ergonomics infrastructure.",
+    "timeInIndustry": "Lead / Strategic",
+    "title": "Cross-Functional Risk Strategy & AI Risk Intelligence",
+    "summary": "Acting as the departmental risk liaison to central GRC at CYBER RANGES. Built the department's first AI & risk intelligence pipeline ranking 20+ active scenarios across Red Team, Content, and Community into an executive mitigation roadmap.",
     "topicalMastery": [
       {
-        "topic": "Autonomous Agent Orchestration",
+        "topic": "AI Risk Intelligence & Evaluation",
         "level": "Pioneering",
-        "description": "Orchestrating multi-agent collaboration, structured state handoffs, and resilient recovery protocols."
+        "description": "Governing organizational AI usage across prompt robustness, hallucination detection, acceptable-use policy, and autonomous agent safety bounds."
       },
       {
-        "topic": "Developer Tooling & Infrastructure",
+        "topic": "Enterprise GRC & Risk Roadmapping",
         "level": "Advanced",
-        "description": "Local-first architectures with offline predictability, minimal dependency footprint, and high-signal observability."
+        "description": "Turning frontline technical vulnerabilities and scenario findings into ranked GRC risk registers that justify executive budget and resourcing decisions."
+      },
+      {
+        "topic": "Complex Threat Emulation",
+        "level": "Advanced",
+        "description": "Architecting advanced simulation scenarios including Silverthorn Power Plant (SCADA/ICS) and Wizard Spider (ransomware threat-ex)."
       }
     ],
-    "turningPoint": "Treating agent systems not as simple chatbots, but as distributed state machines requiring strict backpressure, timeout gates, and observability.",
-    "skills": ["Autonomous Agents", "Distributed State Machines", "Architecture Design", "Observability"],
+    "turningPoint": "Treating AI systems and autonomous agents not as unconstrained black boxes, but as distributed state machines that require strict mutation guards, input bounding, and non-bypassable GRC governance.",
+    "skills": ["AI Governance", "Risk Strategy", "GRC Liaison", "Threat Emulation", "SCADA / ICS", "Distributed Testing"],
     "linkedLearnings": [],
-    "linkedWorks": ["resilient-orchestrator"]
+    "linkedWorks": ["threat-emulation-scenarios"]
   }
 ]
