@@ -1,0 +1,74 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Badge from '../../components/Badge.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+}).format(entry.data.pubDate);
+---
+
+<Layout
+  title={`${entry.data.title} | Blog`}
+  description={entry.data.description}
+>
+  <article class="site-container max-w-3xl space-y-8">
+    <!-- Breadcrumb -->
+    <div>
+      <a href="/blog" class="text-xs font-semibold text-[var(--color-brand)] hover:underline inline-flex items-center gap-1">
+        ← Back to all articles
+      </a>
+    </div>
+
+    <!-- Header -->
+    <header class="space-y-4 border-b border-[var(--color-border)] pb-8">
+      <div class="flex items-center gap-3 text-xs text-[var(--color-text-muted)] font-mono">
+        <time>{formattedDate}</time>
+        <span>•</span>
+        <span>{entry.data.readTime}</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text-main)] leading-tight">
+        {entry.data.title}
+      </h1>
+
+      <p class="text-base text-[var(--color-text-muted)] leading-relaxed">
+        {entry.data.description}
+      </p>
+
+      <div class="flex flex-wrap gap-2 pt-2">
+        {entry.data.tags.map((tag) => (
+          <Badge variant="subtle" size="sm">#{tag}</Badge>
+        ))}
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose-content">
+      <Content />
+    </div>
+
+    <!-- Bottom nav -->
+    <div class="pt-8 border-t border-[var(--color-border)] flex items-center justify-between text-sm">
+      <a href="/blog" class="text-[var(--color-brand)] font-semibold hover:underline">
+        ← Back to all articles
+      </a>
+      <a href="/learning-curves" class="text-[var(--color-brand)] font-semibold hover:underline">
+        Explore learning curves →
+      </a>
+    </div>
+  </article>
+</Layout>

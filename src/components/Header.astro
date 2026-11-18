@@ -1,0 +1,103 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Works', href: '/works' },
+  { label: 'Learning Curves', href: '/learning-curves' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'About', href: '/about' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-40 backdrop-blur-md bg-[var(--color-bg-base)]/80 border-b border-[var(--color-border)]">
+  <div class="site-container flex items-center justify-between h-16">
+    <a href="/" class="flex items-center gap-2 group text-decoration-none">
+      <span class="w-8 h-8 rounded-lg bg-[var(--color-brand)] text-white font-bold flex items-center justify-center text-sm shadow-sm group-hover:scale-105 transition-transform">
+        T
+      </span>
+      <div class="flex flex-col">
+        <span class="font-bold text-sm tracking-tight text-[var(--color-text-main)] group-hover:text-[var(--color-brand)] transition-colors">
+          Ted's Notebook
+        </span>
+        <span class="text-[11px] text-[var(--color-text-muted)] -mt-1 hidden sm:inline">
+          Works & Learning Curves
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-1 sm:gap-2">
+      {navItems.map((item) => {
+        const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+        return (
+          <a
+            href={item.href}
+            class={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+              isActive
+                ? 'text-[var(--color-brand)] bg-[var(--color-accent-badge)] font-semibold'
+                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-subtle)]'
+            }`}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-3">
+      <ThemeToggle />
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        aria-label="Toggle navigation menu"
+        class="md:hidden p-2 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-bg-subtle)] border border-[var(--color-border)]"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden border-b border-[var(--color-border)] bg-[var(--color-bg-card)] px-4 py-3">
+    <nav class="flex flex-col gap-1">
+      {navItems.map((item) => {
+        const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+        return (
+          <a
+            href={item.href}
+            class={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              isActive
+                ? 'text-[var(--color-brand)] bg-[var(--color-accent-badge)] font-semibold'
+                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-subtle)]'
+            }`}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+  </div>
+</header>
+
+<script>
+  function setupMobileMenu() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  }
+
+  setupMobileMenu();
+  document.addEventListener('astro:after-swap', setupMobileMenu);
+</script>

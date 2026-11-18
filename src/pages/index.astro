@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import LearningCard from '../components/LearningCard.astro';
+import PostCard from '../components/PostCard.astro';
+import Badge from '../components/Badge.astro';
+import { getCollection } from 'astro:content';
+
+const allWorks = await getCollection('works');
+const featuredWorks = allWorks
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
+
+const allLearnings = await getCollection('learnings');
+const recentLearnings = allLearnings
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2);
+
+const allPosts = await getCollection('posts');
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2);
+---
+
+<Layout
+  title="Ted | Software Engineer & Systems Explorer"
+  description="Showcasing production software, developer utilities, and candid field notes on steep engineering learning curves."
+>
+  <div class="site-container space-y-16 sm:space-y-24">
+    <!-- HERO SECTION -->
+    <section class="pt-4 sm:pt-10">
+      <div class="inline-flex items-center gap-2 mb-4">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <Badge variant="subtle" size="sm">Engineering, Tooling & Architecture</Badge>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[var(--color-text-main)] leading-[1.15]">
+        Building resilient systems. <br />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-brand)] to-teal-400">
+          Chronicling the steep climbs.
+        </span>
+      </h1>
+
+      <p class="mt-5 text-base sm:text-lg text-[var(--color-text-muted)] max-w-2xl leading-relaxed">
+        I’m <strong class="text-[var(--color-text-main)]">Ted</strong>, an engineer focused on automation infrastructure, distributed tasks, and developer tooling. Here, I document both the polished projects I ship and the messy learning curves behind them.
+      </p>
+
+      <div class="mt-8 flex flex-wrap items-center gap-3">
+        <a
+          href="/works"
+          class="px-5 py-2.5 rounded-lg bg-[var(--color-brand)] hover:bg-[var(--color-brand-hover)] text-white text-sm font-semibold transition-all shadow-sm hover:shadow flex items-center gap-2"
+        >
+          View Works
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+          </svg>
+        </a>
+
+        <a
+          href="/learning-curves"
+          class="px-5 py-2.5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-brand)] bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-subtle)] text-sm font-semibold transition-all flex items-center gap-2"
+        >
+          Explore Learning Curves
+          <svg class="w-4 h-4 text-[var(--color-brand)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+          </svg>
+        </a>
+
+        <a
+          href="/about"
+          class="px-4 py-2.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors"
+        >
+          About Me →
+        </a>
+      </div>
+
+      <!-- Quick Tech Pill Matrix -->
+      <div class="mt-12 pt-8 border-t border-[var(--color-border)] flex flex-wrap items-center gap-2 text-xs text-[var(--color-text-muted)]">
+        <span class="font-semibold text-[var(--color-text-main)] mr-2">Focus Toolkit:</span>
+        <Badge variant="subtle" size="sm">Distributed Queues</Badge>
+        <Badge variant="subtle" size="sm">Test Automation & QA</Badge>
+        <Badge variant="subtle" size="sm">Go & Node.js</Badge>
+        <Badge variant="subtle" size="sm">Browser Extensions</Badge>
+        <Badge variant="subtle" size="sm">Performance Profiling</Badge>
+      </div>
+    </section>
+
+    <!-- FEATURED WORKS -->
+    <section>
+      <div class="flex items-end justify-between mb-8">
+        <div>
+          <Badge variant="brand" size="sm">Portfolio</Badge>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-text-main)] mt-2">
+            Featured Works
+          </h2>
+          <p class="text-sm text-[var(--color-text-muted)] mt-1">
+            Production utilities, backend orchestration engines, and developer-first software.
+          </p>
+        </div>
+        <a
+          href="/works"
+          class="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brand)] hover:text-[var(--color-brand-hover)]"
+        >
+          All Works ({allWorks.length}) →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {featuredWorks.map((work) => (
+          <ProjectCard
+            id={work.id}
+            title={work.data.title}
+            tagline={work.data.tagline}
+            description={work.data.description}
+            category={work.data.category}
+            tags={work.data.tags}
+            stats={work.data.stats}
+            github={work.data.github}
+            demo={work.data.demo}
+            featured={work.data.featured}
+          />
+        ))}
+      </div>
+
+      <div class="mt-6 text-center sm:hidden">
+        <a href="/works" class="text-sm font-semibold text-[var(--color-brand)]">
+          View all works ({allWorks.length}) →
+        </a>
+      </div>
+    </section>
+
+    <!-- LEARNING CURVES SHOWCASE -->
+    <section class="relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]/50 p-6 sm:p-10 overflow-hidden">
+      <div class="absolute -top-12 -right-12 w-48 h-48 bg-[var(--color-brand)]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div class="max-w-xl">
+          <Badge variant="warning" size="sm">Mental Models & Field Notes</Badge>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-text-main)] mt-2">
+            Learning Curves & Post-Mortems
+          </h2>
+          <p class="text-sm text-[var(--color-text-muted)] mt-2 leading-relaxed">
+            Behind every green test is a trail of confusion, broken assumptions, and breakthroughs. I write these post-mortems so future-me and fellow developers avoid the same traps.
+          </p>
+        </div>
+        <a
+          href="/learning-curves"
+          class="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brand)] hover:text-[var(--color-brand-hover)] shrink-0"
+        >
+          Browse All Curves ({allLearnings.length}) →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6">
+        {recentLearnings.map((item) => (
+          <LearningCard
+            id={item.id}
+            title={item.data.title}
+            subtitle={item.data.subtitle}
+            topic={item.data.topic}
+            curveLevel={item.data.curveLevel}
+            obstacle={item.data.obstacle}
+            breakthrough={item.data.breakthrough}
+            takeaways={item.data.takeaways}
+            tags={item.data.tags}
+            date={item.data.date}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- RECENT ARTICLES -->
+    <section>
+      <div class="flex items-end justify-between mb-8">
+        <div>
+          <Badge variant="brand" size="sm">Writing</Badge>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--color-text-main)] mt-2">
+            Recent Articles
+          </h2>
+          <p class="text-sm text-[var(--color-text-muted)] mt-1">
+            Essays on tooling philosophy, systems design, and engineering habits.
+          </p>
+        </div>
+        <a
+          href="/blog"
+          class="hidden sm:inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brand)] hover:text-[var(--color-brand-hover)]"
+        >
+          All Articles ({allPosts.length}) →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {recentPosts.map((post) => (
+          <PostCard
+            id={post.id}
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            readTime={post.data.readTime}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION / CONNECT -->
+    <section class="rounded-xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-bg-card)] to-[var(--color-bg-subtle)] p-8 sm:p-12 text-center">
+      <h3 class="text-2xl font-bold text-[var(--color-text-main)]">
+        Have a challenging problem or interesting tool idea?
+      </h3>
+      <p class="mt-2 text-sm text-[var(--color-text-muted)] max-w-lg mx-auto">
+        I’m always excited to exchange field notes on automation, concurrency bugs, or infrastructure bottlenecks.
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-4">
+        <a
+          href="mailto:ted@example.com"
+          class="px-5 py-2.5 rounded-lg bg-[var(--color-brand)] hover:bg-[var(--color-brand-hover)] text-white text-sm font-semibold transition-all shadow-sm"
+        >
+          Send an Email
+        </a>
+        <a
+          href="/about"
+          class="px-5 py-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-subtle)] text-sm font-semibold transition-all"
+        >
+          Read My Background
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

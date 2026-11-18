@@ -1,0 +1,59 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-auto border-t border-[var(--color-border)] bg-[var(--color-bg-card)] py-10 transition-colors">
+  <div class="site-container flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-[var(--color-text-muted)]">
+    <div class="flex flex-col sm:items-start items-center gap-1">
+      <div class="font-semibold text-[var(--color-text-main)]">
+        Ted's Developer Showcase & Learning Log
+      </div>
+      <p class="text-xs">
+        Chronicling engineering challenges, mental model shifts, and shipped tools.
+      </p>
+    </div>
+
+    <!-- Social & Links -->
+    <div class="flex items-center gap-5 text-xs sm:text-sm">
+      <a
+        href="https://github.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-[var(--color-brand)] transition-colors"
+      >
+        GitHub
+      </a>
+      <a
+        href="https://linkedin.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-[var(--color-brand)] transition-colors"
+      >
+        LinkedIn
+      </a>
+      <a
+        href="https://x.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-[var(--color-brand)] transition-colors"
+      >
+        X (Twitter)
+      </a>
+      <a
+        href="mailto:contact@example.com"
+        class="hover:text-[var(--color-brand)] transition-colors"
+      >
+        Email
+      </a>
+    </div>
+  </div>
+
+  <div class="site-container mt-6 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[var(--color-text-muted)]">
+    <div>
+      © {currentYear} Ted. All rights reserved.
+    </div>
+    <div>
+      Powered by Astro & Modern Web Standards
+    </div>
+  </div>
+</footer>

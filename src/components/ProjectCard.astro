@@ -1,0 +1,110 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  category: string;
+  tags: string[];
+  stats?: { label: string; value: string }[];
+  github?: string;
+  demo?: string;
+  featured?: boolean;
+}
+
+const { id, title, tagline, description, category, tags, stats, github, demo, featured } = Astro.props;
+---
+
+<article class={`group relative flex flex-col justify-between rounded-xl border bg-[var(--color-bg-card)] p-6 transition-all duration-200 hover:shadow-lg hover:border-[var(--color-brand)]/50 ${featured ? 'border-[var(--color-brand)]/30 ring-1 ring-[var(--color-brand)]/10' : 'border-[var(--color-border)]'}`}>
+  <div>
+    <!-- Header with category and featured indicator -->
+    <div class="flex items-center justify-between gap-2 mb-3">
+      <Badge variant="brand" size="sm">{category}</Badge>
+      {featured && (
+        <Badge variant="warning" size="sm">★ Featured</Badge>
+      )}
+    </div>
+
+    <!-- Title and tagline -->
+    <h3 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] group-hover:text-[var(--color-brand)] transition-colors">
+      <a href={`/works/${id}`}>
+        <span class="absolute inset-0 z-0"></span>
+        {title}
+      </a>
+    </h3>
+
+    <p class="text-xs font-medium text-[var(--color-brand)] mt-1">
+      {tagline}
+    </p>
+
+    <!-- Description -->
+    <p class="mt-3 text-sm text-[var(--color-text-muted)] line-clamp-3 leading-relaxed">
+      {description}
+    </p>
+
+    <!-- Project Metrics (if available) -->
+    {stats && stats.length > 0 && (
+      <div class="mt-4 grid grid-cols-3 gap-2 border-y border-[var(--color-border)] py-2.5 my-4">
+        {stats.map((stat) => (
+          <div class="text-center">
+            <div class="text-xs font-bold text-[var(--color-text-main)]">{stat.value}</div>
+            <div class="text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <div class="mt-4 pt-3 border-t border-[var(--color-border)]/50">
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-1.5 mb-3">
+      {tags.slice(0, 4).map((tag) => (
+        <Badge variant="subtle" size="sm">{tag}</Badge>
+      ))}
+      {tags.length > 4 && (
+        <span class="text-[11px] text-[var(--color-text-muted)] self-center">+{tags.length - 4}</span>
+      )}
+    </div>
+
+    <!-- Action Links -->
+    <div class="flex items-center justify-between text-xs font-semibold relative z-10 pt-1">
+      <span class="text-[var(--color-brand)] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+        Read Case Study
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </span>
+
+      <div class="flex items-center gap-3">
+        {github && (
+          <a
+            href={github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[var(--color-text-muted)] hover:text-[var(--color-text-main)]"
+            title="View Source on GitHub"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+          </a>
+        )}
+        {demo && (
+          <a
+            href={demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[var(--color-text-muted)] hover:text-[var(--color-text-main)]"
+            title="Live Demo"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,98 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  subtitle: string;
+  topic: string;
+  curveLevel: 'Steep' | 'Moderate' | 'Smooth';
+  obstacle: string;
+  breakthrough: string;
+  takeaways: string[];
+  tags: string[];
+  date: Date;
+}
+
+const { id, title, subtitle, topic, curveLevel, obstacle, breakthrough, takeaways, tags, date } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+}).format(date);
+
+const levelVariant = {
+  Steep: 'danger',
+  Moderate: 'warning',
+  Smooth: 'success',
+}[curveLevel] as 'danger' | 'warning' | 'success';
+---
+
+<article class="group relative rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 transition-all duration-200 hover:shadow-lg hover:border-[var(--color-brand)]/50">
+  <!-- Top metadata row -->
+  <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+    <div class="flex items-center gap-2">
+      <Badge variant="brand" size="sm">{topic}</Badge>
+      <Badge variant={levelVariant} size="sm">
+        Curve: {curveLevel}
+      </Badge>
+    </div>
+    <time class="text-xs text-[var(--color-text-muted)] font-mono">{formattedDate}</time>
+  </div>
+
+  <!-- Title & Subtitle -->
+  <h3 class="text-lg sm:text-xl font-bold tracking-tight text-[var(--color-text-main)] group-hover:text-[var(--color-brand)] transition-colors">
+    <a href={`/learning-curves/${id}`}>
+      <span class="absolute inset-0 z-0"></span>
+      {title}
+    </a>
+  </h3>
+
+  <p class="text-xs text-[var(--color-text-muted)] mt-1 font-medium">
+    {subtitle}
+  </p>
+
+  <!-- Problem vs Solution Breakdown -->
+  <div class="mt-4 space-y-2.5 text-xs">
+    <div class="rounded-lg bg-rose-500/5 dark:bg-rose-950/20 border border-rose-500/20 p-3">
+      <div class="font-bold text-rose-600 dark:text-rose-400 flex items-center gap-1.5 mb-1">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        </svg>
+        The Obstacle / The Wall
+      </div>
+      <p class="text-[var(--color-text-muted)] leading-relaxed">
+        {obstacle}
+      </p>
+    </div>
+
+    <div class="rounded-lg bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20 p-3">
+      <div class="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 mb-1">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+        </svg>
+        The Breakthrough
+      </div>
+      <p class="text-[var(--color-text-muted)] leading-relaxed">
+        {breakthrough}
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer with tags & link -->
+  <div class="mt-4 pt-3 border-t border-[var(--color-border)]/50 flex flex-wrap items-center justify-between gap-3 text-xs">
+    <div class="flex flex-wrap gap-1.5">
+      {tags.map((tag) => (
+        <Badge variant="subtle" size="sm">#{tag}</Badge>
+      ))}
+    </div>
+
+    <span class="text-[var(--color-brand)] font-semibold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+      Read Field Notes
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+      </svg>
+    </span>
+  </div>
+</article>

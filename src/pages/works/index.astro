@@ -1,0 +1,99 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Badge from '../../components/Badge.astro';
+import { getCollection } from 'astro:content';
+
+const allWorks = await getCollection('works');
+const sortedWorks = allWorks.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Collect all unique categories
+const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
+---
+
+<Layout
+  title="Works & Projects | Ted's Showcase"
+  description="Selected software projects, developer utilities, and architecture experiments built for reliability and scale."
+>
+  <div class="site-container space-y-10">
+    <!-- Header -->
+    <header class="max-w-2xl">
+      <Badge variant="brand" size="sm">Portfolio</Badge>
+      <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-[var(--color-text-main)] mt-2">
+        Featured Works & Systems
+      </h1>
+      <p class="text-base text-[var(--color-text-muted)] mt-3 leading-relaxed">
+        Production developer tools, orchestration infrastructure, and telemetry utilities designed to solve real operational bottlenecks.
+      </p>
+    </header>
+
+    <!-- Category filter tabs -->
+    <div class="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] pb-4">
+      {categories.map((cat, idx) => (
+        <button
+          type="button"
+          class={`filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer border ${
+            idx === 0
+              ? 'active bg-[var(--color-brand)] text-white border-[var(--color-brand)]'
+              : 'border-[var(--color-border)] bg-[var(--color-bg-card)] text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] hover:bg-[var(--color-bg-subtle)]'
+          }`}
+          data-category={cat}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Works Grid -->
+    <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {sortedWorks.map((work) => (
+        <div class="work-item" data-category={work.data.category}>
+          <ProjectCard
+            id={work.id}
+            title={work.data.title}
+            tagline={work.data.tagline}
+            description={work.data.description}
+            category={work.data.category}
+            tags={work.data.tags}
+            stats={work.data.stats}
+            github={work.data.github}
+            demo={work.data.demo}
+            featured={work.data.featured}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<script>
+  function setupFilters() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const items = document.querySelectorAll<HTMLElement>('.work-item');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cat = btn.getAttribute('data-category');
+
+        buttons.forEach((b) => {
+          b.classList.remove('active', 'bg-[var(--color-brand)]', 'text-white', 'border-[var(--color-brand)]');
+          b.classList.add('border-[var(--color-border)]', 'bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
+        });
+
+        btn.classList.add('active', 'bg-[var(--color-brand)]', 'text-white', 'border-[var(--color-brand)]');
+        btn.classList.remove('border-[var(--color-border)]', 'bg-[var(--color-bg-card)]', 'text-[var(--color-text-muted)]');
+
+        items.forEach((item) => {
+          if (cat === 'All' || item.getAttribute('data-category') === cat) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  setupFilters();
+  document.addEventListener('astro:after-swap', setupFilters);
+</script>

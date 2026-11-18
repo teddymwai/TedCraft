@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Badge from '../components/Badge.astro';
+
+const toolkit = [
+  {
+    category: 'Languages & Core Systems',
+    items: ['TypeScript / Node.js', 'Go', 'Python', 'POSIX Shell / Bash', 'SQL & Redis'],
+  },
+  {
+    category: 'Architecture & Testing',
+    items: ['Distributed Task Queues', 'End-to-End QA Automation', 'WebSocket Telemetry', 'Fault-Tolerant IPC'],
+  },
+  {
+    category: 'Web & Tools',
+    items: ['Astro', 'Tailwind CSS', 'Chrome Extensions', 'Web Workers & WASM', 'Docker / Linux'],
+  },
+];
+
+const principles = [
+  {
+    title: 'Fail Visibly & Early',
+    description: 'Silent failures and swallowed exceptions waste hours of debugging. Software should be vocal about degraded states.',
+  },
+  {
+    title: 'Embrace the Messy Learning Curve',
+    description: 'True domain expertise is forged in the confusing moments before a breakthrough. Documenting mistakes cements them into durable reflexes.',
+  },
+  {
+    title: 'Local-First, Network-Resilient',
+    description: 'Tools should run reliably with zero network dependency wherever possible, gracefully caching and syncing when connections stutter.',
+  },
+];
+---
+
+<Layout
+  title="About Me | Ted's Notebook"
+  description="Background, engineering philosophy, and the tools I use to build resilient software."
+>
+  <div class="site-container max-w-3xl space-y-12">
+    <!-- Intro -->
+    <header class="space-y-4">
+      <Badge variant="brand" size="sm">About Ted</Badge>
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-[var(--color-text-main)]">
+        Hey, I’m Ted.
+      </h1>
+      <p class="text-lg text-[var(--color-text-muted)] leading-relaxed">
+        I’m an engineer passionate about building reliable software systems, high-efficiency developer tools, and automation pipelines.
+      </p>
+    </header>
+
+    <!-- Bio Section -->
+    <section class="space-y-4 text-sm leading-relaxed text-[var(--color-text-main)]">
+      <p>
+        Over the past few years, I’ve worked on everything from automated regression test harnesses and network diagnostic suites to fault-tolerant task orchestrators.
+      </p>
+      <p>
+        My philosophy revolves around <strong class="text-[var(--color-brand)]">transparency in engineering</strong>. We spend too much time reading idealized tech writeups that make hard systems look trivial. I treat this website as a dual workspace: a showroom for production tools that solve real problems, and a field log of the steep learning curves conquered along the way.
+      </p>
+    </section>
+
+    <!-- Core Principles -->
+    <section class="space-y-6">
+      <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
+        Engineering Principles
+      </h2>
+      <div class="grid grid-cols-1 gap-4">
+        {principles.map((p) => (
+          <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-5">
+            <h3 class="text-sm font-bold text-[var(--color-text-main)] flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-[var(--color-brand)]"></span>
+              {p.title}
+            </h3>
+            <p class="mt-2 text-xs text-[var(--color-text-muted)] leading-relaxed">
+              {p.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Technical Toolkit -->
+    <section class="space-y-6">
+      <h2 class="text-xl font-bold tracking-tight text-[var(--color-text-main)] border-b border-[var(--color-border)] pb-2">
+        Technical Toolkit
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {toolkit.map((group) => (
+          <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4">
+            <div class="text-xs font-bold text-[var(--color-brand)] uppercase tracking-wider mb-3">
+              {group.category}
+            </div>
+            <ul class="space-y-1.5 text-xs text-[var(--color-text-main)]">
+              {group.items.map((item) => (
+                <li class="flex items-center gap-1.5">
+                  <span class="text-[var(--color-text-muted)]">•</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Connect / Contact -->
+    <section class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 space-y-4">
+      <h2 class="text-lg font-bold text-[var(--color-text-main)]">
+        Get in Touch
+      </h2>
+      <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">
+        Whether you want to discuss asynchronous stream handling, compare notes on automated testing frameworks, or collaborate on open-source dev utilities:
+      </p>
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a
+          href="mailto:ted@example.com"
+          class="px-4 py-2 rounded-lg bg-[var(--color-brand)] text-white text-xs font-semibold hover:bg-[var(--color-brand-hover)] transition-colors"
+        >
+          Email Me
+        </a>
+        <a
+          href="https://github.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs font-semibold hover:text-[var(--color-brand)] transition-colors"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-4 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs font-semibold hover:text-[var(--color-brand)] transition-colors"
+        >
+          LinkedIn
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>
