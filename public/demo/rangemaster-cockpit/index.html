@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RangeMaster Cockpit // Public Demonstration Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --canvas: #09090b;
+      --card-bg: rgba(21, 21, 24, 0.88);
+      --card-solid: #151518;
+      --surface-raised: #1f1f23;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(212, 168, 83, 0.35);
+      --gold: #d4a853;
+      --gold-hover: #e2bc6b;
+      --gold-surface: rgba(212, 168, 83, 0.12);
+      --text-main: #efe9de;
+      --text-secondary: #aaa398;
+      --text-muted: #8a847a;
+      --positive: #22c55e;
+      --positive-surface: rgba(34, 197, 94, 0.14);
+      --negative: #ef4444;
+      --negative-surface: rgba(239, 68, 68, 0.14);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-capsule: 9999px;
+      --font-display: "Newsreader", Georgia, serif;
+      --font-body: "Instrument Sans", -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--canvas);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      line-height: 1.5;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(circle at 50% 0%, rgba(212, 168, 83, 0.06) 0%, transparent 60%);
+      background-attachment: fixed;
+    }
+
+    .ms {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+      user-select: none;
+    }
+
+    /* Top Chrome Header */
+    header.cockpit-header {
+      background: rgba(12, 12, 14, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-stamp {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      background: var(--gold-surface);
+      border: 1px solid var(--border-accent);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-main);
+      letter-spacing: -0.015em;
+    }
+
+    .controls-strip {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Apple HIG Select & Checkbox Controls */
+    .hig-select {
+      height: 40px;
+      background-color: var(--surface-raised);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      border-radius: var(--radius-capsule);
+      padding: 0 36px 0 16px;
+      font-size: 13px;
+      font-family: var(--font-body);
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23aaa398' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .hig-select:focus { border-color: var(--gold); }
+
+    .guard-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: var(--surface-raised);
+      padding: 8px 14px;
+      border-radius: var(--radius-capsule);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+    .guard-chip input[type="checkbox"] {
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+
+    /* Portal Navigation Tabs */
+    nav.portal-strip {
+      display: flex;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--card-solid);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .portal-tab {
+      height: 38px;
+      padding: 0 18px;
+      border-radius: var(--radius-capsule);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .portal-tab:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .portal-tab.active {
+      color: var(--gold);
+      background: var(--gold-surface);
+      border-color: var(--border-accent);
+    }
+    .portal-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Main Grid Layout */
+    .cockpit-layout {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 440px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1100px) {
+      .cockpit-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Filter Toolbelt */
+    .toolbelt {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+    .search-box .ms {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    .search-input {
+      width: 100%;
+      height: 40px;
+      background: var(--card-solid);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-capsule);
+      padding: 0 16px 0 40px;
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .search-input:focus { border-color: var(--gold); }
+
+    .filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      height: 32px;
+      padding: 0 14px;
+      border-radius: var(--radius-capsule);
+      border: 1px solid var(--border);
+      background: var(--surface-raised);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-pill:hover { color: var(--text-main); }
+    .filter-pill.active {
+      color: var(--gold);
+      background: var(--gold-surface);
+      border-color: var(--border-accent);
+    }
+
+    /* Domain Cards */
+    .domain-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: border-color 0.15s ease;
+    }
+    .domain-card:hover { border-color: rgba(255, 255, 255, 0.14); }
+
+    .domain-header {
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .domain-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .domain-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .suite-list { padding: 6px 12px; }
+    .suite-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 8px;
+      border-radius: var(--radius-sm);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      transition: background 0.15s ease;
+      gap: 12px;
+    }
+    .suite-row:last-child { border-bottom: none; }
+    .suite-row:hover { background: rgba(255, 255, 255, 0.03); }
+
+    .suite-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    .suite-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gold);
+      background: var(--gold-surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+      min-width: 64px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .suite-name {
+      font-size: 13px;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .suite-contract {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+
+    .badge-verdict {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-variant-numeric: tabular-nums;
+    }
+    .verdict-passed { color: var(--positive); background: var(--positive-surface); }
+    .verdict-running { color: var(--gold); background: var(--gold-surface); }
+    .verdict-pending { color: var(--text-muted); background: rgba(255, 255, 255, 0.05); }
+
+    /* Sticky Command Deck & Telemetry Side-Panel */
+    .command-panel {
+      position: sticky;
+      top: 80px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .panel-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Apple HIG Action Buttons */
+    .hig-btn {
+      height: 44px;
+      border-radius: var(--radius-capsule);
+      padding: 0 20px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      width: 100%;
+    }
+    .hig-btn:active { transform: scale(0.975); }
+
+    .hig-btn-primary {
+      background: var(--gold);
+      color: #0c0c0e;
+      border-color: var(--gold);
+    }
+    .hig-btn-primary:hover { background: var(--gold-hover); }
+
+    .hig-btn-secondary {
+      background: var(--surface-raised);
+      color: var(--text-main);
+      border-color: var(--border);
+    }
+    .hig-btn-secondary:hover { background: rgba(255, 255, 255, 0.08); }
+
+    /* Step Matrix Telemetry & Log Console */
+    .step-matrix {
+      background: #060608;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      max-height: 220px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    .log-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      padding: 3px 0;
+    }
+    .log-ts { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .log-ok { color: var(--positive); }
+    .log-run { color: var(--gold); }
+
+    .demo-notice-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      background: rgba(34, 197, 94, 0.12);
+      color: var(--positive);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      padding: 3px 10px;
+      border-radius: var(--radius-capsule);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="cockpit-header">
+    <div class="brand-group">
+      <span class="brand-stamp">DOSSIER-TC // PUBLIC</span>
+      <h1 class="brand-title">RangeMaster Cockpit</h1>
+      <span class="demo-notice-pill" id="demo-indicator">
+        <span class="ms" style="font-size: 14px;">check_circle</span>
+        <span>Interactive Demo Mode</span>
+      </span>
+    </div>
+
+    <div class="controls-strip">
+      <label for="dep-select" class="sr-only">Select Target Deployment</label>
+      <select id="dep-select" class="hig-select">
+        <option value="mock-staging-alpha">Mock Staging Alpha</option>
+        <option value="synthetic-sandbox">Synthetic Sandbox (Local)</option>
+        <option value="demo-range-eu">Demo Range EU (Read-Only)</option>
+      </select>
+
+      <label class="guard-chip">
+        <input type="checkbox" id="guard-mut" checked>
+        <span>Allow state mutation</span>
+      </label>
+
+      <label class="guard-chip">
+        <input type="checkbox" id="guard-destr">
+        <span>Confirm destructive</span>
+      </label>
+    </div>
+  </header>
+
+  <!-- Segmented Portal Navigation Strip -->
+  <nav class="portal-strip">
+    <button class="portal-tab active" data-portal="app">
+      <span class="ms">apps</span>
+      <span>App Portal</span>
+      <span class="portal-count" id="count-app">4</span>
+    </button>
+    <button class="portal-tab" data-portal="scenariocomposer">
+      <span class="ms">cloud</span>
+      <span>Scenario Composer</span>
+      <span class="portal-count" id="count-scenariocomposer">1</span>
+    </button>
+    <button class="portal-tab" data-portal="admin">
+      <span class="ms">admin_panel_settings</span>
+      <span>Admin Governance</span>
+      <span class="portal-count" id="count-admin">1</span>
+    </button>
+    <button class="portal-tab" data-portal="bay">
+      <span class="ms">terminal</span>
+      <span>Operator Bay</span>
+      <span class="portal-count" id="count-bay">1</span>
+    </button>
+  </nav>
+
+  <!-- Main Cockpit Layout -->
+  <main class="cockpit-layout">
+    <!-- Left Column: Test Suite Catalog & Search -->
+    <section>
+      <div class="toolbelt">
+        <div class="search-box">
+          <span class="ms">search</span>
+          <input type="text" id="search-input" class="search-input" placeholder="Search by suite code, title, or wire contract...">
+        </div>
+
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="passed">Passed</button>
+          <button class="filter-pill" data-filter="mutating">Mutating</button>
+          <button class="filter-pill" data-filter="destructive">Destructive</button>
+        </div>
+      </div>
+
+      <div id="domains-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Right Column: Sticky Command Deck & Telemetry -->
+    <aside class="command-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="ms" style="color: var(--gold);">terminal</span>
+          <span>Execution Command Deck</span>
+        </div>
+        <span class="brand-stamp" id="selection-counter">4 selected</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button id="btn-run" class="hig-btn hig-btn-primary">
+          <span class="ms">play_arrow</span>
+          <span>Run selected DAG suites</span>
+        </button>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <button id="btn-pause" class="hig-btn hig-btn-secondary">
+            <span class="ms">pause</span>
+            <span>Pause at next</span>
+          </button>
+          <button id="btn-reset" class="hig-btn hig-btn-secondary">
+            <span class="ms">restart_alt</span>
+            <span>Reset selection</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step Matrix Live Telemetry -->
+      <div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <span style="font-size: 12px; font-weight: 600; color: var(--text-secondary);">Real-Time Step Matrix</span>
+          <span id="run-status-chip" class="badge-verdict verdict-pending">IDLE</span>
+        </div>
+        <div class="step-matrix" id="step-log">
+          <div class="log-line">
+            <span class="log-ts">[20:00:00]</span>
+            <span>Ready. Select suites and click 'Run selected DAG suites' to simulate wire verification.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Architectural Guard Note -->
+      <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5; padding: 12px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);">
+        <strong style="color: var(--gold); font-weight: 500;">Sanitized Verification Boundary:</strong>
+        All wire calls simulate OpenAPI 3.1 contracts against synthetic endpoints. Zero proprietary infrastructure, secrets, or internal customer targets are accessible.
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    // Embedded Synthetic Suite Catalog (Client-Side Standalone Fallback)
+    const CATALOG = {
+      "AUTH-01": { code: "AUTH-01", title: "Session Lifecycle & Token Exchange", portal: "app", domain: "Authentication & Identity", mutates_state: false, destructive: false, contract: "GET /api/v1/auth/session", duration_ms: 4500 },
+      "CAT-01": { code: "CAT-01", title: "Asset Catalog Ingestion & Search", portal: "app", domain: "Catalogs & Repositories", mutates_state: false, destructive: false, contract: "GET /api/v1/assets/library", duration_ms: 6200 },
+      "EV-01": { code: "EV-01", title: "Multiplayer Exercise Lobby Provisioning", portal: "app", domain: "Drills & Multi-Actor Events", mutates_state: true, destructive: false, contract: "POST /api/v1/events/lobbies", duration_ms: 8100 },
+      "TM-01": { code: "TM-01", title: "Team Lifecycle & Captaincy Transfer", portal: "app", domain: "Teams & Access Roles", mutates_state: true, destructive: false, contract: "POST /api/v1/teams/{id}/transfer", duration_ms: 7400 },
+      "INF-01": { code: "INF-01", title: "Cloud Infrastructure Stack Boot & L3 Reachability", portal: "scenariocomposer", domain: "Cloud Infrastructure & Stacks", mutates_state: true, destructive: true, contract: "PUT /api/v1/infrastructure/stacks/CREATE", duration_ms: 14800 },
+      "HAR-01": { code: "HAR-01", title: "Wire Archive OpenAPI Contract Enforcement", portal: "admin", domain: "Wire Verification & Compliance", mutates_state: false, destructive: false, contract: "HAR Schema Validation", duration_ms: 3900 },
+      "OP-01": { code: "OP-01", title: "Physical Hypervisor Console Handshake", portal: "bay", domain: "Operator Bay Manual Gates", mutates_state: false, destructive: false, contract: "VNC WebSocket Handshake", duration_ms: 5000 }
+    };
+
+    const state = {
+      portal: "app",
+      searchQuery: "",
+      filter: "all",
+      selected: new Set(["AUTH-01", "CAT-01", "EV-01", "TM-01"]),
+      isRunning: false
+    };
+
+    function renderSuites() {
+      const container = document.getElementById("domains-container");
+      container.innerHTML = "";
+
+      const suites = Object.values(CATALOG).filter(s => {
+        if (s.portal !== state.portal) return false;
+        if (state.searchQuery) {
+          const q = state.searchQuery.toLowerCase();
+          const match = s.code.toLowerCase().includes(q) || s.title.toLowerCase().includes(q) || s.contract.toLowerCase().includes(q);
+          if (!match) return false;
+        }
+        if (state.filter === "mutating" && !s.mutates_state) return false;
+        if (state.filter === "destructive" && !s.destructive) return false;
+        return true;
+      });
+
+      // Group by domain
+      const domains = {};
+      suites.forEach(s => {
+        if (!domains[s.domain]) domains[s.domain] = [];
+        domains[s.domain].push(s);
+      });
+
+      if (Object.keys(domains).length === 0) {
+        container.innerHTML = `<div style="padding: 40px; text-align: center; color: var(--text-muted);">No suites match current filters.</div>`;
+        return;
+      }
+
+      for (const [domainName, domainSuites] of Object.entries(domains)) {
+        const card = document.createElement("div");
+        card.className = "domain-card";
+        
+        const header = document.createElement("div");
+        header.className = "domain-header";
+        header.innerHTML = `
+          <div class="domain-title-group">
+            <span class="ms" style="color: var(--gold); font-size: 16px;">layers</span>
+            <span class="domain-title">${domainName}</span>
+          </div>
+          <span class="brand-stamp">${domainSuites.length} suites</span>
+        `;
+        card.appendChild(header);
+
+        const list = document.createElement("div");
+        list.className = "suite-list";
+
+        domainSuites.forEach(s => {
+          const row = document.createElement("div");
+          row.className = "suite-row";
+          const isChecked = state.selected.has(s.code);
+
+          row.innerHTML = `
+            <div class="suite-info">
+              <input type="checkbox" ${isChecked ? "checked" : ""} data-code="${s.code}" style="accent-color: var(--gold); cursor: pointer;">
+              <span class="suite-code">${s.code}</span>
+              <div>
+                <span class="suite-name">${s.title}</span>
+                <span class="suite-contract">${s.contract}</span>
+              </div>
+            </div>
+            <span class="badge-verdict verdict-passed" id="verdict-${s.code}">PASSED · ${(s.duration_ms / 1000).toFixed(1)}s</span>
+          `;
+
+          row.querySelector("input").onchange = (e) => {
+            if (e.target.checked) state.selected.add(s.code);
+            else state.selected.delete(s.code);
+            updateSelectionCounter();
+          };
+
+          list.appendChild(row);
+        });
+
+        card.appendChild(list);
+        container.appendChild(card);
+      }
+
+      updateSelectionCounter();
+    }
+
+    function updateSelectionCounter() {
+      document.getElementById("selection-counter").textContent = `${state.selected.size} selected`;
+    }
+
+    function appendLog(text, type = "normal") {
+      const log = document.getElementById("step-log");
+      const d = new Date();
+      const ts = `[${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}]`;
+      const row = document.createElement("div");
+      row.className = "log-line";
+      const cls = type === "ok" ? "log-ok" : type === "run" ? "log-run" : "";
+      row.innerHTML = `<span class="log-ts">${ts}</span><span class="${cls}">${text}</span>`;
+      log.appendChild(row);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function simulateRun() {
+      if (state.isRunning) return;
+      state.isRunning = true;
+      const runBtn = document.getElementById("btn-run");
+      const statusChip = document.getElementById("run-status-chip");
+      runBtn.disabled = true;
+      runBtn.style.opacity = "0.6";
+      statusChip.className = "badge-verdict verdict-running";
+      statusChip.textContent = "EXECUTING";
+
+      const selectedCodes = Array.from(state.selected);
+      appendLog(`Starting simulated test execution across ${selectedCodes.length} selected suites...`, "run");
+
+      for (let i = 0; i < selectedCodes.length; i++) {
+        const code = selectedCodes[i];
+        const s = CATALOG[code];
+        if (!s) continue;
+
+        const verdictEl = document.getElementById(`verdict-${code}`);
+        if (verdictEl) {
+          verdictEl.className = "badge-verdict verdict-running";
+          verdictEl.textContent = "RUNNING";
+        }
+
+        appendLog(`[${code}] Initializing context & executing wire contract: ${s.contract}`, "run");
+        await new Promise(r => setTimeout(r, 800));
+        appendLog(`[${code}] Asserting payload schemas and response timing boundaries`, "normal");
+        await new Promise(r => setTimeout(r, 600));
+
+        if (verdictEl) {
+          verdictEl.className = "badge-verdict verdict-passed";
+          verdictEl.textContent = `PASSED · ${(s.duration_ms / 1000).toFixed(1)}s`;
+        }
+        appendLog(`[${code}] Suite verified successfully (Status: 200/201 OK)`, "ok");
+      }
+
+      appendLog(`Simulated execution completed: ${selectedCodes.length} suites passed, 0 regressions, 0 contract anomalies.`, "ok");
+      statusChip.className = "badge-verdict verdict-passed";
+      statusChip.textContent = "COMPLETED";
+      runBtn.disabled = false;
+      runBtn.style.opacity = "1";
+      state.isRunning = false;
+    }
+
+    // Portal Tab Listeners
+    document.querySelectorAll(".portal-tab").forEach(tab => {
+      tab.onclick = () => {
+        document.querySelectorAll(".portal-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        state.portal = tab.dataset.portal;
+        renderSuites();
+      };
+    });
+
+    // Filter Listeners
+    document.querySelectorAll(".filter-pill").forEach(pill => {
+      pill.onclick = () => {
+        document.querySelectorAll(".filter-pill").forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        state.filter = pill.dataset.filter;
+        renderSuites();
+      };
+    });
+
+    // Search Listener
+    document.getElementById("search-input").oninput = (e) => {
+      state.searchQuery = e.target.value.trim();
+      renderSuites();
+    };
+
+    // Button Actions
+    document.getElementById("btn-run").onclick = simulateRun;
+    document.getElementById("btn-reset").onclick = () => {
+      state.selected.clear();
+      renderSuites();
+    };
+    document.getElementById("btn-pause").onclick = () => {
+      appendLog("Pause signal issued. Checkpointing at next barrier.", "run");
+    };
+
+    // Initial Render
+    renderSuites();
+  </script>
+</body>
+</html>

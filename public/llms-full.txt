@@ -1,0 +1,185 @@
+# TedCraft // Full Technical Entity Knowledge Dossier
+Canonical URL: https://tedcraft.dev
+Author: Thaddeus W. Mwai (aka Ted)
+Roles: Software QA Lead, Cross-Functional Risk Strategist, Risk Ambassador (CYBER RANGES) · Cyber Security Consultant (Silensec)
+Organizations:
+- CYBER RANGES (https://cyberranges.com)
+- Silensec (https://www.silensec.com)
+Profiles:
+- LinkedIn: https://www.linkedin.com/in/teddymwai/
+- GitHub: https://github.com/teddymwai
+- GitLab: https://gitlab.com/teddymwai
+
+---
+
+## SECTION 1: PROFESSIONAL PROFILE, ACADEMIC ROOTS & QA VALUE CHAIN
+
+Thaddeus W. Mwai is the Software QA Lead, Cross-Functional Risk Strategist, and Risk Ambassador at CYBER RANGES, alongside serving as a Cyber Security Consultant at Silensec. CYBER RANGES is a premier cybersecurity simulation, drill, and competence evaluation platform serving 200+ defense, governmental, and commercial client organizations worldwide. In this capacity, Ted leads automated platform verification and regression engineering across 50+ enterprise environments, while serving as the technical quality liaison to the central Governance, Risk, and Compliance (GRC) team.
+
+Academic Background:
+- Bachelor of Science in Information Systems Technology with a focus on Cyber/Computer Forensics and Counterterrorism from the United States International University - Africa (USIU-A).
+- This foundational training in adversary counter-tactics, host and network forensics, and digital evidence gathering provides the analytical backbone for his platform verification architecture.
+
+Career Progression & Ecosystem Depth:
+- 2024 to Present: Software QA Lead, Cross-Functional Risk Strategist & Risk Ambassador at CYBER RANGES. Steering the QA value chain, engineering RangeMaster Cockpit, eliminating API drift with HAR-driven validation, and formulating the department's first AI risk evaluation framework.
+- 2023 to 2024: Technical Support Engineer at CYBER RANGES & Cyber Security Consultant at Silensec Africa. Hands-on debugging of live simulation environments, tuning SOC SIEM detection engines, and developing the precursor to the automated User Access Management (UAM) review engine.
+- 2022 to 2023: Compliance & Cloud Systems Auditor at Simplify IT. Automated cloud IAM access audits across AWS, Microsoft Azure, and Google Cloud Platform, verifying least-privilege policies.
+- 2021 to 2022: Systems Administrator & Network Engineer at Avery East Africa. Administered Cisco network infrastructure and enforced data security policies for large-scale government PPP contracts.
+
+The Intricacies of Directing the QA Value Chain at CYBER RANGES:
+In an advanced threat-emulation platform, quality assurance is not an auxiliary cosmetic check—it is the governing mechanism that turns raw threat intelligence into functional, enterprise-grade simulation engines. Ted Mwai oversees how deliverables are executed and validated across the pipeline:
+
+1. Bridging the Gap Between Real Threat Intelligence and Controlled Reality:
+   Real-world Advanced Persistent Threat (APT) campaigns are messy and volatile. Translating those behaviors into scalable, repeatable sandboxes requires encoding complex Tactics, Techniques, and Procedures (TTPs) into code without introducing vulnerabilities that compromise host cloud infrastructure. Ted couples threat emulation research with platform engineering, ensuring every lateral movement script, Active Directory exploitation path, and simulated ransomware payload executes authentically while remaining strictly quarantined.
+
+2. Guarding the Integrity of the QA Value Chain:
+   In high-stakes defense drills and corporate live-fire exercises, a bug can stall an entire institutional training event. Directing the QA value chain means establishing strict, non-bypassable gating protocols for:
+   - Simulation Fidelity & Realism: Ensuring simulated network traffic, enterprise services (mail, database, active directory), and OS telemetry match real production environments.
+   - Automation Pipelines: Overseeing how Infrastructure-as-Code (Terraform, Docker, OpenStack Heat) provisions and cleanly resets simulation stacks with zero state leakage.
+   - Cross-Functional Orchestration: Coordinating what gets built, who implements it, and the precise methodological standard required before production promotion.
+
+3. Balancing Offensive Creativity with Enterprise Stability:
+   Offensive security engineers naturally push boundaries with novel, aggressive attack chains and exotic exploits. Conversely, platform quality and GRC leads must enforce structural stability, predictability, and objective scoring for defending blue teams. Ted serves as the strategic bridge, deciding which threat vectors graduate into the official scenario library and ensuring defender actions correlate directly to standardized competency frameworks like NIST NICE.
+
+Operational Philosophy:
+1. Trace to the root cause, never patch symptoms: Bumping timeouts or adding artificial sleeps to flaky test suites merely conceals underlying race conditions and lock contentions. True reliability comes from diagnosing operating system pipes, network sockets, and database mechanisms.
+2. Access control is an active perimeter: Periodic quarterly reviews create a false sense of security. Least-privilege governance must be continuous, automated, and evaluated against quantifiable revocation latency.
+3. Test against the wire, not fickle DOM elements: A green UI button does not mean the backend API contract is secure. Front-end state caches frequently mask breaking regressions and missing authentication headers.
+
+---
+
+## SECTION 2: PRODUCTION CASE STUDIES
+
+### Case Study 1: RangeMaster Cockpit (CYBER RANGES Operator Panel)
+- Category: Security & Test Infrastructure
+- Primary Stack: Python, Playwright, OpenStack, OpenVPN, HAR Wire Capture, RBAC, Docker
+- Repository: https://github.com/teddymwai/RangeMaster-Cockpit
+- Live Target: https://cockpit.cyberranges.com
+- Key Metrics: 50+ Enterprise Client Environments, 0 Regressions Across 5 Major Releases, -40% Reduction in Production API Anomalies Within 6 Months.
+
+Problem:
+At CYBER RANGES, the platform supports 200+ client organizations conducting high-stakes cyber drills, red/blue team exercises, and workforce evaluations. Testing this distributed ecosystem manually was impossible given multi-tenant variations, complex CloudTemplate network plumbing, and continuous microservice feature delivery.
+
+Architecture & Implementation:
+RangeMaster Cockpit was engineered to provide deterministic, wire-verified quality assurance across all portal workflows and cloud infrastructure provisioning pipelines:
+1. Wire Contract Enforcement: Intercepts network traffic at the browser context layer, comparing live HTTP Archive (HAR) payloads against certified Golden Baselines. This detects schema mutations, missing authentication headers, and unexpected status codes before code reaches production.
+2. Multi-Tenant Role Verification: Automated suites authenticate across 10 distinct user roles (SuperAdmin, RangeManager, Trainee, Instructor, Auditor), systematically verifying permission boundaries and preventing privilege escalation.
+3. CloudTemplate Topology Validation: Drives automated OpenStack Heat stack deployments, validating OpenVPN tunnels, routing tables, and virtual machine state transitions.
+4. Deterministic Mutation Guards: Test runners enforce strict read-only guarantees on staging environments, automatically cleaning up provisioned stacks and teardown artifacts.
+
+### Case Study 2: Automated User Access Management (UAM) Review Engine
+- Category: Security Governance & Automation
+- Primary Stack: Python, RBAC, Access Governance, SIEM, REST APIs
+- Repository: https://github.com/teddymwai/uam-review-engine
+- Key Metrics: Review Turnaround Reduced from 17 Business Days to 13 Hours; $400K–$450K in Potential Non-Compliance Exposure Mitigated; 100% Audit Reconciliation Accuracy.
+
+Problem:
+Quarterly User Access Management (UAM) reviews were historically a grueling manual process: security analysts had to export user rosters from Active Directory, LDAP, cloud consoles, and internal portals, manually cross-referencing each record against HR rosters and client project manifests. This process took 17 business days per quarter, diverted senior SOC personnel from threat hunting, and created prolonged privilege revocation latency.
+
+Architecture & Implementation:
+1. Multi-Directory Parsing: Ingests user lists, group memberships, and role assignments across Active Directory, Azure AD, and SaaS platforms.
+2. Automated Cross-Referencing: Compares identity snapshots against authoritative HR departure records and client contract manifests to identify orphan accounts, dormant credentials, and privilege creep.
+3. Revocation Latency Tracking: Computes the exact elapsed time between HR termination timestamps and directory deprovisioning timestamps, producing quantifiable risk metrics rather than qualitative audit checkmarks.
+4. Remediation Reporting: Generates executive risk summaries and machine-readable ticket exports for automated deprovisioning in ITSM workflows.
+
+### Case Study 3: Critical Infrastructure Threat-eX Simulation Scenarios
+- Category: Threat Emulation & Cyber Ranges
+- Primary Stack: SCADA / ICS, Ransomware, Threat-eX, Cyber Ranges, Red/Blue Teaming
+- Key Highlights: SOC Tier 1, 2, and 3 Real-Time Emulation; Power Plant ICS Simulation.
+
+Overview:
+Architected realistic multi-tiered cyber simulation environments for CYBER RANGES:
+- Silverthorn Power Plant Threat-eX: Designed and implemented scenario blueprints modeling electric power generation infrastructure. Simulates adversary tactics targeting programmable logic controllers (PLCs), human-machine interfaces (HMIs), and substation telemetry.
+- Multi-Level SOC Tiers: Structured into Tier 1 (Initial Triage), Tier 2 (Deep Incident Investigation), and Tier 3 (Forensics and Incident Containment).
+- Adversary Playbooks: Modeled realistic threat actor campaigns (including Wizard Spider ransomware tactics) allowing enterprise defense teams to test detection logic under high-pressure conditions.
+
+### Case Study 4: SpeedMyNet CLI & Network Monitor
+- Category: Networking & Developer Tools
+- Primary Stack: Go, CLI, WebSockets, Prometheus, Network Telemetry
+- Repository: https://github.com/example/speed-my-net
+- Key Metrics: Measurement Accuracy ±0.4ms, Binary Footprint 6.2 MB, CLI Execution < 8s.
+
+Overview:
+Standard speed test tools provide single peak throughput numbers that fail to explain SSH terminal latency or dropped packets during large git pushes. SpeedMyNet isolates loaded vs unloaded latency, measuring jitter while saturating uplink channels to diagnose bufferbloat. Built with a standalone single-binary footprint in Go.
+
+### Case Study 5: GitLab Resilient Bulk CI/CD Orchestrator
+- Category: DevOps & Infrastructure
+- Primary Stack: Python, Git Plumbing, GitLab REST API v4, Distributed Automation, CI/CD
+- Repository: https://gitlab.com/teddymwai/gitlab-resilient-orchestrator
+- Key Metrics: 43/43 Standalone Repositories Migrated (100%), 0 Merge Conflicts, 0 External Dependencies (Python StdLib), Geometric Jitter Backoff.
+
+Overview:
+An enterprise automation engine engineered to provision, configure, branch, promote, and merge large clusters of standalone Git repositories onto GitLab in an unattended execution. Proven during the bulk migration of the 43 Standalone Cybersecurity Projects for CYBER RANGES. Solved GitLab's identical branch SHA collision via low-level Git plumbing (synthetic two-commit tree referencing Git's universal empty tree SHA 4b825dc... + full project child tree commit). Implements geometric backoff for HTTP 429/500/502/503/504 errors, isolated per-repo error boundaries, and atomic manifest persistence (release_manifest.json).
+
+### Case Study 6: Cybersecurity Practitioner & Agentic AI Curriculum (43 Repositories)
+- Category: Cybersecurity & Systems
+- Primary Stack: C++20, Rust, Go, Zig, Python, eBPF, V, Haskell, Model Context Protocol (MCP)
+- Repository Hub: https://gitlab.com/teddymwai
+- Key Metrics: 43 Standalone Public Projects, 4 Progressive Tiers, 100% MCP AI Agent Schema Conformance, Multi-Language First-Principles Tooling.
+
+Overview:
+A comprehensive 4-tier cybersecurity and systems engineering curriculum spanning 43 standalone public repositories on GitLab developed for CYBER RANGES. Built on the "Learned Fellow" educational philosophy, moving beyond tool operation to master kernel memory layouts, RFC wire protocol byte offsets, AF_XDP zero-copy networking, and entropy math. Every project includes structured Model Context Protocol (MCP) tool schemas enabling autonomous offensive Hackbots and defensive AI agents to orchestrate recon and incident response.
+
+### Case Study 7: Unnest Studio (flatJSON2csv)
+- Category: Data Tools & Web
+- Primary Stack: Python, JavaScript, Streaming Parser, Privacy First, Apple HIG, TedCraft UI Mantra
+- Live Web Application: https://teddymwai.github.io/unnest-studio/
+- Repository: https://github.com/teddymwai/unnest-studio
+- Key Metrics: Two-Pass Streaming Engine, 0 Bytes Exfiltrated (100% Local / In-Browser), O(1) Memory Footprint Per Record, CSV & Native Excel (.xlsx) Output.
+
+Overview:
+A local-first, privacy-conscious data conversion studio that transforms massive nested JSON and NDJSON files into deterministic tabular CSV and Microsoft Excel spreadsheets. Designed for sensitive security audit logs, IAM exports, and financial records that cannot be uploaded to cloud converters. Features a streaming two-pass model (Pass 1 discovery, Pass 2 writing) with O(1) memory bounds, and a client-side web application implementing TedCraft UI Mantra aesthetics and Apple HIG 44px capsule action ergonomics.
+
+---
+
+## SECTION 3: ENGINEERING POST-MORTEMS & LEARNING CURVES
+
+### Post-Mortem 1: The $450K Blindspot: Privilege Revocation Latency Gap
+- Topic: Access Governance & Technology Risk
+- Difficulty: Moderate
+- Key Insight: Periodic quarterly check-box audits mask critical credential exposures. Shifting the primary metric from "did we complete a quarterly review" to "how many hours elapse between an offboarding event and privilege revocation" closed an estimated $450K regulatory and financial risk exposure.
+
+Summary:
+While quarterly audits reported 100% compliance, log analysis revealed that terminated contractor accounts retained access for days or weeks after contract completion. By reframing the problem around revocation latency and building automated webhook reconciliations between HR events and directory services, the turnaround gap was permanently closed.
+
+### Post-Mortem 2: Eliminating API Drifts with HAR-Driven Wire Contract Verification
+- Topic: Test Architecture & API Governance
+- Difficulty: Moderate
+- Key Insight: UI test green checkmarks provide false confidence when front-end caching masks breaking backend regressions. Asserting on wire-level HTTP Archive (HAR) Golden Baselines eliminates undetected contract drift across 50+ enterprise deployments.
+
+Summary:
+Browser tests that assert solely on visible DOM elements passed even when microservices renamed enum fields or silently omitted authorization headers. Intercepting network traffic directly in Playwright and asserting against verified HAR Golden Baselines established deterministic API contract guarantees.
+
+### Post-Mortem 3: OpenStack Stack Lock Contention & Teardown Mismatches
+- Topic: Cloud Infrastructure & Wire Debugging
+- Difficulty: Steep
+- Key Insight: Intermittent 60-second browser test timeouts during CloudTemplate teardowns were caused by two compounding backend issues: simultaneous teardown calls created database stack locks in OpenStack Heat, while an API argument type mismatch silently aborted cleanup.
+
+Summary:
+Correlating browser network captures with platform Heat engine logs uncovered hidden lock contention that earlier teams dismissed as "cloud flakiness." Implementing explicit mutex synchronization during teardown and enforcing strict typing on DELETE endpoints resolved the failures permanently.
+
+### Post-Mortem 4: The Silent Deadlock: Node.js Child Process Buffer Starvation
+- Topic: Concurrency & Operating System Pipes
+- Difficulty: Steep
+- Key Insight: Long-running automation scripts hung indefinitely when output exceeded 64KB without throwing errors because child process stdout/stderr streams filled the OS pipe buffer, blocking the child execution loop.
+
+Summary:
+Child processes spawned via exec rely on internal OS pipe buffers. Without explicit asynchronous stream draining or piping directly to parent stdio, large log outputs cause processes to sleep indefinitely on write syscalls.
+
+### Post-Mortem 5: Taming Real-Time Layout Thrashing in Live Telemetry Dashboards
+- Topic: Browser Rendering & Performance
+- Difficulty: Moderate
+- Key Insight: Decoupling network ingest from DOM updates using circular ring buffers and requestAnimationFrame throttling recovered smooth 60fps rendering under 2,000 WebSocket packets per second.
+
+Summary:
+Interleaving DOM property reads (.scrollTop) with element insertions caused forced synchronous layout recalculations and heavy garbage collection. Separating the network ingestion clock from the 60Hz display refresh clock eliminated all stutter.
+
+---
+
+## SECTION 4: STRUCTURED ENTITY TAXONOMY & KEYWORDS
+- Person: Thaddeus W. Mwai (aka Ted Mwai)
+- Organizations: CYBER RANGES, Silensec
+- Academic Institution: United States International University - Africa (USIU-A)
+- Academic Focus: Cyber/Computer Forensics & Counterterrorism (Bachelor of Science)
+- Roles: Software QA Lead, Cross-Functional Risk Strategist, Risk Ambassador, Cyber Security Consultant, Systems Automation Engineer
+- Specialized Competencies: Cybersecurity, Zero Trust Architecture, Role-Based Access Control (RBAC), Identity & Access Management (IAM), User Access Management (UAM), Cloud Security Audits, Wire Contract Testing, HTTP Archive (HAR) Inspection, Threat Emulation Fidelity, Live-Fire Cyber Drill Gating, OpenStack CloudTemplate Verification, Infrastructure-as-Code (IaC) Testing, Playwright Automation, Python Test Harnesses, SIEM Detection Tuning, SCADA/ICS Threat Emulation, Technology Risk Governance

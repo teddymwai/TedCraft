@@ -1,5 +1,6 @@
 ---
 import BrandIcon from './BrandIcon.astro';
+import { resolvePath } from '../utils/paths';
 
 const currentYear = new Date().getFullYear();
 
@@ -56,37 +57,37 @@ const quickLinks = [
             TC
           </span>
           <span class="font-medium text-[15px] text-[var(--color-text-main)]">
-            Thaddeus (Ted) Mwai
-          </span>
-          <span class="text-[11px] font-mono-tabular text-[var(--color-brand)] bg-[var(--color-accent-badge)] px-2 py-0.5 rounded-[6px] border border-[var(--color-border-accent)]">
-            CYBER RANGES
+            Thaddeus W. Mwai (aka Ted)
           </span>
         </div>
         <p class="text-[13px] leading-5 text-[var(--color-text-secondary)]">
-          Security QA Lead and Risk Strategist. Documenting high-assurance platform verification, access governance, and engineering post-mortems.
+          Software QA Lead and Senior Risk Strategist. Documenting high-assurance platform verification, access governance, and engineering post-mortems.
         </p>
       </div>
 
       <!-- Social Capsule Controls with Official Brand SVG Icons -->
       <div class="flex flex-wrap items-center gap-2">
-        {socialLinks.map((item) => (
-          <a
-            href={item.href}
-            target={item.href.startsWith('mailto') || item.href.startsWith('/') ? undefined : '_blank'}
-            rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-            aria-label={item.ariaLabel}
-            class="hig-filter-pill"
-          >
-            {item.brandIcon ? (
-              <BrandIcon name={item.brandIcon} class="w-4 h-4 text-[var(--color-text-muted)]" />
-            ) : (
-              <span class="material-symbols-outlined !text-[16px] text-[var(--color-text-muted)]" aria-hidden="true">
-                {item.materialIcon}
-              </span>
-            )}
-            <span>{item.name}</span>
-          </a>
-        ))}
+        {socialLinks.map((item) => {
+          const resolvedHref = item.href.startsWith('/') ? resolvePath(item.href) : item.href;
+          return (
+            <a
+              href={resolvedHref}
+              target={resolvedHref.startsWith('mailto') || resolvedHref.startsWith('/') ? undefined : '_blank'}
+              rel={resolvedHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+              aria-label={item.ariaLabel}
+              class="hig-filter-pill"
+            >
+              {item.brandIcon ? (
+                <BrandIcon name={item.brandIcon} class="w-4 h-4 text-[var(--color-text-muted)]" />
+              ) : (
+                <span class="material-symbols-outlined !text-[16px] text-[var(--color-text-muted)]" aria-hidden="true">
+                  {item.materialIcon}
+                </span>
+              )}
+              <span>{item.name}</span>
+            </a>
+          );
+        })}
       </div>
     </div>
 
@@ -94,7 +95,7 @@ const quickLinks = [
     <div class="pt-6 border-t border-[var(--color-border)] flex flex-wrap items-center justify-between gap-4 text-[13px] text-[var(--color-text-secondary)]">
       <nav class="flex flex-wrap items-center gap-6" aria-label="Footer navigation">
         {quickLinks.map((link) => (
-          <a href={link.href} class="hover:text-[var(--color-brand)] transition-colors">
+          <a href={resolvePath(link.href)} class="hover:text-[var(--color-brand)] transition-colors">
             {link.label}
           </a>
         ))}
@@ -108,10 +109,10 @@ const quickLinks = [
     <!-- Bottom Row: Copyright & Credits -->
     <div class="pt-4 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-[var(--color-text-muted)]">
       <div>
-        Copyright {currentYear} Thaddeus (Ted) Mwai
+        Copyright &copy; {currentYear} Ted Mwai
       </div>
       <div class="font-mono-tabular">
-        DOC-CR // TedCraft Engineering Dossier & UI Mantra Architecture
+        DOSSIER-TC // TedCraft Engineering Dossier & UI Mantra Architecture
       </div>
     </div>
   </div>

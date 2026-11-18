@@ -1,34 +1,87 @@
 ---
-// ThemeToggle.astro - Apple HIG 44x44px Circular Button + modern-web-guidance color-scheme
+// ThemeToggle.astro - Apple HIG 44x44px Tactile 3D Medallion Flip Theme Toggle
 ---
 
 <div class="relative inline-flex items-center">
   <button
     id="theme-toggle-btn"
     type="button"
-    aria-label="Toggle color theme"
-    class="hig-btn hig-btn-glass !p-0 w-11 h-11 rounded-full text-[var(--color-text-secondary)] hover:text-[var(--color-brand)]"
+    aria-label="Switch to Warm Ivory reading theme"
+    title="Switch to Warm Ivory reading theme"
+    class="hig-btn hig-btn-glass !p-0 w-11 h-11 rounded-full relative overflow-hidden text-[var(--color-text-secondary)] hover:text-[var(--color-brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand)] theme-toggle-container"
   >
-    <!-- Sun icon (shown when dark -> switch to light parchment mode) -->
-    <span id="theme-icon-sun" class="material-symbols-outlined hidden" aria-hidden="true">
-      light_mode
-    </span>
+    <!-- 3D Flipping Medallion Disc: Single visible icon at rest; flips 180deg on click to reveal reverse icon -->
+    <div id="theme-flip-disc" class="theme-flip-disc" aria-hidden="true">
+      <!-- Front Face: Sun / Warm Ivory Trigger (visible in Dark Obsidian mode) -->
+      <span class="theme-face theme-face-front material-symbols-outlined !text-[20px]">
+        light_mode
+      </span>
 
-    <!-- Moon icon (shown when light -> switch to dark obsidian mode) -->
-    <span id="theme-icon-moon" class="material-symbols-outlined hidden" aria-hidden="true">
-      dark_mode
-    </span>
+      <!-- Back Face: Moon / Deep Obsidian Trigger (revealed when flipped to Light mode) -->
+      <span class="theme-face theme-face-back material-symbols-outlined !text-[20px]">
+        dark_mode
+      </span>
+    </div>
   </button>
 </div>
 
-<script>
+<style>
+  .theme-toggle-container {
+    perspective: 600px;
+  }
+
+  .theme-flip-disc {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transition: transform 480ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+  }
+
+  /* When in light parchment reading mode, flip the medallion 180 degrees */
+  .theme-flip-disc.is-flipped {
+    transform: rotateY(180deg);
+  }
+
+  .theme-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .theme-face-front {
+    transform: rotateY(0deg);
+  }
+
+  .theme-face-back {
+    transform: rotateY(180deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-flip-disc {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
   function setupThemeToggle() {
     const btn = document.getElementById('theme-toggle-btn');
-    const sunIcon = document.getElementById('theme-icon-sun');
-    const moonIcon = document.getElementById('theme-icon-moon');
+    const disc = document.getElementById('theme-flip-disc');
     const metaTheme = document.querySelector('meta[name="color-scheme"]');
 
-    if (!btn || !metaTheme || !sunIcon || !moonIcon) return;
+    if (!btn || !metaTheme || !disc) return;
 
     function getResolvedTheme() {
       const stored = localStorage.getItem('color-scheme');
@@ -38,47 +91,56 @@
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
-    function updateIcons() {
-      if (!btn || !sunIcon || !moonIcon) return;
+    function syncState(animate = true) {
+      if (!btn || !disc) return;
       const current = getResolvedTheme();
-      if (current === 'dark') {
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
-        btn.setAttribute('aria-label', 'Switch to light reading theme');
-        btn.setAttribute('title', 'Switch to Warm Ivory reading theme');
-      } else {
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
-        btn.setAttribute('aria-label', 'Switch to dark obsidian theme');
+
+      if (!animate) {
+        disc.style.transition = 'none';
+      }
+
+      if (current === 'light') {
+        disc.classList.add('is-flipped');
+        btn.setAttribute('aria-label', 'Switch to Deep Obsidian theme');
         btn.setAttribute('title', 'Switch to Deep Obsidian theme');
+      } else {
+        disc.classList.remove('is-flipped');
+        btn.setAttribute('aria-label', 'Switch to Warm Ivory reading theme');
+        btn.setAttribute('title', 'Switch to Warm Ivory reading theme');
+      }
+
+      if (!animate) {
+        // Force reflow and restore transition
+        disc.offsetHeight;
+        disc.style.transition = '';
       }
     }
 
-    btn.addEventListener('click', () => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
       const current = getResolvedTheme();
       const next = current === 'dark' ? 'light' : 'dark';
       localStorage.setItem('color-scheme', next);
       metaTheme.setAttribute('content', next);
-      updateIcons();
-    });
+      syncState(true);
+    };
 
-    // Listen to OS system preference changes when no explicit override exists
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       if (!localStorage.getItem('color-scheme')) {
         metaTheme.setAttribute('content', e.matches ? 'dark' : 'light');
-        updateIcons();
+        syncState(true);
       }
     });
 
-    // Sync across browser tabs
     window.addEventListener('storage', (e) => {
       if (e.key === 'color-scheme') {
         metaTheme.setAttribute('content', e.newValue || 'dark');
-        updateIcons();
+        syncState(true);
       }
     });
 
-    updateIcons();
+    // Initial sync without transition flicker on load
+    syncState(false);
   }
 
   setupThemeToggle();

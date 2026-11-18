@@ -6,6 +6,8 @@ import BrandIcon from '../../components/BrandIcon.astro';
 import SyndicationBar from '../../components/SyndicationBar.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import { getCollection, render } from 'astro:content';
+import { getSoftwareApplicationSchema, DEFAULT_SITE_URL } from '../../utils/schema';
+import { resolvePath } from '../../utils/paths';
 
 export async function getStaticPaths() {
   const works = await getCollection('works');
@@ -18,6 +20,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 
+const siteUrl = Astro.site ? Astro.site.toString() : DEFAULT_SITE_URL;
 const formattedDate = new Intl.DateTimeFormat('en-US', {
   month: 'long',
   year: 'numeric',
@@ -28,11 +31,12 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
   title={`${entry.data.title} | Case Study`}
   description={entry.data.description}
   showReadingProgress={true}
+  jsonLd={getSoftwareApplicationSchema(siteUrl, entry)}
 >
   <article class="site-container-reading space-y-8">
     <!-- Back breadcrumb -->
     <div>
-      <a href="/works" class="hig-filter-pill">
+      <a href={resolvePath('/works')} class="hig-filter-pill">
         <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">arrow_back</span>
         <span>All works</span>
       </a>
@@ -54,7 +58,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
       </p>
 
       <!-- Action buttons (Apple HIG 44px Capsule Buttons, equal height) -->
-      {(entry.data.demo || entry.data.github) && (
+      {(entry.data.demo || entry.data.github || entry.data.gitlab) && (
         <div class="flex flex-wrap items-center gap-3 pt-2">
           {entry.data.demo && (
             <a
@@ -68,7 +72,17 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
             </a>
           )}
 
-          {entry.data.github && (
+          {(entry.data.gitlab || (entry.data.github && entry.data.github.includes('gitlab.com'))) ? (
+            <a
+              href={entry.data.gitlab || entry.data.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hig-btn hig-btn-glass"
+            >
+              <BrandIcon name="gitlab" class="w-4 h-4" />
+              <span>GitLab repository</span>
+            </a>
+          ) : entry.data.github ? (
             <a
               href={entry.data.github}
               target="_blank"
@@ -78,7 +92,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
               <BrandIcon name="github" class="w-4 h-4" />
               <span>GitHub repository</span>
             </a>
-          )}
+          ) : null}
         </div>
       )}
 
@@ -118,11 +132,11 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
 
         <!-- Footer navigation -->
         <div class="pt-4 flex flex-wrap items-center justify-between gap-4">
-          <a href="/works" class="hig-btn hig-btn-glass">
+          <a href={resolvePath('/works')} class="hig-btn hig-btn-glass">
             <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">arrow_back</span>
             <span>Back to all works</span>
           </a>
-          <a href="/learning-curves" class="hig-btn hig-btn-tinted">
+          <a href={resolvePath('/learning-curves')} class="hig-btn hig-btn-tinted">
             <span>Read related learning curves</span>
             <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">arrow_forward</span>
           </a>
@@ -130,7 +144,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
       </div>
 
       <div class="lg:col-span-4">
-        <TableOfContents headings={headings} stamp="DOC-CR // TOC" />
+        <TableOfContents headings={headings} />
       </div>
     </div>
   </article>

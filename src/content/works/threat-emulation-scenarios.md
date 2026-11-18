@@ -4,8 +4,8 @@ tagline: "High-fidelity industrial control (SCADA/ICS) and ransomware attack sce
 description: "Architected complex simulation environments including Silverthorn Power Plant (multi-tier SOC simulation against ICS/SCADA infrastructure) and Wizard Spider (ransomware campaign emulation)."
 date: 2026-02-15
 featured: true
-category: "Threat Emulation & Cyber Ranges"
-tags: ["SCADA / ICS", "Ransomware", "Threat-eX", "Cyber Ranges", "Red Teaming", "Blue Teaming"]
+category: "Threat Emulation & CYBER RANGES"
+tags: ["SCADA / ICS", "Ransomware", "Threat-eX", "CYBER RANGES", "Red Teaming", "Blue Teaming"]
 github: "https://github.com/teddymwai"
 stats:
   - label: "Simulation Tiers"
@@ -16,7 +16,7 @@ stats:
 
 ## Overview
 
-High-fidelity cyber ranges require realistic multi-tiered target networks that emulate real-world adversary playbooks. 
+High-fidelity CYBER RANGES simulation environments require realistic multi-tiered target networks that emulate real-world adversary playbooks. 
 
 ### Silverthorn Power Plant Threat-eX
 

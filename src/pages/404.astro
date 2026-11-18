@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { resolvePath } from '../utils/paths';
+---
+
+<Layout
+  title="404 // Record Not Located | TedCraft"
+  description="The requested ledger entry or verification record does not exist in the dossier."
+>
+  <div class="site-container min-h-[50vh] flex flex-col items-center justify-center text-center py-16 sm:py-24 space-y-6">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--color-border-accent)] bg-[var(--color-bg-subtle)] font-mono-tabular text-[12px] text-[var(--color-brand)]">
+      <span>DOSSIER-TC // STATUS 404</span>
+    </div>
+
+    <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)] max-w-xl">
+      Record not located in engineering ledger
+    </h1>
+
+    <p class="text-[15px] sm:text-[16px] text-[var(--color-text-secondary)] max-w-md leading-relaxed">
+      The telemetry artifact, route, or case study you requested could not be resolved in the index.
+    </p>
+
+    <!-- Apple HIG Equal-Height 44px Action CTAs -->
+    <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
+      <a href={resolvePath('/')} class="hig-btn hig-btn-primary">
+        <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">home</span>
+        <span>Return to overview</span>
+      </a>
+      <a href={resolvePath('/works')} class="hig-btn hig-btn-glass">
+        <span>Browse production works</span>
+      </a>
+      <a href={resolvePath('/learning-curves')} class="hig-btn hig-btn-tinted">
+        <span>Explore learning curves</span>
+      </a>
+    </div>
+  </div>
+</Layout>

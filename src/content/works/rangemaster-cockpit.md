@@ -7,7 +7,7 @@ featured: true
 category: "Security & Test Infrastructure"
 tags: ["Python", "Playwright", "OpenStack", "OpenVPN", "HAR Wire Capture", "RBAC", "Docker"]
 github: "https://github.com/teddymwai/RangeMaster-Cockpit"
-demo: "https://cockpit.cyberranges.com"
+demo: "/demo/rangemaster-cockpit/"
 stats:
   - label: "Client Tenants"
     value: "50+ Envs"
@@ -48,6 +48,18 @@ At CYBER RANGES, the platform supports 200+ client organizations conducting high
 2. **CloudTemplate Provisioning Engine (CT-01)**: Provisions multi-node OpenStack stacks, establishes tunnel connectivity via OpenVPN, verifies Layer 3/Layer 4 reachability into isolated victim networks, and confirms clean teardown.
 3. **Multi-Actor Lifecycle Isolation**: Validates multi-actor team hierarchies, captaincy transfers, PvP/TvT lobby creation, and role-based access control (RBAC) across 3 simultaneous isolated actors.
 4. **Golden Baseline Regression Matching**: Compares network and state responses against certified baseline snapshots to detect subtle payload drifts before releases reach client environments.
+
+---
+
+## Sanitized Public Demonstration Edition
+
+To showcase RangeMaster Cockpit to the open-source engineering community without exposing CYBER RANGES internal microservice topologies, client tenant lists, or proprietary network keys, a **Sanitized Public Demonstration Edition** was architected:
+
+- **Synthetic Environments & RFC Routes:** All internal microservice routes (`/mediatorservice/...`, `/coreservice/...`, `/scoreservice-v2/...`) are abstracted into clean RFC-compliant wire specifications (`/api/v1/catalog`, `/api/v1/sessions`, `/api/v1/teams`, `/api/v1/infrastructure/stacks`).
+- **Synthetic Datasets:** Pre-bundled with simulated multi-service staging configurations (`mock-staging-alpha`, `synthetic-sandbox`), scrubbed HTTP Archive (HAR) captures, and simulated test verdicts.
+- **Client-Side Interactive Mock Mode:** The accompanying web Operator Panel includes a zero-backend demonstration mode. Visitors can explore the portal switcher (`App Portal`, `Scenario Composer`, `Admin Governance`, `Operator Bay`), test DAG resolution, and trigger simulated test execution with real-time Step Matrix event playback.
+
+---
 
 ## Measurable Results
 

@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/Badge.astro';
 import BrandIcon from '../components/BrandIcon.astro';
+import { getProfilePageSchema, DEFAULT_SITE_URL } from '../utils/schema';
+
+const siteUrl = Astro.site ? Astro.site.toString() : DEFAULT_SITE_URL;
 
 const toolkit = [
   {
@@ -58,27 +61,32 @@ const principles = [
 ---
 
 <Layout
-  title="About Thaddeus (Ted) Mwai | Security QA Lead & Risk Strategist"
-  description="Security QA Lead, Risk Strategist, and Systems Automation Engineer at CYBER RANGES. 5+ years across test automation, access governance, and technology risk."
+  title="About Thaddeus W. Mwai (aka Ted) | Software QA Lead & Senior Risk Strategist"
+  description="Software QA Lead, Senior Risk Strategist, and Systems Automation Engineer at CYBER RANGES. 5+ years across test automation, access governance, and technology risk."
+  jsonLd={getProfilePageSchema(siteUrl, '/about')}
 >
   <div class="site-container space-y-12">
     <!-- Intro -->
     <header class="space-y-4 max-w-3xl">
       <div class="flex items-center gap-2.5">
         <Badge variant="brand" size="sm">CYBER RANGES</Badge>
-        <span class="text-[12px] text-[var(--color-text-muted)] font-mono-tabular">DOC-CR // Nairobi, Kenya · Stafford, VA</span>
+        <span class="text-[12px] text-[var(--color-text-muted)] font-mono-tabular">Nairobi, Kenya · Stafford, VA</span>
       </div>
 
       <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)]">
-        Thaddeus (Ted) Wachira Mwai
+        Thaddeus W. Mwai (aka Ted)
       </h1>
 
       <p class="text-[18px] text-[var(--color-brand)] font-medium">
-        Security QA Lead & Cross-Functional Risk Strategist
+        Software QA Lead & Senior Risk Strategist
+      </p>
+
+      <p class="text-[14px] text-[var(--color-text-muted)] font-mono-tabular">
+        Risk Ambassador & QA Lead at CYBER RANGES · Cyber Security Consultant at Silensec
       </p>
 
       <p class="text-[16px] text-[var(--color-text-secondary)] leading-relaxed">
-        I lead quality assurance at <strong class="text-[var(--color-text-main)] font-medium">CYBER RANGES</strong>, a cybersecurity simulation and drill platform serving 200+ client organizations worldwide. I also serve as the department's risk liaison to the central Governance, Risk, and Compliance (GRC) function.
+        I lead quality assurance at <strong class="text-[var(--color-text-main)] font-medium">CYBER RANGES</strong>, a premier cybersecurity simulation and drill platform serving 200+ client organizations worldwide. I also serve as the department's risk liaison to the central Governance, Risk, and Compliance (GRC) function and as a cybersecurity consultant with <strong class="text-[var(--color-text-main)] font-medium">Silensec</strong>.
       </p>
     </header>
 
@@ -102,7 +110,7 @@ const principles = [
         <h2 class="font-display text-2xl text-[var(--color-text-main)]">
           Background & operational focus
         </h2>
-        <span class="font-mono-tabular text-[11px] text-[var(--color-text-muted)]">DOC-CR // BIO</span>
+        <span class="font-mono-tabular text-[11px] text-[var(--color-text-muted)]">DOSSIER-TC // BIO</span>
       </div>
       <p>
         My work centers on three operational pillars: <strong class="text-[var(--color-text-main)] font-medium">finding platform failures before clients do</strong>, <strong class="text-[var(--color-text-main)] font-medium">strictly governing who can touch what</strong>, and <strong class="text-[var(--color-text-main)] font-medium">turning scattered operational anomalies into ranked risk registers that leadership can act on</strong>.
@@ -111,14 +119,53 @@ const principles = [
         I architect the automation I rely on—authoring high-assurance Python and Playwright verification platforms like <strong class="text-[var(--color-brand)] font-medium">RangeMaster Cockpit</strong>, which validates multi-tenant CloudTemplate stacks and enforces wire contracts against certified Golden Baselines.
       </p>
       <p>
-        Prior to leading QA at CYBER RANGES, I worked in cybersecurity consulting and SOC optimization at <strong class="text-[var(--color-text-main)] font-medium">Silensec Africa</strong> (tuning SIEM detection rules and building automated access review engines), compliance auditing at <strong class="text-[var(--color-text-main)] font-medium">Simplify IT</strong> (verifying cloud IAM policies across AWS, Azure, and GCP), and enterprise systems administration at <strong class="text-[var(--color-text-main)] font-medium">Avery East Africa</strong> (deploying Cisco networks and enforcing digital security policies for government PPP contracts).
+        My technical foundation began at <strong class="text-[var(--color-text-main)] font-medium">United States International University - Africa (USIU-A)</strong>, where I earned a Bachelor of Science in Information Systems Technology with a focus on <strong class="text-[var(--color-text-main)] font-medium">Cyber/Computer Forensics and Counterterrorism</strong>. That academic grounding in adversary tactics and forensic evidence shapes my approach to software verification.
       </p>
+      <p>
+        My trajectory at CYBER RANGES includes deep operational roots—originally joining as a <strong class="text-[var(--color-text-main)] font-medium">Technical Support Engineer</strong> resolving live-fire sandbox anomalies before taking ownership of the QA value chain and assuming cross-functional risk leadership. Prior to that, I served as a cybersecurity consultant at <strong class="text-[var(--color-text-main)] font-medium">Silensec</strong> (tuning SOC detection rules and architecting automated access review engines), cloud compliance auditor at <strong class="text-[var(--color-text-main)] font-medium">Simplify IT</strong> (verifying IAM policies across AWS, Azure, and GCP), and systems administrator at <strong class="text-[var(--color-text-main)] font-medium">Avery East Africa</strong> (securing Cisco network infrastructure for government PPP contracts).
+      </p>
+    </section>
+
+    <!-- The QA Value Chain & Platform Integrity -->
+    <section class="space-y-6">
+      <div class="border-b border-[var(--color-border)] pb-3">
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // OPERATIONAL GATING & VALUE CHAIN</div>
+        <h2 class="font-display text-3xl text-[var(--color-text-main)] mt-1">
+          Directing the QA value chain in threat emulation
+        </h2>
+        <p class="text-[14px] text-[var(--color-text-secondary)] mt-1 max-w-2xl">
+          In an advanced cyber drill ecosystem, QA is the nerve center that translates raw adversarial tactics into contained, measurable reality.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="mantra-card p-6 space-y-3">
+          <div class="font-mono-tabular text-[11px] text-[var(--color-brand)]">INTRICACY // 01</div>
+          <h3 class="font-display text-xl text-[var(--color-text-main)]">Threat intel vs. controlled reality</h3>
+          <p class="text-[13px] text-[var(--color-text-secondary)] leading-relaxed">
+            Translating complex APT TTPs into code without compromising host infrastructure. Every exploit path and lateral movement script is tested to run authentically while remaining rigorously quarantined.
+          </p>
+        </div>
+        <div class="mantra-card p-6 space-y-3">
+          <div class="font-mono-tabular text-[11px] text-[var(--color-brand)]">INTRICACY // 02</div>
+          <h3 class="font-display text-xl text-[var(--color-text-main)]">Gating the live-fire lifecycle</h3>
+          <p class="text-[13px] text-[var(--color-text-secondary)] leading-relaxed">
+            A bug in a defense or corporate drill halts the entire multi-team exercise. Directing QA means enforcing non-bypassable gating for traffic realism, IaC stack provisioning, and scoring engine calculations.
+          </p>
+        </div>
+        <div class="mantra-card p-6 space-y-3">
+          <div class="font-mono-tabular text-[11px] text-[var(--color-brand)]">INTRICACY // 03</div>
+          <h3 class="font-display text-xl text-[var(--color-text-main)]">Offensive creativity vs. enterprise stability</h3>
+          <p class="text-[13px] text-[var(--color-text-secondary)] leading-relaxed">
+            Red teams push aggressive novel exploit vectors; defending blue teams require stability and fair evaluation. Directing the value chain means arbitrating which vectors graduate to production and how they map to NIST NICE.
+          </p>
+        </div>
+      </div>
     </section>
 
     <!-- Engineering Principles -->
     <section class="space-y-6">
       <div class="border-b border-[var(--color-border)] pb-3">
-        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // HEURISTICS</div>
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // HEURISTICS</div>
         <h2 class="font-display text-3xl text-[var(--color-text-main)] mt-1">
           Engineering philosophy
         </h2>
@@ -144,7 +191,7 @@ const principles = [
     <!-- Technical Toolkit -->
     <section class="space-y-6">
       <div class="border-b border-[var(--color-border)] pb-3">
-        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // CAPABILITIES</div>
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // CAPABILITIES</div>
         <h2 class="font-display text-3xl text-[var(--color-text-main)] mt-1">
           Core competencies & toolkit
         </h2>
@@ -171,7 +218,7 @@ const principles = [
     <!-- Connect / Contact (Apple HIG 44px Capsule Buttons) -->
     <section class="mantra-panel p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
       <div class="space-y-2 max-w-xl">
-        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // DIRECT CHANNELS</div>
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // DIRECT CHANNELS</div>
         <h2 class="font-display text-2xl sm:text-3xl text-[var(--color-text-main)]">
           Get in touch
         </h2>

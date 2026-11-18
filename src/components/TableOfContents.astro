@@ -10,7 +10,7 @@ interface Props {
   stamp?: string;
 }
 
-const { headings = [], stamp = 'DOC-CR // TOC' } = Astro.props;
+const { headings = [], stamp = 'TOC' } = Astro.props;
 const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 ---
 

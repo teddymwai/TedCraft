@@ -10,13 +10,13 @@ const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
 ---
 
 <Layout
-  title="Works & Production Systems | Thaddeus Mwai"
+  title="Works & Production Systems | Thaddeus W. Mwai (aka Ted)"
   description="Selected software projects, verification harnesses, access governance tools, and architecture systems built for reliability and scale."
 >
   <div class="site-container space-y-10">
     <!-- Header -->
     <header class="max-w-3xl space-y-3">
-      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // PRODUCTION SYSTEMS & HARNESSES</div>
+      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // PRODUCTION SYSTEMS & HARNESSES</div>
       <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)]">
         Featured works & verification systems
       </h1>
@@ -87,6 +87,7 @@ const categories = ['All', ...new Set(allWorks.map((w) => w.data.category))];
             tags={work.data.tags}
             stats={work.data.stats}
             github={work.data.github}
+            gitlab={work.data.gitlab}
             demo={work.data.demo}
             featured={work.data.featured}
             index={idx}

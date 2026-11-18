@@ -12,6 +12,7 @@ const works = defineCollection({
     category: z.string(),
     tags: z.array(z.string()).default([]),
     github: z.string().optional(),
+    gitlab: z.string().optional(),
     demo: z.string().optional(),
     stats: z
       .array(

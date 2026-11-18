@@ -1,5 +1,6 @@
 ---
 import BrandIcon from './BrandIcon.astro';
+import { resolvePath } from '../utils/paths';
 
 interface Props {
   title: string;
@@ -81,7 +82,7 @@ const encodedUrl = encodeURIComponent(currentUrl);
         <span>LinkedIn</span>
       </a>
       <a
-        href="/rss.xml"
+        href={resolvePath('/rss.xml')}
         class="hig-filter-pill"
         title="Subscribe via RSS"
       >

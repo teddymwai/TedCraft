@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import { resolvePath } from '../utils/paths';
 
 const navItems = [
   { label: 'Overview', href: '/' },
@@ -13,15 +14,15 @@ const navItems = [
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-40 h-16 backdrop-blur-md bg-[var(--color-bg-card)] border-b border-[var(--color-border)]">
-  <div class="site-container flex items-center justify-between h-full">
-    <a href="/" class="flex items-center gap-3 text-decoration-none group">
+<header class="sticky top-0 z-40 backdrop-blur-md bg-[var(--color-bg-card)] border-b border-[var(--color-border)]">
+  <div class="site-container flex items-center justify-between h-16">
+    <a href={resolvePath('/')} class="flex items-center gap-3 text-decoration-none group">
       <span class="w-8 h-8 rounded-[8px] bg-[var(--color-bg-subtle)] border border-[var(--color-border-accent)] text-[var(--color-brand)] font-display font-medium flex items-center justify-center text-sm tracking-tight">
         TC
       </span>
       <div class="flex flex-col">
         <span class="font-medium text-[15px] leading-5 text-[var(--color-text-main)] group-hover:text-[var(--color-brand)] transition-colors">
-          Thaddeus Mwai
+          Thaddeus W. Mwai
         </span>
         <span class="text-[12px] leading-4 text-[var(--color-text-muted)] font-mono-tabular hidden sm:inline">
           TedCraft // Dossier & Engineering Ledger
@@ -32,10 +33,13 @@ const currentPath = Astro.url.pathname;
     <!-- Desktop Navigation (Unslop Pass 1 & 7: 36px height rows, 4px gap, surface step active state) -->
     <nav class="hidden md:flex items-center gap-1" aria-label="Main navigation">
       {navItems.map((item) => {
-        const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+        const resolvedHref = resolvePath(item.href);
+        const isActive = item.href === '/'
+          ? currentPath === resolvedHref || currentPath === resolvedHref.replace(/\/$/, '')
+          : currentPath.startsWith(resolvedHref);
         return (
           <a
-            href={item.href}
+            href={resolvedHref}
             aria-current={isActive ? 'page' : undefined}
             class={`relative h-9 px-3.5 rounded-[8px] inline-flex items-center text-[14px] leading-5 transition-colors ${
               isActive
@@ -52,7 +56,7 @@ const currentPath = Astro.url.pathname;
     <!-- Right Controls -->
     <div class="flex items-center gap-2">
       <a
-        href="/rss.xml"
+        href={resolvePath('/rss.xml')}
         class="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-[8px] text-[13px] text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors font-mono-tabular"
         title="RSS Feed"
       >
@@ -70,19 +74,22 @@ const currentPath = Astro.url.pathname;
         aria-expanded="false"
         class="md:hidden hig-btn hig-btn-glass !p-0 w-11 h-11 rounded-full text-[var(--color-text-secondary)]"
       >
-        <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        <span id="mobile-menu-icon" class="material-symbols-outlined" aria-hidden="true">menu</span>
       </button>
     </div>
   </div>
 
   <!-- Mobile Navigation Dropdown -->
-  <div id="mobile-menu" class="hidden md:hidden border-b border-[var(--color-border)] bg-[var(--color-bg-card-solid)] px-4 py-3">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-[var(--color-border)] bg-[var(--color-bg-card-solid)] px-4 py-3">
     <nav class="flex flex-col gap-1" aria-label="Mobile navigation">
       {navItems.map((item) => {
-        const isActive = item.href === '/' ? currentPath === '/' : currentPath.startsWith(item.href);
+        const resolvedHref = resolvePath(item.href);
+        const isActive = item.href === '/'
+          ? currentPath === resolvedHref || currentPath === resolvedHref.replace(/\/$/, '')
+          : currentPath.startsWith(resolvedHref);
         return (
           <a
-            href={item.href}
+            href={resolvedHref}
             aria-current={isActive ? 'page' : undefined}
             class={`h-11 px-3 rounded-[8px] flex items-center text-[14px] transition-colors ${
               isActive
@@ -98,15 +105,37 @@ const currentPath = Astro.url.pathname;
   </div>
 </header>
 
-<script>
+<style>
+  @media (min-width: 768px) {
+    #mobile-menu-btn,
+    #mobile-menu {
+      display: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
   function setupMobileMenu() {
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('mobile-menu-icon');
     if (!btn || !menu) return;
 
-    btn.addEventListener('click', () => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
       const isHidden = menu.classList.toggle('hidden');
       btn.setAttribute('aria-expanded', String(!isHidden));
+      if (icon) {
+        icon.textContent = isHidden ? 'menu' : 'close';
+      }
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+        if (icon) icon.textContent = 'menu';
+      }
     });
   }
 

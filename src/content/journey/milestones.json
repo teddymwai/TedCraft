@@ -1,12 +1,17 @@
 [
   {
     "id": "phase-1",
-    "era": "Infrastructure, Cisco Networks & Cloud Audits",
+    "era": "Forensic Foundations, Networks & Cloud Audits",
     "period": "2021 - 2023",
     "timeInIndustry": "Years 1 - 2",
-    "title": "Systems Administration, Cisco Networks & Multi-Cloud Compliance",
-    "summary": "Managing enterprise IT infrastructure, Cisco network deployments, and disaster recovery at Avery East Africa, alongside cloud security assessments across AWS, Azure, and GCP at Simplify IT.",
+    "title": "USIU-A Forensics Grounding, Cisco Networks & Multi-Cloud Compliance",
+    "summary": "Completing forensic and counterterrorism specialization at USIU-A while administering enterprise Cisco infrastructure at Avery East Africa and executing automated cloud IAM audits at Simplify IT.",
     "topicalMastery": [
+      {
+        "topic": "Digital Forensics & Counterterrorism",
+        "level": "Advanced",
+        "description": "Formal academic specialization in host/network forensic analysis, adversary TTP decomposition, and evidence integrity at USIU-Africa."
+      },
       {
         "topic": "Cloud Security Audits (AWS / Azure / GCP)",
         "level": "Advanced",
@@ -23,18 +28,18 @@
         "description": "Authoring custom correlation rules in Splunk and ELK, reducing false positive alerts by 30%."
       }
     ],
-    "turningPoint": "Realizing that compliance and infrastructure audits should not be manual checklists; writing automated Python IAM verification scripts compressed multi-day compliance cycles into hours.",
-    "skills": ["Cisco IOS", "Python", "Bash", "AWS IAM", "Azure", "Splunk", "Linux LPIC-1"],
+    "turningPoint": "Connecting forensic threat modeling with infrastructure automation—proving that compliance and security audits should be continuous, automated programmatic assertions rather than static manual checklists.",
+    "skills": ["Digital Forensics", "Cisco IOS", "Python", "Bash", "AWS IAM", "Azure", "Splunk", "Linux LPIC-1"],
     "linkedLearnings": [],
     "linkedWorks": []
   },
   {
     "id": "phase-2",
-    "era": "Cybersecurity Operations & Access Governance",
+    "era": "Platform Support, Consulting & Access Governance",
     "period": "2023 - 2024",
     "timeInIndustry": "Years 2 - 3",
-    "title": "SOC Alert Optimization, Access Review Automation & Platform Operations",
-    "summary": "Consulting on threat operations at Silensec Africa and resolving frontline platform challenges at CYBER RANGES. Slashing quarterly access review cycle times and tuning SIEM detection engines.",
+    "title": "CYBER RANGES Support Engineering, Silensec Consulting & UAM Automation",
+    "summary": "Frontline technical support engineering for CYBER RANGES sandboxes and threat operations consulting at Silensec. Slashing quarterly access review cycle times and tuning SOC SIEM detection engines.",
     "topicalMastery": [
       {
         "topic": "Access Governance & UAM Automation",
@@ -62,8 +67,8 @@
     "era": "Security QA Leadership & Platform Verification",
     "period": "2024 - 2025",
     "timeInIndustry": "Years 3 - 5",
-    "title": "Leading QA at CYBER RANGES & Engineering RangeMaster Cockpit",
-    "summary": "Leading quality assurance for a cybersecurity training platform used by 200+ client organizations. Owning RBAC across 150+ internal users and 1,000+ clients across 50+ environments with zero unauthorized access incidents in 18 months.",
+    "title": "Directing the QA Value Chain at CYBER RANGES & Engineering RangeMaster Cockpit",
+    "summary": "Steering the quality assurance value chain, setting operational guidelines, and coordinating technical workflows across teams for CYBER RANGES threat emulation platforms used by 200+ client organizations. Owning RBAC and platform verification across 50+ environments with zero unauthorized access incidents in 18 months.",
     "topicalMastery": [
       {
         "topic": "High-Assurance Platform Harnesses",
@@ -84,15 +89,15 @@
     "turningPoint": "Diagnosing that what appeared to be frontend timeouts was actually OpenStack stack lock contention and API payload type mismatches on stack teardown. Wire-level inspection eliminated 40% of production anomalies.",
     "skills": ["Playwright", "Python", "OpenStack", "OpenVPN", "HAR Wire Capture", "RBAC", "Docker", "Go"],
     "linkedLearnings": ["openstack-stack-lock-contention", "har-driven-contract-verification"],
-    "linkedWorks": ["rangemaster-cockpit", "nice-framework-mapper"]
+    "linkedWorks": ["rangemaster-cockpit", "nice-framework-mapper", "resilient-orchestrator"]
   },
   {
     "id": "phase-4",
     "era": "Risk Strategy & AI Governance",
     "period": "2026 - Present",
     "timeInIndustry": "Lead / Strategic",
-    "title": "Cross-Functional Risk Strategy & AI Risk Intelligence",
-    "summary": "Acting as the departmental risk liaison to central GRC at CYBER RANGES. Built the department's first AI & risk intelligence pipeline ranking 20+ active scenarios across Red Team, Content, and Community into an executive mitigation roadmap.",
+    "title": "Cross-Functional Risk Strategy, Risk Ambassador & AI Governance",
+    "summary": "Serving as Risk Ambassador and cross-functional risk strategist liaison to central GRC at CYBER RANGES. Built the department's first AI & risk intelligence pipeline ranking 20+ active scenarios across Red Team, Content, and Community into an executive mitigation roadmap.",
     "topicalMastery": [
       {
         "topic": "AI Risk Intelligence & Evaluation",
@@ -113,6 +118,6 @@
     "turningPoint": "Treating AI systems and autonomous agents not as unconstrained black boxes, but as distributed state machines that require strict mutation guards, input bounding, and non-bypassable GRC governance.",
     "skills": ["AI Governance", "Risk Strategy", "GRC Liaison", "Threat Emulation", "SCADA / ICS", "Distributed Testing"],
     "linkedLearnings": [],
-    "linkedWorks": ["threat-emulation-scenarios"]
+    "linkedWorks": ["threat-emulation-scenarios", "cybersecurity-courses-curriculum", "unnest-studio"]
   }
 ]

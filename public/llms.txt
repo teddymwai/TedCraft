@@ -1,0 +1,42 @@
+# TedCraft // Thaddeus W. Mwai (aka Ted)
+
+> Software QA Lead, Cross-Functional Risk Strategist, and Risk Ambassador at CYBER RANGES, alongside Cyber Security Consultant at Silensec. Specializing in high-assurance platform verification, steering the threat emulation QA value chain, access governance, and distributed systems root-cause post-mortems.
+
+## Professional Entity & Overview
+- Canonical Name: Thaddeus W. Mwai
+- Common Name / Alias: Ted Mwai, Teddy Mwai
+- Current Roles: Software QA Lead, Cross-Functional Risk Strategist, Risk Ambassador (CYBER RANGES) · Cyber Security Consultant (Silensec)
+- Organizations: CYBER RANGES (https://cyberranges.com) & Silensec (https://www.silensec.com)
+- Education: Bachelor of Science in Information Systems Technology (Focus: Cyber/Computer Forensics & Counterterrorism) from United States International University - Africa (USIU-A)
+- Career Progression: Started in enterprise network administration (Avery East Africa) and multi-cloud IAM compliance (Simplify IT), joining CYBER RANGES as Technical Support Engineer before rising to lead the QA value chain and departmental risk strategy.
+- Focus Areas: Quality Engineering Leadership, Continuous Platform Assurance, Technology Risk Management, Role-Based Access Control (RBAC), Wire-Contract Testing (HAR), Threat Emulation Fidelity, Distributed Systems Diagnostics
+- Canonical Website: https://tedcraft.dev
+- Complete Knowledge Digest: https://tedcraft.dev/llms-full.txt
+
+## The QA Value Chain & Threat Emulation Leadership
+- Bridging Threat Intelligence & Controlled Reality: Translating real-world Advanced Persistent Threat (APT) Tactics, Techniques, and Procedures (TTPs) into repeatable, contained sandboxes without compromising host infrastructure.
+- Guarding the Integrity of the QA Value Chain: Enforcing strict non-bypassable gating for live-fire exercise fidelity, traffic generator realism, and Infrastructure-as-Code (IaC) provisioning/teardown pipelines across 50+ enterprise environments.
+- Arbitrating Offensive Creativity vs Enterprise Stability: Balancing aggressive novel red-team exploit vectors against predictable, objective evaluation criteria and scoring standards for defending blue teams.
+
+## Verified Production Works & Platforms
+- RangeMaster Cockpit (https://tedcraft.dev/works/rangemaster-cockpit): High-assurance QA verification platform, wire-contract enforcement harness, and CloudTemplate provisioning engine for CYBER RANGES. Built with Python, Playwright, OpenStack, and HAR capture. Supports 50+ enterprise environments with zero regressions across 5 releases.
+- Automated UAM Review Engine (https://tedcraft.dev/works/uam-access-review-engine): Access governance automation parsing identity directories, active engagement manifests, and privilege revocation latency. Compressed quarterly access reviews from 17 business days to 13 hours, protecting an estimated $400K–$450K in compliance exposure.
+- Critical Infrastructure Threat-eX Simulation Scenarios (https://tedcraft.dev/works/threat-emulation-scenarios): Realistic SCADA/ICS and ransomware attack environments for CYBER RANGES, including Silverthorn Power Plant (multi-tier SOC L1/L2/L3 simulation against PLC/HMI telemetry) and Wizard Spider adversary emulation.
+- SpeedMyNet CLI & Network Monitor (https://tedcraft.dev/works/speed-my-net): High-precision developer network telemetry tool written in Go. Accurately profiles loaded bufferbloat, jitter, and bandwidth with sub-millisecond precision (±0.4ms) in under 8 seconds.
+- GitLab Resilient Bulk CI/CD Orchestrator (https://tedcraft.dev/works/resilient-orchestrator): Automated, fault-tolerant bulk repository provisioning, synthetic two-commit tree staging, and merge request lifecycle engine built in Python standard library. Migrated 43 standalone repositories for CYBER RANGES onto GitLab with 100% success and zero merge conflicts.
+- Cybersecurity Practitioner & Agentic AI Curriculum (https://tedcraft.dev/works/cybersecurity-courses-curriculum): A 4-tier systems programming and security curriculum across 43 public standalone GitLab repositories, covering C++20, Rust, Go, Zig, eBPF, Python, and Haskell with Model Context Protocol (MCP) tool integration for autonomous Hackbot and Defense AI agents.
+- Unnest Studio (flatJSON2csv) (https://tedcraft.dev/works/unnest-studio): Privacy-first, zero-exfiltration streaming JSON/NDJSON-to-tabular CSV and Excel engine with client-side web application implementing TedCraft UI Mantra and Apple HIG ergonomics.
+- NIST NICE Framework Mapping Engine (https://tedcraft.dev/works/nice-framework-mapper): Automated analytics tool correlating cyber drill telemetry and scenario question tags directly to NIST NICE Knowledge, Skills, and Abilities (KSA) work roles.
+- In-Browser Markdown Studio (https://tedcraft.dev/works/markdown-viewer): Zero-latency, local-first web authoring tool offloading AST parsing and KaTeX compilation to Web Workers for smooth editing of 10,000+ line technical documents.
+
+## Engineering Post-Mortems & Learning Curves
+- Privilege Revocation Latency Gap ($450K Blindspot) (https://tedcraft.dev/learning-curves/privilege-revocation-latency-gap): Why quarterly check-box audits mask critical credential exposures. Proved that tracking the elapsed hours between HR departure events and identity provider deprovisioning closes severe risk exposure.
+- HAR-Driven Wire Contract Verification (https://tedcraft.dev/learning-curves/har-driven-contract-verification): Why pure DOM assertions fail in microservice architectures. Demonstrates capturing certified HTTP Archive (HAR) Golden Baselines in Playwright to eliminate API drift across multi-tenant deployments.
+- OpenStack Stack Lock Contention & Teardown Mismatches (https://tedcraft.dev/learning-curves/openstack-stack-lock-contention): Diagnosing intermittent 60-second browser test timeouts during CloudTemplate stack teardowns. Uncovered simultaneous database stack locks and REST API argument type mismatches beneath the UI.
+- Node.js Child Process Buffer Starvation (https://tedcraft.dev/learning-curves/async-process-deadlocks): Resolving silent deadlocks when running headless containerized test runners that emit over 64KB of stdout/stderr without asynchronous stream draining.
+- Real-Time WebSocket Layout Thrashing (https://tedcraft.dev/learning-curves/websocket-layout-thrashing): Decoupling network ingest from DOM updates using circular ring buffers and requestAnimationFrame throttling to recover 60fps rendering under 2,000 packets/sec.
+
+## Core Technical Competencies & Taxonomy
+- Security & Risk Governance: Role-Based Access Control (RBAC), Identity & Access Management (IAM), User Access Management (UAM) Auditing, Enterprise GRC Alignment, Privilege Revocation Latency Metrics, SIEM Detection Tuning, AI Risk Assessment, Threat Emulation Fidelity
+- Quality Engineering & Verification: High-Assurance QA Automation, Wire Contract Testing, Playwright, Python, Deterministic Mutation Guards, Golden Baseline Testing, Regression Prevention, Live-Fire Exercise Gating
+- Systems & Cloud Infrastructure: OpenStack, Docker, Linux Internals, IPC Pipes & Streams, Asynchronous Concurrency, Network Telemetry, SCADA/ICS Simulation, Infrastructure-as-Code (IaC) Testing

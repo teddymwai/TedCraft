@@ -5,6 +5,8 @@ import DomainBadge from '../../components/DomainBadge.astro';
 import SyndicationBar from '../../components/SyndicationBar.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
 import { getCollection, render } from 'astro:content';
+import { getTechArticleSchema, DEFAULT_SITE_URL } from '../../utils/schema';
+import { resolvePath } from '../../utils/paths';
 
 export async function getStaticPaths() {
   const learnings = await getCollection('learnings');
@@ -17,6 +19,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 
+const siteUrl = Astro.site ? Astro.site.toString() : DEFAULT_SITE_URL;
 const formattedDate = new Intl.DateTimeFormat('en-US', {
   month: 'long',
   day: 'numeric',
@@ -34,11 +37,12 @@ const levelVariant = {
   title={`${entry.data.title} | Learning Curve`}
   description={entry.data.subtitle}
   showReadingProgress={true}
+  jsonLd={getTechArticleSchema(siteUrl, entry)}
 >
   <article class="site-container-reading space-y-8">
     <!-- Breadcrumb -->
     <div>
-      <a href="/learning-curves" class="hig-filter-pill">
+      <a href={resolvePath('/learning-curves')} class="hig-filter-pill">
         <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">arrow_back</span>
         <span>All learning curves</span>
       </a>
@@ -127,11 +131,11 @@ const levelVariant = {
 
         <!-- Bottom navigation -->
         <div class="pt-4 flex flex-wrap items-center justify-between gap-4">
-          <a href="/learning-curves" class="hig-btn hig-btn-glass">
+          <a href={resolvePath('/learning-curves')} class="hig-btn hig-btn-glass">
             <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">arrow_back</span>
             <span>Back to all curves</span>
           </a>
-          <a href="/works" class="hig-btn hig-btn-tinted">
+          <a href={resolvePath('/works')} class="hig-btn hig-btn-tinted">
             <span>See production works</span>
             <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">arrow_forward</span>
           </a>

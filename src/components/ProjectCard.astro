@@ -2,6 +2,7 @@
 import Badge from './Badge.astro';
 import DomainBadge from './DomainBadge.astro';
 import BrandIcon from './BrandIcon.astro';
+import { resolvePath } from '../utils/paths';
 
 interface Props {
   id: string;
@@ -12,13 +13,16 @@ interface Props {
   tags: string[];
   stats?: { label: string; value: string }[];
   github?: string;
+  gitlab?: string;
   demo?: string;
   featured?: boolean;
   index?: number;
 }
 
-const { id, title, tagline, description, category, tags, stats, github, demo, featured, index } = Astro.props;
+const { id, title, tagline, description, category, tags, stats, github, gitlab, demo, featured, index } = Astro.props;
 const stampIndex = typeof index === 'number' ? String(index + 1).padStart(2, '0') : id.slice(0, 2).toUpperCase();
+const repoUrl = gitlab || github;
+const isGitLab = Boolean(gitlab || (github && github.includes('gitlab.com')));
 ---
 
 <article class={`mantra-card group relative flex flex-col justify-between p-6 ${featured ? 'border-[var(--color-border-accent)]' : ''}`}>
@@ -27,13 +31,13 @@ const stampIndex = typeof index === 'number' ? String(index + 1).padStart(2, '0'
     <div class="flex items-center justify-between gap-2 mb-4">
       <DomainBadge label={category} id={id} />
       <span class="font-mono-tabular text-[11px] text-[var(--color-text-muted)]">
-        DOC-CR // {stampIndex}
+        TC // {stampIndex}
       </span>
     </div>
 
     <!-- Title and tagline (Newsreader Editorial Serif, weight 500) -->
     <h3 class="font-display text-xl sm:text-[22px] leading-snug text-[var(--color-text-main)] group-hover:text-[var(--color-brand)] transition-colors">
-      <a href={`/works/${id}`}>
+      <a href={resolvePath(`/works/${id}`)}>
         <span class="absolute inset-0 z-0"></span>
         {title}
       </a>
@@ -80,16 +84,16 @@ const stampIndex = typeof index === 'number' ? String(index + 1).padStart(2, '0'
       </span>
 
       <div class="flex items-center gap-3">
-        {github && (
+        {repoUrl && (
           <a
-            href={github}
+            href={repoUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors inline-flex items-center"
-            title="View source on GitHub"
-            aria-label="View source on GitHub"
+            title={isGitLab ? "View source on GitLab" : "View source on GitHub"}
+            aria-label={isGitLab ? "View source on GitLab" : "View source on GitHub"}
           >
-            <BrandIcon name="github" class="w-4 h-4" />
+            <BrandIcon name={isGitLab ? "gitlab" : "github"} class="w-4 h-4" />
           </a>
         )}
         {demo && (

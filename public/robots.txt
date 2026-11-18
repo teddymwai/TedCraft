@@ -1,4 +1,31 @@
 User-agent: *
 Allow: /
 
+# Dedicated Directives for Modern Semantic & AI Search Engines
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Canonical Sitemap and LLM Context Endpoints
 Sitemap: https://tedcraft.dev/sitemap-index.xml
+Disallow: /_astro/

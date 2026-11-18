@@ -6,6 +6,10 @@ import PostCard from '../components/PostCard.astro';
 import Badge from '../components/Badge.astro';
 import DomainBadge from '../components/DomainBadge.astro';
 import { getCollection } from 'astro:content';
+import { getHomeGraphSchema, DEFAULT_SITE_URL } from '../utils/schema';
+import { resolvePath } from '../utils/paths';
+
+const siteUrl = Astro.site ? Astro.site.toString() : DEFAULT_SITE_URL;
 
 const allWorks = await getCollection('works');
 const featuredWorks = allWorks
@@ -24,8 +28,9 @@ const recentPosts = allPosts
 ---
 
 <Layout
-  title="Thaddeus (Ted) Mwai | Security QA Lead & Risk Strategist"
-  description="Security QA Lead and Risk Strategist at CYBER RANGES. Leading quality engineering, access governance, and wire-level verification across 50+ environments."
+  title="Thaddeus W. Mwai (aka Ted) | TedCraft · Software QA Lead & Senior Risk Strategist"
+  description="Software QA Lead and Senior Risk Strategist at CYBER RANGES. Leading quality engineering, access governance, and wire-level verification across 50+ environments."
+  jsonLd={getHomeGraphSchema(siteUrl)}
 >
   <div class="site-container space-y-16 sm:space-y-24">
     <!-- HERO SECTION (Unslop Pass 6 & 8: Asymmetric Split + Executive Telemetry Dossier Panel) -->
@@ -36,7 +41,7 @@ const recentPosts = allPosts
           <div class="inline-flex items-center gap-2.5">
             <span class="inline-block w-2 h-2 rounded-full bg-[var(--color-positive)]" aria-hidden="true"></span>
             <span class="font-mono-tabular text-[12px] text-[var(--color-text-secondary)]">
-              DOC-CR // Security QA Lead · Risk Strategist · CYBER RANGES
+              Software QA Lead · Senior Risk Strategist · CYBER RANGES
             </span>
           </div>
 
@@ -45,17 +50,17 @@ const recentPosts = allPosts
           </h1>
 
           <p class="text-[16px] sm:text-[18px] leading-[1.6] text-[var(--color-text-secondary)] max-w-2xl">
-            I am <strong class="text-[var(--color-text-main)] font-medium">Thaddeus (Ted) Mwai</strong>, Security QA Lead and Risk Strategist at <strong class="text-[var(--color-text-main)] font-medium">CYBER RANGES</strong>. I govern role-based access across 50+ enterprise environments, architect wire-protocol verification harnesses like <strong class="text-[var(--color-brand)] font-medium">RangeMaster Cockpit</strong>, and document root-cause post-mortems on distributed systems failures.
+            I am <strong class="text-[var(--color-text-main)] font-medium">Thaddeus W. Mwai (aka Ted)</strong>, Software QA Lead and Senior Risk Strategist at <strong class="text-[var(--color-text-main)] font-medium">CYBER RANGES</strong>. I govern role-based access across 50+ enterprise environments, architect wire-protocol verification harnesses like <strong class="text-[var(--color-brand)] font-medium">RangeMaster Cockpit</strong>, and document root-cause post-mortems on distributed systems failures.
           </p>
 
           <!-- Apple HIG Button Hierarchy: 1 Primary + 1 Secondary Capsule CTA, identical 44px height -->
           <div class="flex flex-wrap items-center gap-3 pt-2">
-            <a href="/works" class="hig-btn hig-btn-primary">
+            <a href={resolvePath('/works')} class="hig-btn hig-btn-primary">
               <span>Explore production works</span>
               <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">arrow_forward</span>
             </a>
 
-            <a href="/learning-curves" class="hig-btn hig-btn-glass">
+            <a href={resolvePath('/learning-curves')} class="hig-btn hig-btn-glass">
               <span class="material-symbols-outlined !text-[18px] text-[var(--color-brand)]" aria-hidden="true">troubleshoot</span>
               <span>Read learning curves</span>
             </a>
@@ -79,7 +84,7 @@ const recentPosts = allPosts
               <span>Verification telemetry dossier</span>
             </div>
             <span class="font-mono-tabular text-[11px] text-[var(--color-brand)] bg-[var(--color-accent-badge)] px-2 py-0.5 rounded-[4px] border border-[var(--color-border-accent)]">
-              DOC-CR // 2021–2026
+              DOSSIER-TC // 2021–2026
             </span>
           </div>
 
@@ -142,7 +147,7 @@ const recentPosts = allPosts
 
           <div class="pt-3 border-t border-[var(--color-border)] flex items-center justify-between text-[12px]">
             <span class="font-mono-tabular text-[var(--color-text-muted)]">Harness: RangeMaster Cockpit</span>
-            <a href="/works/rangemaster-cockpit" class="text-[var(--color-brand)] font-medium hover:underline inline-flex items-center gap-1">
+            <a href={resolvePath('/works/rangemaster-cockpit')} class="text-[var(--color-brand)] font-medium hover:underline inline-flex items-center gap-1">
               <span>Inspect architecture</span>
               <span class="material-symbols-outlined !text-[15px]" aria-hidden="true">arrow_forward</span>
             </a>
@@ -156,7 +161,7 @@ const recentPosts = allPosts
       <div class="space-y-2 max-w-2xl">
         <div class="flex items-center gap-2.5">
           <Badge variant="brand" size="sm">Evolutionary trajectory</Badge>
-          <span class="text-[12px] text-[var(--color-text-muted)] font-mono-tabular">DOC-CR // 4 eras (2021–2026)</span>
+          <span class="text-[12px] text-[var(--color-text-muted)] font-mono-tabular">4 eras (2021–2026)</span>
         </div>
         <h2 class="font-display text-2xl sm:text-3xl text-[var(--color-text-main)]">
           Five years across infrastructure audits, SOC tuning, QA leadership, and AI risk strategy
@@ -165,7 +170,7 @@ const recentPosts = allPosts
           From automating cloud IAM audits at Simplify IT and tuning SIEM detections at Silensec Africa to leading platform verification and GRC risk strategy at CYBER RANGES.
         </p>
       </div>
-      <a href="/journey" class="hig-btn hig-btn-tinted shrink-0">
+      <a href={resolvePath('/journey')} class="hig-btn hig-btn-tinted shrink-0">
         <span>Inspect growth timeline</span>
         <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">timeline</span>
       </a>
@@ -175,7 +180,7 @@ const recentPosts = allPosts
     <section class="space-y-8">
       <div class="flex items-end justify-between border-b border-[var(--color-border)] pb-4">
         <div>
-          <div class="font-mono-tabular text-[12px] text-[var(--color-brand)] mb-1">DOC-CR // SYSTEMS & HARNESSES</div>
+          <div class="font-mono-tabular text-[12px] text-[var(--color-brand)] mb-1">DOSSIER-TC // SYSTEMS & HARNESSES</div>
           <h2 class="font-display text-3xl sm:text-4xl text-[var(--color-text-main)]">
             Featured production works
           </h2>
@@ -183,7 +188,7 @@ const recentPosts = allPosts
             Verification harnesses, access governance engines, and cyber drill telemetry systems
           </p>
         </div>
-        <a href="/works" class="hidden sm:inline-flex hig-filter-pill">
+        <a href={resolvePath('/works')} class="hidden sm:inline-flex hig-filter-pill">
           <span>All works ({allWorks.length})</span>
           <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">arrow_forward</span>
         </a>
@@ -200,6 +205,7 @@ const recentPosts = allPosts
             tags={work.data.tags}
             stats={work.data.stats}
             github={work.data.github}
+            gitlab={work.data.gitlab}
             demo={work.data.demo}
             featured={work.data.featured}
             index={idx}
@@ -208,7 +214,7 @@ const recentPosts = allPosts
       </div>
 
       <div class="sm:hidden">
-        <a href="/works" class="hig-btn hig-btn-glass w-full">
+        <a href={resolvePath('/works')} class="hig-btn hig-btn-glass w-full">
           <span>View all works ({allWorks.length})</span>
         </a>
       </div>
@@ -226,7 +232,7 @@ const recentPosts = allPosts
             Behind every stable release is a trail of false hypotheses, OpenStack lock contentions, and wire contract drifts. These field notes document the exact diagnostic turning points.
           </p>
         </div>
-        <a href="/learning-curves" class="hig-filter-pill self-start md:self-auto shrink-0">
+        <a href={resolvePath('/learning-curves')} class="hig-filter-pill self-start md:self-auto shrink-0">
           <span>Browse all curves ({allLearnings.length})</span>
           <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">arrow_forward</span>
         </a>
@@ -263,7 +269,7 @@ const recentPosts = allPosts
             Continuous dispatches on systems architecture, verification methodology, and engineering craft
           </p>
         </div>
-        <a href="/blog" class="hidden sm:inline-flex hig-filter-pill">
+        <a href={resolvePath('/blog')} class="hidden sm:inline-flex hig-filter-pill">
           <span>All articles ({allPosts.length})</span>
           <span class="material-symbols-outlined !text-[16px]" aria-hidden="true">arrow_forward</span>
         </a>
@@ -287,7 +293,7 @@ const recentPosts = allPosts
     <!-- CALL TO ACTION / CONNECT -->
     <section class="mantra-panel p-8 sm:p-12 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
       <div class="space-y-2 max-w-xl">
-        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // CORRESPONDENCE</div>
+        <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // CORRESPONDENCE</div>
         <h3 class="font-display text-2xl sm:text-3xl text-[var(--color-text-main)]">
           Exchange field notes on verification, access governance, or systems risk
         </h3>
@@ -300,7 +306,7 @@ const recentPosts = allPosts
           <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">mail</span>
           <span>Email Thaddeus</span>
         </a>
-        <a href="/about" class="hig-btn hig-btn-glass">
+        <a href={resolvePath('/about')} class="hig-btn hig-btn-glass">
           <span>Executive dossier & bio</span>
         </a>
       </div>

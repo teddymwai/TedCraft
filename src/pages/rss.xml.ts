@@ -36,9 +36,9 @@ export async function GET(context: APIContext) {
   );
 
   return rss({
-    title: "Ted's Developer Showcase & Learning Curves",
-    description: "Field notes on resilient systems, continuous engineering learnings, and shipped tools.",
-    site: context.site || 'https://ted.github.io',
+    title: "Thaddeus W. Mwai (aka Ted) | TedCraft Engineering Ledger",
+    description: "Field notes on high-assurance platform verification, access governance, and root-cause engineering post-mortems.",
+    site: context.site || 'https://tedcraft.dev',
     items: allItems,
     customData: `<language>en-us</language>`,
   });

@@ -1,6 +1,7 @@
 ---
 import Badge from './Badge.astro';
 import DomainBadge from './DomainBadge.astro';
+import { resolvePath } from '../utils/paths';
 
 interface Props {
   id: string;
@@ -52,7 +53,7 @@ const stampIndex = typeof index === 'number' ? String(index + 1).padStart(2, '0'
 
     <!-- Title & Subtitle (Newsreader editorial serif) -->
     <h3 class="font-display text-xl sm:text-[22px] leading-snug text-[var(--color-text-main)] group-hover:text-[var(--color-brand)] transition-colors">
-      <a href={`/learning-curves/${id}`}>
+      <a href={resolvePath(`/learning-curves/${id}`)}>
         <span class="absolute inset-0 z-0"></span>
         {title}
       </a>

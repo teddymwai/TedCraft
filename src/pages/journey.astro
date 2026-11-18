@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Badge from '../components/Badge.astro';
 import milestonesData from '../content/journey/milestones.json';
 import { getCollection } from 'astro:content';
+import { resolvePath } from '../utils/paths';
 
 const allWorks = await getCollection('works');
 const allLearnings = await getCollection('learnings');
@@ -23,13 +24,13 @@ const levelBadge = {
 ---
 
 <Layout
-  title="Growth Journey: Day 1 to Present | Thaddeus Mwai"
+  title="Growth Journey: Day 1 to Present | Thaddeus W. Mwai (aka Ted)"
   description="A chronological and topical retrospective showing continuous engineering evolution, mental model breakthroughs, and domain mastery from day 1 to the present."
 >
   <div class="site-container space-y-12">
     <!-- Header -->
     <header class="max-w-3xl space-y-3">
-      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // EVOLUTIONARY RETROSPECTIVE</div>
+      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // EVOLUTIONARY RETROSPECTIVE</div>
       <h1 class="font-display text-4xl sm:text-5xl text-[var(--color-text-main)]">
         Growth journey: day 1 to present
       </h1>
@@ -143,7 +144,7 @@ const levelBadge = {
                       <div class="flex flex-wrap gap-2">
                         {m.resolvedWorks.map((w) => (
                           <a
-                            href={`/works/${w.id}`}
+                            href={resolvePath(`/works/${w.id}`)}
                             class="hig-filter-pill !border-[var(--color-border-accent)]"
                           >
                             <span class="material-symbols-outlined !text-[15px] text-[var(--color-brand)]" aria-hidden="true">deployed_code</span>
@@ -152,7 +153,7 @@ const levelBadge = {
                         ))}
                         {m.resolvedLearnings.map((l) => (
                           <a
-                            href={`/learning-curves/${l.id}`}
+                            href={resolvePath(`/learning-curves/${l.id}`)}
                             class="hig-filter-pill"
                           >
                             <span class="material-symbols-outlined !text-[15px] text-[var(--color-positive)]" aria-hidden="true">troubleshoot</span>
@@ -179,7 +180,7 @@ const levelBadge = {
 
     <!-- Bottom Callout -->
     <section class="mantra-panel p-8 text-center space-y-3">
-      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOC-CR // CONTINUOUS LEDGER</div>
+      <div class="font-mono-tabular text-[12px] text-[var(--color-brand)]">DOSSIER-TC // CONTINUOUS LEDGER</div>
       <h3 class="font-display text-2xl sm:text-3xl text-[var(--color-text-main)]">
         The trajectory is continuously documented
       </h3>
@@ -187,11 +188,11 @@ const levelBadge = {
         Whenever I diagnose a new distributed systems deadlock, wire contract mismatch, or access governance vulnerability, I record the root cause and remediation here.
       </p>
       <div class="flex flex-wrap justify-center gap-3 pt-2">
-        <a href="/learning-curves" class="hig-btn hig-btn-primary">
+        <a href={resolvePath('/learning-curves')} class="hig-btn hig-btn-primary">
           <span>Explore learning curves</span>
           <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">arrow_forward</span>
         </a>
-        <a href="/works" class="hig-btn hig-btn-glass">
+        <a href={resolvePath('/works')} class="hig-btn hig-btn-glass">
           <span>Browse production works</span>
         </a>
       </div>
