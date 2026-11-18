@@ -111,6 +111,9 @@
     --color-canvas-wash-bottom: var(--color-canvas-wash-bottom-light);
 
     --active-bg-image: url('/backgrounds/img001.jpg');
+    --ambient-mote-color-light: #8c6218;
+    --ambient-mote-color-dark: #d4a853;
+    --ambient-mote-color: var(--ambient-mote-color-light);
 
     /* Scrollbar tokens */
     --color-scrollbar-track: #efe9df;
@@ -139,6 +142,7 @@
       --color-cr-border: var(--color-cr-border-dark);
       --color-canvas-wash-top: var(--color-canvas-wash-top-dark);
       --color-canvas-wash-bottom: var(--color-canvas-wash-bottom-dark);
+      --ambient-mote-color: var(--ambient-mote-color-dark);
       --color-scrollbar-track: #151518;
       --color-scrollbar-thumb: #5e554a;
     }
@@ -166,6 +170,7 @@
       --color-cr-border: light-dark(var(--color-cr-border-light), var(--color-cr-border-dark));
       --color-canvas-wash-top: light-dark(var(--color-canvas-wash-top-light), var(--color-canvas-wash-top-dark));
       --color-canvas-wash-bottom: light-dark(var(--color-canvas-wash-bottom-light), var(--color-canvas-wash-bottom-dark));
+      --ambient-mote-color: light-dark(var(--ambient-mote-color-light), var(--ambient-mote-color-dark));
       --color-scrollbar-track: light-dark(#efe9df, #151518);
       --color-scrollbar-thumb: light-dark(#8a847a, #5e554a);
     }
@@ -177,6 +182,7 @@
     &:has(> head > meta[name="color-scheme"][content="dark"]) {
       color-scheme: dark;
     }
+
     &:has(> head > meta[name="color-scheme"][content="light"]) {
       color-scheme: light;
     }
@@ -187,14 +193,17 @@
     :root {
       scrollbar-width: auto;
     }
+
     ::-webkit-scrollbar {
       width: 10px;
       height: 10px;
     }
+
     ::-webkit-scrollbar-thumb {
       background: var(--color-scrollbar-thumb);
       border-radius: 9999px;
     }
+
     ::-webkit-scrollbar-track {
       background: var(--color-scrollbar-track);
     }
@@ -230,6 +239,32 @@
   *:focus-visible {
     outline: 2px solid var(--color-brand);
     outline-offset: 2px;
+  }
+}
+
+/* Explicit Ambient Canvas & Site-Shell Layering Contract */
+#ambient-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--ambient-mote-color);
+}
+
+#site-shell {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #ambient-canvas {
+    display: none;
   }
 }
 
@@ -287,29 +322,97 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-playlist::before { content: "\e944"; }
-.icon-scenarios::before { content: "\e915"; }
-.icon-captain::before { content: "\e92b"; }
-.icon-officer::before { content: "\e932"; }
-.icon-recruit::before { content: "\e934"; }
-.icon-account-group::before { content: "\e954"; }
-.icon-cloud-template::before { content: "\e91e"; }
-.icon-cloud-stack::before { content: "\e91d"; }
-.icon-vpn::before { content: "\e900"; }
-.icon-ethernet::before { content: "\e926"; }
-.icon-flag-checkered::before { content: "\e9a5"; }
-.icon-trophy::before { content: "\e957"; }
-.icon-dashboard::before { content: "\e936"; }
-.icon-assessment::before { content: "\e90c"; }
-.icon-account::before { content: "\e955"; }
-.icon-chart-line::before { content: "\e9ab"; }
-.icon-chart-bar::before { content: "\e9ac"; }
-.icon-file-multiple::before { content: "\e98a"; }
-.icon-cloud-sync::before { content: "\e99d"; }
-.icon-node-router::before { content: "\e927"; }
-.icon-node-subnet::before { content: "\e928"; }
-.icon-node-server-linux::before { content: "\e922"; }
-.icon-node-server-windows::before { content: "\e924"; }
+.icon-playlist::before {
+  content: "\e944";
+}
+
+.icon-scenarios::before {
+  content: "\e915";
+}
+
+.icon-captain::before {
+  content: "\e92b";
+}
+
+.icon-officer::before {
+  content: "\e932";
+}
+
+.icon-recruit::before {
+  content: "\e934";
+}
+
+.icon-account-group::before {
+  content: "\e954";
+}
+
+.icon-cloud-template::before {
+  content: "\e91e";
+}
+
+.icon-cloud-stack::before {
+  content: "\e91d";
+}
+
+.icon-vpn::before {
+  content: "\e900";
+}
+
+.icon-ethernet::before {
+  content: "\e926";
+}
+
+.icon-flag-checkered::before {
+  content: "\e9a5";
+}
+
+.icon-trophy::before {
+  content: "\e957";
+}
+
+.icon-dashboard::before {
+  content: "\e936";
+}
+
+.icon-assessment::before {
+  content: "\e90c";
+}
+
+.icon-account::before {
+  content: "\e955";
+}
+
+.icon-chart-line::before {
+  content: "\e9ab";
+}
+
+.icon-chart-bar::before {
+  content: "\e9ac";
+}
+
+.icon-file-multiple::before {
+  content: "\e98a";
+}
+
+.icon-cloud-sync::before {
+  content: "\e99d";
+}
+
+.icon-node-router::before {
+  content: "\e927";
+}
+
+.icon-node-subnet::before {
+  content: "\e928";
+}
+
+.icon-node-server-linux::before {
+  content: "\e922";
+}
+
+.icon-node-server-windows::before {
+  content: "\e924";
+}
 
 /* Material Symbols Outlined Optical Rules (Pillar 02) */
 .material-symbols-outlined {
@@ -542,10 +645,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .hig-btn,
   .hig-filter-pill {
     transition: none;
   }
+
   .hig-btn:active:not(:disabled),
   .hig-filter-pill:active {
     transform: none;
@@ -554,8 +659,13 @@
 
 /* Scroll Progress Indicator (modern-web-guidance: scroll-progress-indicator) */
 @keyframes grow-progress {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
 }
 
 #scroll-progress {
