@@ -8,7 +8,7 @@ This setup is purposefully architected around **dual storytelling**:
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 From the project root:
 
@@ -30,7 +30,7 @@ The site will be available at `http://localhost:4321`.
 
 ---
 
-## 📁 Content Architecture
+## Content Architecture
 
 All content is managed through Astro Content Collections with strict TypeScript schema validation (`src/content.config.ts`).
 
@@ -104,7 +104,7 @@ Your article content goes here...
 
 ---
 
-## 🎨 Design & Web Standards
+## Design & Web Standards
 
 - **Theme & Dark Mode:** Implements the modern web platform pattern (`light-dark()`, `<meta name="color-scheme">` state syncing, and inline anti-FOUC script) with zero layout flash.
 - **Accessible & Keyboard Friendly:** Standard focus rings, semantic HTML landmarks (`<main>`, `<header>`, `<footer>`, `<nav>`, `<article>`), and high-contrast color tokens.
@@ -112,7 +112,7 @@ Your article content goes here...
 
 ---
 
-## 🌐 1-Click Deployment
+## 1-Click Deployment
 
 Because Astro outputs standard static HTML, CSS, and JS into `./dist`, you can deploy to:
 - **Vercel / Netlify:** Connect your GitHub repository; framework detection auto-selects Astro.

@@ -155,6 +155,6 @@ if (fs.existsSync(filePath)) {
 }
 
 fs.writeFileSync(filePath, content, 'utf-8');
-console.log(`\n✓ Successfully created new ${type} entry:`);
+console.log(`\n[SUCCESS] Created new ${type} entry:`);
 console.log(`  File: ${filePath}`);
 console.log(`  Title: ${title}\n`);
