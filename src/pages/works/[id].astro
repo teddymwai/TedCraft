@@ -62,7 +62,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
         <div class="flex flex-wrap items-center gap-3 pt-2">
           {entry.data.demo && (
             <a
-              href={entry.data.demo}
+              href={entry.data.demo.startsWith('/') ? resolvePath(entry.data.demo) : entry.data.demo}
               target="_blank"
               rel="noopener noreferrer"
               class="hig-btn hig-btn-primary"

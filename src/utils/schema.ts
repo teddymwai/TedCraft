@@ -188,7 +188,9 @@ export function getSoftwareApplicationSchema(
         },
         keywords: entry.data.tags.join(', '),
         codeRepository: entry.data.gitlab || entry.data.github,
-        installUrl: entry.data.demo,
+        installUrl: entry.data.demo
+          ? (entry.data.demo.startsWith('/') ? `${cleanUrl}${entry.data.demo}` : entry.data.demo)
+          : undefined,
         about: entry.data.tags.map((tag) => ({
           '@type': 'Thing',
           name: tag,

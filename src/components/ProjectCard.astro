@@ -98,7 +98,7 @@ const isGitLab = Boolean(gitlab || (github && github.includes('gitlab.com')));
         )}
         {demo && (
           <a
-            href={demo}
+            href={demo.startsWith('/') ? resolvePath(demo) : demo}
             target="_blank"
             rel="noopener noreferrer"
             class="text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors"
