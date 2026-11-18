@@ -1,11 +1,11 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { getPublishedPosts, getPublishedLearnings, getPublishedWorks } from '../utils/content';
 
 export async function GET(context: APIContext) {
-  const posts = await getCollection('posts');
-  const learnings = await getCollection('learnings');
-  const works = await getCollection('works');
+  const posts = await getPublishedPosts();
+  const learnings = await getPublishedLearnings();
+  const works = await getPublishedWorks();
 
   const postItems = posts.map((post) => ({
     title: `[Article] ${post.data.title}`,

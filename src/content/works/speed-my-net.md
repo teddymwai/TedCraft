@@ -6,8 +6,6 @@ date: 2026-09-02
 featured: true
 category: "Networking & Developer Tools"
 tags: ["Go", "CLI", "WebSockets", "Prometheus", "Network Telemetry"]
-github: "https://github.com/example/speed-my-net"
-demo: "https://speedmynet.example.com"
 stats:
   - label: "Measurement Accuracy"
     value: "±0.4ms"

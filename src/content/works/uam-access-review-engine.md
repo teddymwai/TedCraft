@@ -4,30 +4,51 @@ tagline: "Python governance automation tool that compressed quarterly access rev
 description: "An automated audit reconciliation engine that parses identity directories, cross-references active client engagements, detects orphan accounts, and monitors privilege revocation latency."
 date: 2024-04-12
 featured: true
+featuredOrder: 2
 category: "Security Governance & Automation"
 tags: ["Python", "RBAC", "Access Governance", "SIEM", "Audit Automation", "REST APIs"]
 github: "https://github.com/teddymwai/uam-review-engine"
 stats:
   - label: "Review Turnaround"
     value: "17 Days → 13 Hrs"
-  - label: "Revenue Protected"
-    value: "$400K - $450K"
-  - label: "Audit Accuracy"
-    value: "100% Passed"
+  - label: "Exposure Identified"
+    value: "$400K–$450K est."
+  - label: "Reconciled Scope"
+    value: "150+ Internal / 1,000+ Client"
 ---
 
-## The Problem
+## Problem
 
-Quarterly User Access Management (UAM) reviews were historically a grueling manual process: security analysts had to export user rosters from Active Directory, LDAP, cloud consoles, and internal portals, manually cross-referencing each record against HR rosters and client project manifests.
+Quarterly User Access Management (UAM) reviews were a manual bottleneck: security analysts exported user rosters from Active Directory, LDAP, cloud consoles, and internal portals, then cross-referenced each record against HR rosters and client project manifests by hand. This consumed **17 business days** per quarter and masked lag between offboarding events and actual privilege revocation.
 
-This manual process:
-- Consumed **17 business days** per quarter, pulling senior SOC personnel away from threat hunting.
-- Introduced significant lag between account deprovisioning requests and actual access removal.
+## Constraints
 
-## The Solution
+- **Heterogeneous Identity Sources**: Identity data spanned directory services, cloud IAM tables, and engagement manifests with inconsistent identifier formats.
+- **Audit Traceability**: Every reconciliation decision needed deterministic, timestamped evidence suitable for ISO 27001 and SOC review.
+- **Zero-Trust Perimeter**: Stale contractor and consultant privileges across 50+ environments created unmeasured compliance and operational risk.
 
-I engineered a modular Python automation tool that directly connects to identity providers, extracts authorization tables, and reconciles user privileges against current engagement contracts and HR status:
+## My Contribution
 
-1. **Automated Role Reconciliation**: Identifies over-privileged accounts, inactive consultants, and mismatched group memberships within seconds.
-2. **Revocation Latency Tracking**: Introduced privilege revocation latency as an executive metric. This revealed delayed revocations carrying an estimated **$400,000 to $450,000** in business exposure, successfully driving revocation turnaround from days down to hours.
-3. **Audit-Ready Evidence Bundles**: Automatically outputs timestamped, cryptographically signed PDF and CSV audit registers compliant with ISO 27001 and SOC standards.
+I designed and implemented the Python reconciliation engine, defined privilege revocation latency as an executive governance metric, and built the automated PDF/CSV audit register generator in collaboration with security operations stakeholders.
+
+## Architecture
+
+1. **Identity & Manifest Ingestion**: Normalizes exports from identity providers, authorization tables, and active HR/client engagement manifests.
+2. **Automated Role Reconciliation**: Flags over-privileged accounts, inactive consultants, and mismatched group memberships deterministically.
+3. **Revocation Latency Tracking**: Measures elapsed hours between HR/engagement offboarding timestamps and identity-provider deprovisioning.
+4. **Audit-Ready Evidence Bundles**: Generates timestamped, cryptographically signed PDF and CSV audit registers.
+
+## Verification
+
+- Reconciled **100% of active user records** across **150+ internal accounts and 1,000+ client operator accounts** in 50+ environments against HR offboarding manifests prior to sign-off.
+- Validated generated exception lists against manual spot-check baselines across quarterly audit cycles, achieving **0 unauthorized access or privilege escalation incidents over 18 months**.
+
+## Results
+
+- **Turnaround Compression**: Reduced quarterly access review cycles from **17 business days to 13 business hours**.
+- **Exposure & Latency Improvement**: Identified an estimated **$400K–$450K annual business exposure** associated with delayed privilege revocation, and helped reduce revocation turnaround from **days to under 2 hours** through automated access governance.
+
+## Evidence
+
+- **Source Repository**: [uam-review-engine on GitHub](https://github.com/teddymwai/uam-review-engine)
+- **Related Post-Mortem**: [The $450K Blindspot: Privilege Revocation Latency Gap](/learning-curves/privilege-revocation-latency-gap)

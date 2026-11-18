@@ -34,10 +34,18 @@ jobs:
       - name: Verify Types & Astro Check
         run: npx astro check
 
+      - name: Security audit
+        run: npm audit --audit-level=high
+
       - name: Build static site with Astro
         run: npm run build
         env:
           SITE_URL: "https://teddymwai.github.io"
+          BASE_PATH: "/TedCraft"
+
+      - name: Validate content & internal links
+        run: npm run validate
+        env:
           BASE_PATH: "/TedCraft"
 
       - name: Upload GitHub Pages artifact

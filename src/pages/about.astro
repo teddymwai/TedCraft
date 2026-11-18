@@ -2,9 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/Badge.astro';
 import BrandIcon from '../components/BrandIcon.astro';
-import { getProfilePageSchema, DEFAULT_SITE_URL } from '../utils/schema';
+import { getProfilePageSchema, getSiteRootUrl } from '../utils/schema';
+import { resolvePath } from '../utils/paths';
 
-const siteUrl = Astro.site ? Astro.site.toString() : DEFAULT_SITE_URL;
+const siteUrl = getSiteRootUrl(Astro.site);
 
 const toolkit = [
   {
@@ -33,14 +34,14 @@ const results = [
     detail: 'Engineered Python UAM automation engine that compressed quarterly user access review turnaround from 17 days to 13 business hours.',
   },
   {
-    metric: '0 regressions',
-    label: 'Production releases',
+    metric: '0 critical',
+    label: 'Production regressions',
     detail: 'Zero critical regressions reached production across 5 consecutive major platform releases of CYBER RANGES via RangeMaster Cockpit.',
   },
   {
-    metric: '$450,000',
-    label: 'Revenue exposure protected',
-    detail: 'Identified privilege revocation latency as an executive metric, driving deprovisioning latency from days down to under 2 hours.',
+    metric: '$400K–$450K',
+    label: 'Est. exposure identified',
+    detail: 'Identified estimated annual business exposure from delayed privilege revocation, helping reduce turnaround from days to under 2 hours.',
   },
 ];
 
@@ -227,9 +228,19 @@ const principles = [
         </p>
       </div>
       <div class="flex flex-wrap gap-3 shrink-0">
-        <a href="mailto:thaddeusmwai.9974@gmail.com" class="hig-btn hig-btn-primary">
+        <a
+          href="mailto:thaddeusmwai.9974@gmail.com?subject=QA%20%26%20Risk%20Leadership%20Inquiry"
+          class="hig-btn hig-btn-primary"
+        >
           <span class="material-symbols-outlined !text-[18px]" aria-hidden="true">mail</span>
-          <span>Email (thaddeusmwai.9974@gmail.com)</span>
+          <span>Discuss QA &amp; Risk Strategy</span>
+        </a>
+        <a
+          href={resolvePath('/works/rangemaster-cockpit')}
+          class="hig-btn hig-btn-glass"
+        >
+          <span class="material-symbols-outlined !text-[18px] text-[var(--color-brand)]" aria-hidden="true">deployed_code</span>
+          <span>Inspect RangeMaster Case Study</span>
         </a>
         <a
           href="https://www.linkedin.com/in/teddymwai/"

@@ -1,6 +1,6 @@
 # Ted's Developer Showcase & Learning Curves Blog
 
-A fast, content-driven developer portfolio and technical blog built with **Astro 5+**, **Tailwind CSS**, and **MDX**.
+A fast, content-driven developer portfolio and technical blog built with **Astro 7**, **Tailwind CSS**, and **MDX**.
 
 This setup is purposefully architected around **dual storytelling**:
 1. **Showcase Production Works:** Highlights your production systems, developer tools, metrics, GitHub links, and live demos.
@@ -47,8 +47,7 @@ date: 2026-11-15
 featured: true
 category: "Systems & Infrastructure"
 tags: ["Node.js", "Redis", "TypeScript", "Distributed Systems"]
-github: "https://github.com/your-username/my-project"
-demo: "https://demo.example.com"
+github: "https://github.com/teddymwai/my-project"
 stats:
   - label: "Throughput"
     value: "10k jobs/min"

@@ -71,7 +71,7 @@ RangeMaster Cockpit was engineered to provide deterministic, wire-verified quali
 - Category: Security Governance & Automation
 - Primary Stack: Python, RBAC, Access Governance, SIEM, REST APIs
 - Repository: https://github.com/teddymwai/uam-review-engine
-- Key Metrics: Review Turnaround Reduced from 17 Business Days to 13 Hours; $400K–$450K in Potential Non-Compliance Exposure Mitigated; 100% Audit Reconciliation Accuracy.
+- Key Metrics: Review Turnaround Reduced from 17 Business Days to 13 Hours; $400K–$450K Est. Annual Exposure Identified; 150+ Internal & 1,000+ Client Operator Accounts Reconciled.
 
 Problem:
 Quarterly User Access Management (UAM) reviews were historically a grueling manual process: security analysts had to export user rosters from Active Directory, LDAP, cloud consoles, and internal portals, manually cross-referencing each record against HR rosters and client project manifests. This process took 17 business days per quarter, diverted senior SOC personnel from threat hunting, and created prolonged privilege revocation latency.
@@ -137,7 +137,7 @@ A local-first, privacy-conscious data conversion studio that transforms massive 
 ### Post-Mortem 1: The $450K Blindspot: Privilege Revocation Latency Gap
 - Topic: Access Governance & Technology Risk
 - Difficulty: Moderate
-- Key Insight: Periodic quarterly check-box audits mask critical credential exposures. Shifting the primary metric from "did we complete a quarterly review" to "how many hours elapse between an offboarding event and privilege revocation" closed an estimated $450K regulatory and financial risk exposure.
+- Key Insight: Periodic quarterly check-box audits mask critical credential exposures. Shifting the primary metric from "did we complete a quarterly review" to "how many hours elapse between an offboarding event and privilege revocation" surfaced an estimated $400K–$450K annual exposure and helped reduce revocation turnaround from days to under 2 hours.
 
 Summary:
 While quarterly audits reported 100% compliance, log analysis revealed that terminated contractor accounts retained access for days or weeks after contract completion. By reframing the problem around revocation latency and building automated webhook reconciliations between HR events and directory services, the turnaround gap was permanently closed.

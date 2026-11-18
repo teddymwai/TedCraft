@@ -6,8 +6,6 @@ date: 2026-08-11
 featured: false
 category: "Web & Productivity"
 tags: ["TypeScript", "Web Components", "Astro", "Web Workers", "WASM"]
-github: "https://github.com/example/browser-md-studio"
-demo: "https://md-studio.example.com"
 stats:
   - label: "Input-to-Paint Latency"
     value: "< 4ms"
