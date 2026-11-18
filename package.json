@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run validate",
     "preview": "astro preview",
     "astro": "astro",
     "validate": "node scripts/validate-content.mjs",

@@ -4,12 +4,13 @@ import Badge from '../../components/Badge.astro';
 import DomainBadge from '../../components/DomainBadge.astro';
 import SyndicationBar from '../../components/SyndicationBar.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
-import { getCollection, render } from 'astro:content';
-import { getTechArticleSchema, DEFAULT_SITE_URL } from '../../utils/schema';
+import { render } from 'astro:content';
+import { getPublishedLearnings } from '../../utils/content';
+import { getTechArticleSchema, getSiteRootUrl } from '../../utils/schema';
 import { resolvePath } from '../../utils/paths';
 
 export async function getStaticPaths() {
-  const learnings = await getCollection('learnings');
+  const learnings = await getPublishedLearnings();
   return learnings.map((entry) => ({
     params: { id: entry.id },
     props: { entry },
@@ -19,7 +20,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 
-const siteUrl = Astro.site ? Astro.site.toString() : DEFAULT_SITE_URL;
+const siteUrl = getSiteRootUrl(Astro.site);
 const formattedDate = new Intl.DateTimeFormat('en-US', {
   month: 'long',
   day: 'numeric',
