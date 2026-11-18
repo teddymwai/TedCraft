@@ -1,51 +1,139 @@
 ---
 const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  {
+    name: 'GitHub',
+    href: 'https://github.com/teddymwai',
+    ariaLabel: 'Teddy Mwai on GitHub',
+    iconType: 'github',
+  },
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/teddymwai/',
+    ariaLabel: 'Thaddeus Mwai on LinkedIn',
+    iconType: 'linkedin',
+  },
+  {
+    name: 'GitLab',
+    href: 'https://gitlab.com/teddymwai',
+    ariaLabel: 'Teddy Mwai on GitLab',
+    iconType: 'gitlab',
+  },
+  {
+    name: 'Email',
+    href: 'mailto:thaddeusmwai.9974@gmail.com',
+    ariaLabel: 'Send email to Thaddeus Mwai',
+    iconType: 'email',
+  },
+  {
+    name: 'RSS Feed',
+    href: '/rss.xml',
+    ariaLabel: 'Subscribe via RSS',
+    iconType: 'rss',
+  },
+];
+
+const quickLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Journey', href: '/journey' },
+  { label: 'Works', href: '/works' },
+  { label: 'Learning Curves', href: '/learning-curves' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'About', href: '/about' },
+];
 ---
 
-<footer class="mt-auto border-t border-[var(--color-border)] bg-[var(--color-bg-card)] py-10 transition-colors">
-  <div class="site-container flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-[var(--color-text-muted)]">
-    <div class="flex flex-col sm:items-start items-center gap-1">
-      <div class="font-semibold text-[var(--color-text-main)]">
-        Ted's Developer Showcase & Learning Log
+<footer class="mt-auto border-t border-[var(--color-border)] bg-[var(--color-bg-card)] py-12 transition-colors">
+  <div class="site-container space-y-8">
+    <!-- Top Row: Brand & Social Icon Buttons -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="space-y-1.5 max-w-md">
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-6 rounded-md bg-[var(--color-brand)] text-white font-bold flex items-center justify-center text-xs">
+            T
+          </span>
+          <span class="font-bold text-sm tracking-tight text-[var(--color-text-main)]">
+            Thaddeus (Ted) Mwai
+          </span>
+          <span class="text-[11px] text-[var(--color-brand)] font-semibold bg-[var(--color-accent-badge)] px-2 py-0.5 rounded-full border border-[var(--color-brand)]/20">
+            CYBER RANGES
+          </span>
+        </div>
+        <p class="text-xs text-[var(--color-text-muted)] leading-relaxed">
+          Security QA Lead & Risk Strategist. Documenting high-assurance platform verification, access governance, and field notes from the trenches.
+        </p>
       </div>
-      <p class="text-xs">
-        Chronicling engineering challenges, mental model shifts, and shipped tools.
-      </p>
+
+      <!-- Social Icon Buttons -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        {socialLinks.map((item) => (
+          <a
+            href={item.href}
+            target={item.href.startsWith('mailto') || item.href.startsWith('/') ? undefined : '_blank'}
+            rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            aria-label={item.ariaLabel}
+            class="group inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-base)] text-[var(--color-text-muted)] hover:text-[var(--color-brand)] hover:border-[var(--color-brand)]/40 hover:bg-[var(--color-bg-subtle)] transition-all text-xs font-medium shadow-xs"
+          >
+            {item.iconType === 'github' && (
+              <svg class="w-4 h-4 text-[var(--color-text-main)] group-hover:text-[var(--color-brand)] transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+            )}
+
+            {item.iconType === 'linkedin' && (
+              <svg class="w-4 h-4 text-[#0077b5] group-hover:scale-105 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76c.92 0 1.66-.74 1.66-1.66 0-.91-.74-1.65-1.66-1.65-.92 0-1.66.74-1.66 1.65 0 .92.74 1.66 1.66 1.66m1.39 9.74v-8.37H5.07v8.37h2.78z" />
+              </svg>
+            )}
+
+            {item.iconType === 'gitlab' && (
+              <svg class="w-4 h-4 text-[#fc6d26] group-hover:scale-105 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="m22.68 10.05-1.12-3.46a1.36 1.36 0 0 0-2.58-.08l-1.9 5.84H6.92l-1.9-5.84a1.36 1.36 0 0 0-2.58.08L1.32 10.05a1.88 1.88 0 0 0 .68 2.1l9.64 7a.75.75 0 0 0 .88 0l9.64-7a1.88 1.88 0 0 0 .52-2.1z" />
+              </svg>
+            )}
+
+            {item.iconType === 'email' && (
+              <svg class="w-4 h-4 text-emerald-500 group-hover:scale-105 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+            )}
+
+            {item.iconType === 'rss' && (
+              <svg class="w-4 h-4 text-amber-500 group-hover:scale-105 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93v-2.83Z" />
+              </svg>
+            )}
+
+            <span>{item.name}</span>
+          </a>
+        ))}
+      </div>
     </div>
 
-    <!-- Social & Links -->
-    <div class="flex items-center gap-5 text-xs sm:text-sm">
-      <a
-        href="https://github.com/teddymwai"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hover:text-[var(--color-brand)] transition-colors"
-      >
-        GitHub
-      </a>
-      <a
-        href="https://www.linkedin.com/in/teddymwai/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="hover:text-[var(--color-brand)] transition-colors"
-      >
-        LinkedIn
-      </a>
-      <a
-        href="mailto:thaddeusmwai.9974@gmail.com"
-        class="hover:text-[var(--color-brand)] transition-colors"
-      >
-        Email
-      </a>
-    </div>
-  </div>
+    <!-- Middle Row: Navigation Links -->
+    <div class="pt-6 border-t border-[var(--color-border)] flex flex-wrap items-center justify-between gap-4 text-xs text-[var(--color-text-muted)]">
+      <nav class="flex flex-wrap items-center gap-4 sm:gap-6">
+        {quickLinks.map((link) => (
+          <a href={link.href} class="hover:text-[var(--color-brand)] transition-colors">
+            {link.label}
+          </a>
+        ))}
+      </nav>
 
-  <div class="site-container mt-6 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[var(--color-text-muted)]">
-    <div>
-      © {currentYear} Ted. All rights reserved.
+      <div class="text-[11px] font-mono">
+        Stafford, VA • Nairobi, Kenya
+      </div>
     </div>
-    <div>
-      Powered by Astro & Modern Web Standards
+
+    <!-- Bottom Row: Copyright & Credits -->
+    <div class="pt-4 border-t border-[var(--color-border)]/50 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[var(--color-text-muted)]">
+      <div>
+        © {currentYear} Thaddeus (Ted) Mwai. All rights reserved.
+      </div>
+      <div>
+        Built with Astro & modern web standards
+      </div>
     </div>
   </div>
 </footer>
