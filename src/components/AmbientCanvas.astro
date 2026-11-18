@@ -1,39 +1,31 @@
 ---
-// AmbientCanvas.astro — Restrained, cursor-reactive micro-mote canvas layer
-// Progressive enhancement: zero DOM dependencies, native cursor preserved.
+// AmbientCanvas.astro — Antigravity-inspired breathing radial capsule-ring canvas
+// Adapted to TedCraft's Champagne Gold / Bronze-Gold palette and Quiet Chrome rules.
 ---
 
 <canvas id="ambient-canvas" aria-hidden="true"></canvas>
 
 <script>
-  interface Mote {
-    baseX: number;
-    baseY: number;
-    baseVx: number;
-    baseVy: number;
-    dispX: number;
-    dispY: number;
-    vx: number;
-    vy: number;
-    radius: number;
-    alphaNorm: number;
+  interface Capsule {
+    hx: number;
+    hy: number;
+    x: number;
+    y: number;
+    scale: number;
+    seed: number;
   }
 
   interface AmbientController {
     destroy: () => void;
   }
 
-  const MAX_MOTES = 64;
-  const MIN_MOTES = 20;
-  const INFLUENCE_RADIUS = 115;
-  const INFLUENCE_RADIUS_SQ = INFLUENCE_RADIUS * INFLUENCE_RADIUS;
-  const MAX_REPULSION = 420;
-  const SPRING_K = 14;
-  const DAMPING = 5.5;
-  const MAX_SPEED = 160;
-  const MAX_DISP = 64;
+  const CELL_SIZE = 44;
+  const MAX_CAPSULES = 900;
+  const CAPSULE_LEN = 7.5;
+  const CAPSULE_WID = 2.6;
+  const RING_LERP = 0.045;
+  const SCALE_LERP = 0.16;
   const FRAME_INTERVAL_MS = 1000 / 30;
-  const EDGE_MARGIN = 16;
 
   let ambientInstance: AmbientController | null = null;
   let lifecycleRegistered = false;
@@ -48,6 +40,11 @@
     return el instanceof HTMLCanvasElement;
   }
 
+  function smoothstep(edge0: number, edge1: number, x: number): number {
+    const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+    return t * t * (3 - 2 * t);
+  }
+
   function createAmbientCanvas(canvas: HTMLCanvasElement): AmbientController | null {
     const rawCtx = canvas.getContext('2d');
     if (!rawCtx) return null;
@@ -59,42 +56,46 @@
     let height = window.innerHeight;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    let pointerX = 0;
-    let pointerY = 0;
+    let pointerX = width * 0.5;
+    let pointerY = height * 0.42;
     let pointerActive = false;
+
+    let ringX = pointerX;
+    let ringY = pointerY;
 
     let cachedRgb = '212, 168, 83';
     let isDarkTheme = true;
 
+    let elapsed = 0;
     let lastTime = performance.now();
     let lastDrawTime = 0;
 
-    function computeMoteCount(w: number, h: number): number {
-      const areaScaled = Math.round((w * h) / 28000);
-      return Math.max(MIN_MOTES, Math.min(MAX_MOTES, areaScaled));
-    }
+    let capsules: Capsule[] = [];
 
-    function createMote(w: number, h: number): Mote {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 4 + Math.random() * 8;
-      return {
-        baseX: Math.random() * w,
-        baseY: Math.random() * h,
-        baseVx: Math.cos(angle) * speed,
-        baseVy: Math.sin(angle) * speed,
-        dispX: 0,
-        dispY: 0,
-        vx: 0,
-        vy: 0,
-        radius: 1 + Math.random(),
-        alphaNorm: Math.random(),
-      };
-    }
+    function buildCapsules(w: number, h: number): Capsule[] {
+      const cols = Math.max(8, Math.ceil(w / CELL_SIZE));
+      const rows = Math.max(6, Math.ceil(h / CELL_SIZE));
+      const stepX = w / cols;
+      const stepY = h / rows;
+      const list: Capsule[] = [];
 
-    const motes: Mote[] = Array.from(
-      { length: computeMoteCount(width, height) },
-      () => createMote(width, height)
-    );
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (list.length >= MAX_CAPSULES) break;
+          const hx = (c + 0.2 + Math.random() * 0.6) * stepX;
+          const hy = (r + 0.2 + Math.random() * 0.6) * stepY;
+          list.push({
+            hx,
+            hy,
+            x: hx,
+            y: hy,
+            scale: 0,
+            seed: Math.random() * Math.PI * 2,
+          });
+        }
+      }
+      return list;
+    }
 
     function syncThemeColor(): void {
       const computed = getComputedStyle(canvas).color;
@@ -123,12 +124,21 @@
         return;
       }
 
-      const scaleX = nextW / prevW;
-      const scaleY = nextH / prevH;
-      for (let i = 0; i < motes.length; i++) {
-        motes[i].baseX *= scaleX;
-        motes[i].baseY *= scaleY;
+      if (capsules.length === 0) {
+        capsules = buildCapsules(nextW, nextH);
+      } else {
+        const scaleX = nextW / prevW;
+        const scaleY = nextH / prevH;
+        for (let i = 0; i < capsules.length; i++) {
+          capsules[i].hx *= scaleX;
+          capsules[i].hy *= scaleY;
+          capsules[i].x *= scaleX;
+          capsules[i].y *= scaleY;
+        }
       }
+
+      ringX *= nextW / prevW;
+      ringY *= nextH / prevH;
 
       width = nextW;
       height = nextH;
@@ -151,76 +161,80 @@
 
       const dt = Math.min(Math.max((now - lastTime) / 1000, 0.001), 0.05);
       lastTime = now;
+      elapsed += dt;
+
+      // Lazy magnetic lag toward cursor + gentle figure-eight idle drift
+      const idleOffsetX = Math.sin(elapsed * 0.55) * 28;
+      const idleOffsetY = Math.cos(elapsed * 0.42) * 18;
+      const targetX = pointerActive ? pointerX + idleOffsetX * 0.25 : width * 0.5 + idleOffsetX;
+      const targetY = pointerActive ? pointerY + idleOffsetY * 0.25 : height * 0.42 + idleOffsetY;
+
+      const lagFactor = 1 - Math.pow(1 - RING_LERP, dt * 60);
+      ringX += (targetX - ringX) * lagFactor;
+      ringY += (targetY - ringY) * lagFactor;
+
+      // Breathing ring radius (~22% of min viewport dimension)
+      const baseRing = Math.min(width, height) * 0.22;
+      const ringRadius =
+        baseRing + Math.sin(elapsed * 1.1) * 16 + Math.cos(elapsed * 2.7) * 8;
+      const bandWidth = Math.max(70, baseRing * 0.58);
 
       ctx.clearRect(0, 0, width, height);
 
-      const minAlpha = isDarkTheme ? 0.12 : 0.10;
-      const alphaSpan = isDarkTheme ? 0.06 : 0.04;
+      const peakAlpha = isDarkTheme ? 0.34 : 0.24;
+      const scaleEase = 1 - Math.pow(1 - SCALE_LERP, dt * 60);
 
-      for (let i = 0; i < motes.length; i++) {
-        const m = motes[i];
+      for (let i = 0; i < capsules.length; i++) {
+        const p = capsules[i];
 
-        // 1. Ambient drift along baseline trajectory
-        m.baseX += m.baseVx * dt;
-        m.baseY += m.baseVy * dt;
+        // Subtle organic drift around home position
+        const driftX = Math.sin(elapsed * 0.7 + p.seed) * 5;
+        const driftY = Math.cos(elapsed * 0.6 + p.seed * 1.3) * 5;
+        const baseX = p.hx + driftX;
+        const baseY = p.hy + driftY;
 
-        if (m.baseX < -EDGE_MARGIN) m.baseX = width + EDGE_MARGIN;
-        else if (m.baseX > width + EDGE_MARGIN) m.baseX = -EDGE_MARGIN;
+        const dx = baseX - ringX;
+        const dy = baseY - ringY;
+        const dist = Math.hypot(dx, dy);
 
-        if (m.baseY < -EDGE_MARGIN) m.baseY = height + EDGE_MARGIN;
-        else if (m.baseY > height + EDGE_MARGIN) m.baseY = -EDGE_MARGIN;
+        // Ring band intensity + soft inner halo
+        const ringDelta = Math.abs(dist - ringRadius);
+        const band = 1 - smoothstep(0, bandWidth, ringDelta);
+        const inner = (1 - smoothstep(0, ringRadius, dist)) * 0.32;
+        const targetScale = Math.min(1, band + inner);
 
-        const x = m.baseX + m.dispX;
-        const y = m.baseY + m.dispY;
+        p.scale += (targetScale - p.scale) * scaleEase;
+        if (p.scale < 0.08) continue;
 
-        // 2. Spring restoration + damping
-        let fx = -SPRING_K * m.dispX - DAMPING * m.vx;
-        let fy = -SPRING_K * m.dispY - DAMPING * m.vy;
+        // Radial lensing push outward along the ring band
+        const push = Math.pow(band, 0.85) * 14;
+        const invDist = dist > 0.001 ? 1 / dist : 0;
+        const nx = dx * invDist;
+        const ny = dy * invDist;
 
-        // 3. Smooth quadratic cursor repulsion
-        if (pointerActive) {
-          const dx = x - pointerX;
-          const dy = y - pointerY;
-          const distSq = dx * dx + dy * dy;
+        p.x = baseX + nx * push;
+        p.y = baseY + ny * push;
 
-          if (distSq < INFLUENCE_RADIUS_SQ) {
-            if (distSq < 0.0001) {
-              fx += MAX_REPULSION;
-            } else {
-              const dist = Math.sqrt(distSq);
-              const falloff = 1 - dist / INFLUENCE_RADIUS;
-              const force = MAX_REPULSION * falloff * falloff;
-              fx += (dx / dist) * force;
-              fy += (dy / dist) * force;
-            }
-          }
-        }
+        // Orient capsule radially from ring center + subtle organic wiggle
+        const angle =
+          Math.atan2(p.y - ringY, p.x - ringX) + Math.sin(elapsed * 0.9 + p.seed) * 0.18;
 
-        m.vx += fx * dt;
-        m.vy += fy * dt;
+        const len = CAPSULE_LEN * (0.45 + p.scale * 0.75);
+        const wid = CAPSULE_WID * (0.55 + p.scale * 0.45);
+        const alpha = (p.scale * peakAlpha).toFixed(3);
 
-        const speedSq = m.vx * m.vx + m.vy * m.vy;
-        if (speedSq > MAX_SPEED * MAX_SPEED) {
-          const scale = MAX_SPEED / Math.sqrt(speedSq);
-          m.vx *= scale;
-          m.vy *= scale;
-        }
-
-        m.dispX += m.vx * dt;
-        m.dispY += m.vy * dt;
-
-        const dispSq = m.dispX * m.dispX + m.dispY * m.dispY;
-        if (dispSq > MAX_DISP * MAX_DISP) {
-          const scale = MAX_DISP / Math.sqrt(dispSq);
-          m.dispX *= scale;
-          m.dispY *= scale;
-        }
-
-        const alpha = (minAlpha + m.alphaNorm * alphaSpan).toFixed(3);
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(angle);
         ctx.fillStyle = `rgba(${cachedRgb}, ${alpha})`;
         ctx.beginPath();
-        ctx.arc(m.baseX + m.dispX, m.baseY + m.dispY, m.radius, 0, Math.PI * 2);
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(-len * 0.5, -wid * 0.5, len, wid, wid * 0.5);
+        } else {
+          ctx.rect(-len * 0.5, -wid * 0.5, len, wid);
+        }
         ctx.fill();
+        ctx.restore();
       }
     }
 
@@ -269,6 +283,7 @@
 
     const onSystemThemeChange = () => syncThemeColor();
 
+    capsules = buildCapsules(width, height);
     resizeCanvas();
     syncThemeColor();
 
